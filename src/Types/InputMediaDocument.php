@@ -48,7 +48,7 @@ class InputMediaDocument extends InputMedia
         return new self(
             media: $result['media'],
             type: $result['type'] ?? 'document',
-            thumbnail: $result['thumbnail'] !== null
+            thumbnail: ($result['thumbnail'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InputFile | string::fromResponseResult($result['thumbnail'])
                 : null,
             caption: $result['caption'] ?? null,

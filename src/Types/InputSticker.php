@@ -43,7 +43,7 @@ class InputSticker implements TypeInterface
         return new self(
             sticker: \Shanginn\TelegramBotApiBindings\Types\InputFile | string::fromResponseResult($result['sticker']),
             emojiList: $result['emoji_list'],
-            maskPosition: $result['mask_position'] !== null
+            maskPosition: ($result['mask_position'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\MaskPosition::fromResponseResult($result['mask_position'])
                 : null,
             keywords: $result['keywords'] ?? null,

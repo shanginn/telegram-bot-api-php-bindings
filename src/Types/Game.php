@@ -51,7 +51,7 @@ class Game implements TypeInterface
             photo: $result['photo'],
             text: $result['text'] ?? null,
             textEntities: $result['text_entities'] ?? null,
-            animation: $result['animation'] !== null
+            animation: ($result['animation'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Animation::fromResponseResult($result['animation'])
                 : null,
         );

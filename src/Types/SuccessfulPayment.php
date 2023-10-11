@@ -56,7 +56,7 @@ class SuccessfulPayment implements TypeInterface
             telegramPaymentChargeId: $result['telegram_payment_charge_id'],
             providerPaymentChargeId: $result['provider_payment_charge_id'],
             shippingOptionId: $result['shipping_option_id'] ?? null,
-            orderInfo: $result['order_info'] !== null
+            orderInfo: ($result['order_info'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\OrderInfo::fromResponseResult($result['order_info'])
                 : null,
         );

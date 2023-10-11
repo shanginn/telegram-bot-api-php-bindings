@@ -42,7 +42,7 @@ class OrderInfo implements TypeInterface
             name: $result['name'] ?? null,
             phoneNumber: $result['phone_number'] ?? null,
             email: $result['email'] ?? null,
-            shippingAddress: $result['shipping_address'] !== null
+            shippingAddress: ($result['shipping_address'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ShippingAddress::fromResponseResult($result['shipping_address'])
                 : null,
         );

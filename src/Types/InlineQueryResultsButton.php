@@ -39,7 +39,7 @@ class InlineQueryResultsButton implements TypeInterface
 
         return new self(
             text: $result['text'],
-            webApp: $result['web_app'] !== null
+            webApp: ($result['web_app'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\WebAppInfo::fromResponseResult($result['web_app'])
                 : null,
             startParameter: $result['start_parameter'] ?? null,

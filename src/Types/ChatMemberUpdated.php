@@ -55,7 +55,7 @@ class ChatMemberUpdated implements TypeInterface
             date: $result['date'],
             oldChatMember: \Shanginn\TelegramBotApiBindings\Types\ChatMember::fromResponseResult($result['old_chat_member']),
             newChatMember: \Shanginn\TelegramBotApiBindings\Types\ChatMember::fromResponseResult($result['new_chat_member']),
-            inviteLink: $result['invite_link'] !== null
+            inviteLink: ($result['invite_link'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatInviteLink::fromResponseResult($result['invite_link'])
                 : null,
             viaChatFolderInviteLink: $result['via_chat_folder_invite_link'] ?? null,

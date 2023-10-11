@@ -54,10 +54,10 @@ class KeyboardButtonRequestChat implements TypeInterface
             chatIsForum: $result['chat_is_forum'] ?? null,
             chatHasUsername: $result['chat_has_username'] ?? null,
             chatIsCreated: $result['chat_is_created'] ?? null,
-            userAdministratorRights: $result['user_administrator_rights'] !== null
+            userAdministratorRights: ($result['user_administrator_rights'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatAdministratorRights::fromResponseResult($result['user_administrator_rights'])
                 : null,
-            botAdministratorRights: $result['bot_administrator_rights'] !== null
+            botAdministratorRights: ($result['bot_administrator_rights'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatAdministratorRights::fromResponseResult($result['bot_administrator_rights'])
                 : null,
             botIsMember: $result['bot_is_member'] ?? null,

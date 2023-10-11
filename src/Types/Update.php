@@ -63,46 +63,46 @@ class Update implements TypeInterface
 
         return new self(
             updateId: $result['update_id'],
-            message: $result['message'] !== null
+            message: ($result['message'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['message'])
                 : null,
-            editedMessage: $result['edited_message'] !== null
+            editedMessage: ($result['edited_message'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['edited_message'])
                 : null,
-            channelPost: $result['channel_post'] !== null
+            channelPost: ($result['channel_post'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['channel_post'])
                 : null,
-            editedChannelPost: $result['edited_channel_post'] !== null
+            editedChannelPost: ($result['edited_channel_post'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['edited_channel_post'])
                 : null,
-            inlineQuery: $result['inline_query'] !== null
+            inlineQuery: ($result['inline_query'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InlineQuery::fromResponseResult($result['inline_query'])
                 : null,
-            chosenInlineResult: $result['chosen_inline_result'] !== null
+            chosenInlineResult: ($result['chosen_inline_result'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChosenInlineResult::fromResponseResult($result['chosen_inline_result'])
                 : null,
-            callbackQuery: $result['callback_query'] !== null
+            callbackQuery: ($result['callback_query'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\CallbackQuery::fromResponseResult($result['callback_query'])
                 : null,
-            shippingQuery: $result['shipping_query'] !== null
+            shippingQuery: ($result['shipping_query'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ShippingQuery::fromResponseResult($result['shipping_query'])
                 : null,
-            preCheckoutQuery: $result['pre_checkout_query'] !== null
+            preCheckoutQuery: ($result['pre_checkout_query'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PreCheckoutQuery::fromResponseResult($result['pre_checkout_query'])
                 : null,
-            poll: $result['poll'] !== null
+            poll: ($result['poll'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Poll::fromResponseResult($result['poll'])
                 : null,
-            pollAnswer: $result['poll_answer'] !== null
+            pollAnswer: ($result['poll_answer'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PollAnswer::fromResponseResult($result['poll_answer'])
                 : null,
-            myChatMember: $result['my_chat_member'] !== null
+            myChatMember: ($result['my_chat_member'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatMemberUpdated::fromResponseResult($result['my_chat_member'])
                 : null,
-            chatMember: $result['chat_member'] !== null
+            chatMember: ($result['chat_member'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatMemberUpdated::fromResponseResult($result['chat_member'])
                 : null,
-            chatJoinRequest: $result['chat_join_request'] !== null
+            chatJoinRequest: ($result['chat_join_request'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatJoinRequest::fromResponseResult($result['chat_join_request'])
                 : null,
         );

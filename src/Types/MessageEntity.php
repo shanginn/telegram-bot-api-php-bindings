@@ -52,7 +52,7 @@ class MessageEntity implements TypeInterface
             offset: $result['offset'],
             length: $result['length'],
             url: $result['url'] ?? null,
-            user: $result['user'] !== null
+            user: ($result['user'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['user'])
                 : null,
             language: $result['language'] ?? null,

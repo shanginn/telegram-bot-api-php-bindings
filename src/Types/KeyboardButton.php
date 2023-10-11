@@ -47,18 +47,18 @@ class KeyboardButton implements TypeInterface
 
         return new self(
             text: $result['text'],
-            requestUser: $result['request_user'] !== null
+            requestUser: ($result['request_user'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\KeyboardButtonRequestUser::fromResponseResult($result['request_user'])
                 : null,
-            requestChat: $result['request_chat'] !== null
+            requestChat: ($result['request_chat'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\KeyboardButtonRequestChat::fromResponseResult($result['request_chat'])
                 : null,
             requestContact: $result['request_contact'] ?? null,
             requestLocation: $result['request_location'] ?? null,
-            requestPoll: $result['request_poll'] !== null
+            requestPoll: ($result['request_poll'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\KeyboardButtonPollType::fromResponseResult($result['request_poll'])
                 : null,
-            webApp: $result['web_app'] !== null
+            webApp: ($result['web_app'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\WebAppInfo::fromResponseResult($result['web_app'])
                 : null,
         );

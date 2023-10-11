@@ -65,10 +65,10 @@ class InlineQueryResultAudio extends InlineQueryResult
             captionEntities: $result['caption_entities'] ?? null,
             performer: $result['performer'] ?? null,
             audioDuration: $result['audio_duration'] ?? null,
-            replyMarkup: $result['reply_markup'] !== null
+            replyMarkup: ($result['reply_markup'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup::fromResponseResult($result['reply_markup'])
                 : null,
-            inputMessageContent: $result['input_message_content'] !== null
+            inputMessageContent: ($result['input_message_content'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InputMessageContent::fromResponseResult($result['input_message_content'])
                 : null,
         );

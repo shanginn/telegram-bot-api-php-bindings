@@ -98,7 +98,7 @@ class Chat implements TypeInterface
             firstName: $result['first_name'] ?? null,
             lastName: $result['last_name'] ?? null,
             isForum: $result['is_forum'] ?? true,
-            photo: $result['photo'] !== null
+            photo: ($result['photo'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatPhoto::fromResponseResult($result['photo'])
                 : null,
             activeUsernames: $result['active_usernames'] ?? null,
@@ -111,10 +111,10 @@ class Chat implements TypeInterface
             joinByRequest: $result['join_by_request'] ?? true,
             description: $result['description'] ?? null,
             inviteLink: $result['invite_link'] ?? null,
-            pinnedMessage: $result['pinned_message'] !== null
+            pinnedMessage: ($result['pinned_message'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['pinned_message'])
                 : null,
-            permissions: $result['permissions'] !== null
+            permissions: ($result['permissions'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatPermissions::fromResponseResult($result['permissions'])
                 : null,
             slowModeDelay: $result['slow_mode_delay'] ?? null,
@@ -125,7 +125,7 @@ class Chat implements TypeInterface
             stickerSetName: $result['sticker_set_name'] ?? null,
             canSetStickerSet: $result['can_set_sticker_set'] ?? true,
             linkedChatId: $result['linked_chat_id'] ?? null,
-            location: $result['location'] !== null
+            location: ($result['location'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatLocation::fromResponseResult($result['location'])
                 : null,
         );

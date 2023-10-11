@@ -59,13 +59,13 @@ class EncryptedPassportElement implements TypeInterface
             phoneNumber: $result['phone_number'] ?? null,
             email: $result['email'] ?? null,
             files: $result['files'] ?? null,
-            frontSide: $result['front_side'] !== null
+            frontSide: ($result['front_side'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PassportFile::fromResponseResult($result['front_side'])
                 : null,
-            reverseSide: $result['reverse_side'] !== null
+            reverseSide: ($result['reverse_side'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PassportFile::fromResponseResult($result['reverse_side'])
                 : null,
-            selfie: $result['selfie'] !== null
+            selfie: ($result['selfie'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PassportFile::fromResponseResult($result['selfie'])
                 : null,
             translation: $result['translation'] ?? null,

@@ -72,10 +72,10 @@ class InlineQueryResultDocument extends InlineQueryResult
             parseMode: $result['parse_mode'] ?? null,
             captionEntities: $result['caption_entities'] ?? null,
             description: $result['description'] ?? null,
-            replyMarkup: $result['reply_markup'] !== null
+            replyMarkup: ($result['reply_markup'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup::fromResponseResult($result['reply_markup'])
                 : null,
-            inputMessageContent: $result['input_message_content'] !== null
+            inputMessageContent: ($result['input_message_content'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InputMessageContent::fromResponseResult($result['input_message_content'])
                 : null,
             thumbnailUrl: $result['thumbnail_url'] ?? null,

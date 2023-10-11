@@ -58,10 +58,10 @@ class InlineQueryResultCachedMpeg4Gif extends InlineQueryResult
             caption: $result['caption'] ?? null,
             parseMode: $result['parse_mode'] ?? null,
             captionEntities: $result['caption_entities'] ?? null,
-            replyMarkup: $result['reply_markup'] !== null
+            replyMarkup: ($result['reply_markup'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup::fromResponseResult($result['reply_markup'])
                 : null,
-            inputMessageContent: $result['input_message_content'] !== null
+            inputMessageContent: ($result['input_message_content'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InputMessageContent::fromResponseResult($result['input_message_content'])
                 : null,
         );

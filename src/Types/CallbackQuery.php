@@ -51,7 +51,7 @@ class CallbackQuery implements TypeInterface
             id: $result['id'],
             from: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['from']),
             chatInstance: $result['chat_instance'],
-            message: $result['message'] !== null
+            message: ($result['message'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['message'])
                 : null,
             inlineMessageId: $result['inline_message_id'] ?? null,

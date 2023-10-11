@@ -56,7 +56,7 @@ class PreCheckoutQuery implements TypeInterface
             totalAmount: $result['total_amount'],
             invoicePayload: $result['invoice_payload'],
             shippingOptionId: $result['shipping_option_id'] ?? null,
-            orderInfo: $result['order_info'] !== null
+            orderInfo: ($result['order_info'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\OrderInfo::fromResponseResult($result['order_info'])
                 : null,
         );

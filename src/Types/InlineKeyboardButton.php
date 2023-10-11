@@ -55,18 +55,18 @@ class InlineKeyboardButton implements TypeInterface
             text: $result['text'],
             url: $result['url'] ?? null,
             callbackData: $result['callback_data'] ?? null,
-            webApp: $result['web_app'] !== null
+            webApp: ($result['web_app'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\WebAppInfo::fromResponseResult($result['web_app'])
                 : null,
-            loginUrl: $result['login_url'] !== null
+            loginUrl: ($result['login_url'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\LoginUrl::fromResponseResult($result['login_url'])
                 : null,
             switchInlineQuery: $result['switch_inline_query'] ?? null,
             switchInlineQueryCurrentChat: $result['switch_inline_query_current_chat'] ?? null,
-            switchInlineQueryChosenChat: $result['switch_inline_query_chosen_chat'] !== null
+            switchInlineQueryChosenChat: ($result['switch_inline_query_chosen_chat'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\SwitchInlineQueryChosenChat::fromResponseResult($result['switch_inline_query_chosen_chat'])
                 : null,
-            callbackGame: $result['callback_game'] !== null
+            callbackGame: ($result['callback_game'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\CallbackGame::fromResponseResult($result['callback_game'])
                 : null,
             pay: $result['pay'] ?? null,

@@ -52,7 +52,7 @@ class InlineQuery implements TypeInterface
             query: $result['query'],
             offset: $result['offset'],
             chatType: $result['chat_type'] ?? null,
-            location: $result['location'] !== null
+            location: ($result['location'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Location::fromResponseResult($result['location'])
                 : null,
         );

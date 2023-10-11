@@ -59,7 +59,7 @@ class Video implements TypeInterface
             width: $result['width'],
             height: $result['height'],
             duration: $result['duration'],
-            thumbnail: $result['thumbnail'] !== null
+            thumbnail: ($result['thumbnail'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PhotoSize::fromResponseResult($result['thumbnail'])
                 : null,
             fileName: $result['file_name'] ?? null,

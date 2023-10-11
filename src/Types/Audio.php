@@ -60,7 +60,7 @@ class Audio implements TypeInterface
             fileName: $result['file_name'] ?? null,
             mimeType: $result['mime_type'] ?? null,
             fileSize: $result['file_size'] ?? null,
-            thumbnail: $result['thumbnail'] !== null
+            thumbnail: ($result['thumbnail'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PhotoSize::fromResponseResult($result['thumbnail'])
                 : null,
         );

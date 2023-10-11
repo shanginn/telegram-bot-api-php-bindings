@@ -47,7 +47,7 @@ class ChosenInlineResult implements TypeInterface
             resultId: $result['result_id'],
             from: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['from']),
             query: $result['query'],
-            location: $result['location'] !== null
+            location: ($result['location'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Location::fromResponseResult($result['location'])
                 : null,
             inlineMessageId: $result['inline_message_id'] ?? null,

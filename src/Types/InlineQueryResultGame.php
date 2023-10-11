@@ -44,7 +44,7 @@ class InlineQueryResultGame extends InlineQueryResult
             id: $result['id'],
             gameShortName: $result['game_short_name'],
             type: $result['type'] ?? 'game',
-            replyMarkup: $result['reply_markup'] !== null
+            replyMarkup: ($result['reply_markup'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup::fromResponseResult($result['reply_markup'])
                 : null,
         );

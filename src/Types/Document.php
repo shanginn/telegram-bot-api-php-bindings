@@ -47,7 +47,7 @@ class Document implements TypeInterface
         return new self(
             fileId: $result['file_id'],
             fileUniqueId: $result['file_unique_id'],
-            thumbnail: $result['thumbnail'] !== null
+            thumbnail: ($result['thumbnail'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PhotoSize::fromResponseResult($result['thumbnail'])
                 : null,
             fileName: $result['file_name'] ?? null,

@@ -60,7 +60,7 @@ class InlineQueryResultArticle extends InlineQueryResult
             title: $result['title'],
             inputMessageContent: \Shanginn\TelegramBotApiBindings\Types\InputMessageContent::fromResponseResult($result['input_message_content']),
             type: $result['type'] ?? 'article',
-            replyMarkup: $result['reply_markup'] !== null
+            replyMarkup: ($result['reply_markup'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup::fromResponseResult($result['reply_markup'])
                 : null,
             url: $result['url'] ?? null,

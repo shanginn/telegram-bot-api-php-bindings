@@ -51,7 +51,7 @@ class VideoNote implements TypeInterface
             fileUniqueId: $result['file_unique_id'],
             length: $result['length'],
             duration: $result['duration'],
-            thumbnail: $result['thumbnail'] !== null
+            thumbnail: ($result['thumbnail'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PhotoSize::fromResponseResult($result['thumbnail'])
                 : null,
             fileSize: $result['file_size'] ?? null,

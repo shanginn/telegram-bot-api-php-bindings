@@ -52,7 +52,7 @@ class ChatJoinRequest implements TypeInterface
             userChatId: $result['user_chat_id'],
             date: $result['date'],
             bio: $result['bio'] ?? null,
-            inviteLink: $result['invite_link'] !== null
+            inviteLink: ($result['invite_link'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\ChatInviteLink::fromResponseResult($result['invite_link'])
                 : null,
         );

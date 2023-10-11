@@ -79,10 +79,10 @@ class InlineQueryResultVideo extends InlineQueryResult
             videoHeight: $result['video_height'] ?? null,
             videoDuration: $result['video_duration'] ?? null,
             description: $result['description'] ?? null,
-            replyMarkup: $result['reply_markup'] !== null
+            replyMarkup: ($result['reply_markup'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup::fromResponseResult($result['reply_markup'])
                 : null,
-            inputMessageContent: $result['input_message_content'] !== null
+            inputMessageContent: ($result['input_message_content'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\InputMessageContent::fromResponseResult($result['input_message_content'])
                 : null,
         );

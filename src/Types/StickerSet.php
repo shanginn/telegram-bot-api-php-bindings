@@ -57,7 +57,7 @@ class StickerSet implements TypeInterface
             isAnimated: $result['is_animated'],
             isVideo: $result['is_video'],
             stickers: $result['stickers'],
-            thumbnail: $result['thumbnail'] !== null
+            thumbnail: ($result['thumbnail'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PhotoSize::fromResponseResult($result['thumbnail'])
                 : null,
         );

@@ -43,10 +43,10 @@ class PollAnswer implements TypeInterface
         return new self(
             pollId: $result['poll_id'],
             optionIds: $result['option_ids'],
-            voterChat: $result['voter_chat'] !== null
+            voterChat: ($result['voter_chat'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\Chat::fromResponseResult($result['voter_chat'])
                 : null,
-            user: $result['user'] !== null
+            user: ($result['user'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['user'])
                 : null,
         );

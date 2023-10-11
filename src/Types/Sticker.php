@@ -75,15 +75,15 @@ class Sticker implements TypeInterface
             height: $result['height'],
             isAnimated: $result['is_animated'],
             isVideo: $result['is_video'],
-            thumbnail: $result['thumbnail'] !== null
+            thumbnail: ($result['thumbnail'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\PhotoSize::fromResponseResult($result['thumbnail'])
                 : null,
             emoji: $result['emoji'] ?? null,
             setName: $result['set_name'] ?? null,
-            premiumAnimation: $result['premium_animation'] !== null
+            premiumAnimation: ($result['premium_animation'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\File::fromResponseResult($result['premium_animation'])
                 : null,
-            maskPosition: $result['mask_position'] !== null
+            maskPosition: ($result['mask_position'] ?? null) !== null
                 ? \Shanginn\TelegramBotApiBindings\Types\MaskPosition::fromResponseResult($result['mask_position'])
                 : null,
             customEmojiId: $result['custom_emoji_id'] ?? null,
