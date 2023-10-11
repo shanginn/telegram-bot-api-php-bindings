@@ -17,9 +17,9 @@ class ReplyKeyboardMarkup implements TypeInterface
      */
     public function __construct(
         public array $keyboard,
-        public ?bool $isPersistent = false,
-        public ?bool $resizeKeyboard = false,
-        public ?bool $oneTimeKeyboard = false,
+        public ?bool $isPersistent = null,
+        public ?bool $resizeKeyboard = null,
+        public ?bool $oneTimeKeyboard = null,
         public ?string $inputFieldPlaceholder = null,
         public ?bool $selective = null,
     ) {
@@ -45,9 +45,9 @@ class ReplyKeyboardMarkup implements TypeInterface
 
         return new self(
             keyboard: $result['keyboard'],
-            isPersistent: $result['is_persistent'] ?? false,
-            resizeKeyboard: $result['resize_keyboard'] ?? false,
-            oneTimeKeyboard: $result['one_time_keyboard'] ?? false,
+            isPersistent: $result['is_persistent'] ?? null,
+            resizeKeyboard: $result['resize_keyboard'] ?? null,
+            oneTimeKeyboard: $result['one_time_keyboard'] ?? null,
             inputFieldPlaceholder: $result['input_field_placeholder'] ?? null,
             selective: $result['selective'] ?? null,
         );

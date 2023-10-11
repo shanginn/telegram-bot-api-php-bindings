@@ -38,7 +38,7 @@ class Sticker implements TypeInterface
         public ?File $premiumAnimation = null,
         public ?MaskPosition $maskPosition = null,
         public ?string $customEmojiId = null,
-        public ?bool $needsRepainting = true,
+        public ?bool $needsRepainting = null,
         public ?int $fileSize = null,
     ) {
     }
@@ -87,7 +87,7 @@ class Sticker implements TypeInterface
                 ? \Shanginn\TelegramBotApiBindings\Types\MaskPosition::fromResponseResult($result['mask_position'])
                 : null,
             customEmojiId: $result['custom_emoji_id'] ?? null,
-            needsRepainting: $result['needs_repainting'] ?? true,
+            needsRepainting: $result['needs_repainting'] ?? null,
             fileSize: $result['file_size'] ?? null,
         );
     }
