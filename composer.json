@@ -1,7 +1,7 @@
 {
     "name": "shanginn/telegram-bot-api-bindings",
     "description": "Low level type-safe PHP bindings for the Telegram Bot API",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -19,13 +19,11 @@
         "php": "^8.0"
     },
     "require-dev": {
-        "symfony/var-dumper": "^6.3",
-        "friendsofphp/php-cs-fixer": "^3.34",
-        "erickskrauch/php-cs-fixer-custom-fixers": "^1.2"
+        "symfony/var-dumper": "^6.3"
     },
     "scripts": {
         "fix": [
-            "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix -vvv --config=.php-cs-fixer.php --allow-risky=yes"
+            "PHP_CS_FIXER_IGNORE_ENV=1 ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vvv --config=.php-cs-fixer.php --allow-risky=yes"
         ]
     }
 }
