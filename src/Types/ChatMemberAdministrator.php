@@ -70,7 +70,7 @@ class ChatMemberAdministrator extends ChatMember
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($data[$field])) {
+            if (!isset($result[$field])) {
                 $missingFields[] = $field;
             }
         }
