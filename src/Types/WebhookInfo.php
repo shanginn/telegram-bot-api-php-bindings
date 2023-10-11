@@ -30,4 +30,37 @@ class WebhookInfo implements TypeInterface
         public ?array $allowedUpdates = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'url',
+            'has_custom_certificate',
+            'pending_update_count',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            url: $result['url'],
+            hasCustomCertificate: $result['has_custom_certificate'],
+            pendingUpdateCount: $result['pending_update_count'],
+            ipAddress: $result['ip_address'] ?? null,
+            lastErrorDate: $result['last_error_date'] ?? null,
+            lastErrorMessage: $result['last_error_message'] ?? null,
+            lastSynchronizationErrorDate: $result['last_synchronization_error_date'] ?? null,
+            maxConnections: $result['max_connections'] ?? null,
+            allowedUpdates: $result['allowed_updates'] ?? null,
+        );
+    }
 }

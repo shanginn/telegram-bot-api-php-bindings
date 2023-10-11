@@ -21,4 +21,30 @@ class LoginUrl implements TypeInterface
         public ?bool $requestWriteAccess = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'url',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            url: $result['url'],
+            forwardText: $result['forward_text'] ?? null,
+            botUsername: $result['bot_username'] ?? null,
+            requestWriteAccess: $result['request_write_access'] ?? null,
+        );
+    }
 }

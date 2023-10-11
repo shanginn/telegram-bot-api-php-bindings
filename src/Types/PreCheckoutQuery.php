@@ -26,4 +26,39 @@ class PreCheckoutQuery implements TypeInterface
         public ?OrderInfo $orderInfo = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'id',
+            'from',
+            'currency',
+            'total_amount',
+            'invoice_payload',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            id: $result['id'],
+            from: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['from']),
+            currency: $result['currency'],
+            totalAmount: $result['total_amount'],
+            invoicePayload: $result['invoice_payload'],
+            shippingOptionId: $result['shipping_option_id'] ?? null,
+            orderInfo: $result['order_info'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\OrderInfo::fromResponseResult($result['order_info'])
+                : null,
+        );
+    }
 }

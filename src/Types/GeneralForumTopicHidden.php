@@ -10,4 +10,9 @@ class GeneralForumTopicHidden implements TypeInterface
     public function __construct()
     {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        return new self();
+    }
 }

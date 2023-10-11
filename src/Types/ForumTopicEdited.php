@@ -16,4 +16,27 @@ class ForumTopicEdited implements TypeInterface
         public ?string $iconCustomEmojiId = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            name: $result['name'] ?? null,
+            iconCustomEmojiId: $result['icon_custom_emoji_id'] ?? null,
+        );
+    }
 }

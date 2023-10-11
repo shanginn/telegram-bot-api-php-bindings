@@ -70,4 +70,64 @@ class Chat implements TypeInterface
         public ?ChatLocation $location = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'id',
+            'type',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            id: $result['id'],
+            type: $result['type'],
+            title: $result['title'] ?? null,
+            username: $result['username'] ?? null,
+            firstName: $result['first_name'] ?? null,
+            lastName: $result['last_name'] ?? null,
+            isForum: $result['is_forum'] ?? true,
+            photo: $result['photo'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatPhoto::fromResponseResult($result['photo'])
+                : null,
+            activeUsernames: $result['active_usernames'] ?? null,
+            emojiStatusCustomEmojiId: $result['emoji_status_custom_emoji_id'] ?? null,
+            emojiStatusExpirationDate: $result['emoji_status_expiration_date'] ?? null,
+            bio: $result['bio'] ?? null,
+            hasPrivateForwards: $result['has_private_forwards'] ?? true,
+            hasRestrictedVoiceAndVideoMessages: $result['has_restricted_voice_and_video_messages'] ?? true,
+            joinToSendMessages: $result['join_to_send_messages'] ?? true,
+            joinByRequest: $result['join_by_request'] ?? true,
+            description: $result['description'] ?? null,
+            inviteLink: $result['invite_link'] ?? null,
+            pinnedMessage: $result['pinned_message'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['pinned_message'])
+                : null,
+            permissions: $result['permissions'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatPermissions::fromResponseResult($result['permissions'])
+                : null,
+            slowModeDelay: $result['slow_mode_delay'] ?? null,
+            messageAutoDeleteTime: $result['message_auto_delete_time'] ?? null,
+            hasAggressiveAntiSpamEnabled: $result['has_aggressive_anti_spam_enabled'] ?? true,
+            hasHiddenMembers: $result['has_hidden_members'] ?? true,
+            hasProtectedContent: $result['has_protected_content'] ?? true,
+            stickerSetName: $result['sticker_set_name'] ?? null,
+            canSetStickerSet: $result['can_set_sticker_set'] ?? true,
+            linkedChatId: $result['linked_chat_id'] ?? null,
+            location: $result['location'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatLocation::fromResponseResult($result['location'])
+                : null,
+        );
+    }
 }

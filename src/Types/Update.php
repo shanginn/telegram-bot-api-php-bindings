@@ -42,4 +42,69 @@ class Update implements TypeInterface
         public ?ChatJoinRequest $chatJoinRequest = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'update_id',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            updateId: $result['update_id'],
+            message: $result['message'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['message'])
+                : null,
+            editedMessage: $result['edited_message'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['edited_message'])
+                : null,
+            channelPost: $result['channel_post'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['channel_post'])
+                : null,
+            editedChannelPost: $result['edited_channel_post'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['edited_channel_post'])
+                : null,
+            inlineQuery: $result['inline_query'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\InlineQuery::fromResponseResult($result['inline_query'])
+                : null,
+            chosenInlineResult: $result['chosen_inline_result'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChosenInlineResult::fromResponseResult($result['chosen_inline_result'])
+                : null,
+            callbackQuery: $result['callback_query'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\CallbackQuery::fromResponseResult($result['callback_query'])
+                : null,
+            shippingQuery: $result['shipping_query'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ShippingQuery::fromResponseResult($result['shipping_query'])
+                : null,
+            preCheckoutQuery: $result['pre_checkout_query'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\PreCheckoutQuery::fromResponseResult($result['pre_checkout_query'])
+                : null,
+            poll: $result['poll'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Poll::fromResponseResult($result['poll'])
+                : null,
+            pollAnswer: $result['poll_answer'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\PollAnswer::fromResponseResult($result['poll_answer'])
+                : null,
+            myChatMember: $result['my_chat_member'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatMemberUpdated::fromResponseResult($result['my_chat_member'])
+                : null,
+            chatMember: $result['chat_member'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatMemberUpdated::fromResponseResult($result['chat_member'])
+                : null,
+            chatJoinRequest: $result['chat_join_request'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatJoinRequest::fromResponseResult($result['chat_join_request'])
+                : null,
+        );
+    }
 }

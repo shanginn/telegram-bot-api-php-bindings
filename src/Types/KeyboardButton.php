@@ -26,4 +26,41 @@ class KeyboardButton implements TypeInterface
         public ?WebAppInfo $webApp = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'text',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            text: $result['text'],
+            requestUser: $result['request_user'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\KeyboardButtonRequestUser::fromResponseResult($result['request_user'])
+                : null,
+            requestChat: $result['request_chat'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\KeyboardButtonRequestChat::fromResponseResult($result['request_chat'])
+                : null,
+            requestContact: $result['request_contact'] ?? null,
+            requestLocation: $result['request_location'] ?? null,
+            requestPoll: $result['request_poll'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\KeyboardButtonPollType::fromResponseResult($result['request_poll'])
+                : null,
+            webApp: $result['web_app'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\WebAppInfo::fromResponseResult($result['web_app'])
+                : null,
+        );
+    }
 }

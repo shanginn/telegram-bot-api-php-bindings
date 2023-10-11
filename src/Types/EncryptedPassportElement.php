@@ -32,4 +32,43 @@ class EncryptedPassportElement implements TypeInterface
         public ?array $translation = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'type',
+            'hash',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            type: $result['type'],
+            hash: $result['hash'],
+            data: $result['data'] ?? null,
+            phoneNumber: $result['phone_number'] ?? null,
+            email: $result['email'] ?? null,
+            files: $result['files'] ?? null,
+            frontSide: $result['front_side'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\PassportFile::fromResponseResult($result['front_side'])
+                : null,
+            reverseSide: $result['reverse_side'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\PassportFile::fromResponseResult($result['reverse_side'])
+                : null,
+            selfie: $result['selfie'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\PassportFile::fromResponseResult($result['selfie'])
+                : null,
+            translation: $result['translation'] ?? null,
+        );
+    }
 }

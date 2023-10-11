@@ -18,4 +18,31 @@ class InlineQueryResultsButton implements TypeInterface
         public ?string $startParameter = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'text',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            text: $result['text'],
+            webApp: $result['web_app'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\WebAppInfo::fromResponseResult($result['web_app'])
+                : null,
+            startParameter: $result['start_parameter'] ?? null,
+        );
+    }
 }

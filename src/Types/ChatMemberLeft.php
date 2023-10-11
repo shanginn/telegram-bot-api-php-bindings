@@ -16,4 +16,29 @@ class ChatMemberLeft extends ChatMember
         public User $user,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'status',
+            'user',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            status: $result['status'],
+            user: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['user']),
+        );
+    }
 }

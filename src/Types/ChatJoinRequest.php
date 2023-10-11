@@ -24,4 +24,37 @@ class ChatJoinRequest implements TypeInterface
         public ?ChatInviteLink $inviteLink = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'chat',
+            'from',
+            'user_chat_id',
+            'date',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            chat: \Shanginn\TelegramBotApiBindings\Types\Chat::fromResponseResult($result['chat']),
+            from: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['from']),
+            userChatId: $result['user_chat_id'],
+            date: $result['date'],
+            bio: $result['bio'] ?? null,
+            inviteLink: $result['invite_link'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatInviteLink::fromResponseResult($result['invite_link'])
+                : null,
+        );
+    }
 }

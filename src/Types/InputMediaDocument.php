@@ -26,4 +26,35 @@ class InputMediaDocument extends InputMedia
         public ?bool $disableContentTypeDetection = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'media',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            media: $result['media'],
+            type: $result['type'] ?? 'document',
+            thumbnail: $result['thumbnail'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\InputFile | string::fromResponseResult($result['thumbnail'])
+                : null,
+            caption: $result['caption'] ?? null,
+            parseMode: $result['parse_mode'] ?? null,
+            captionEntities: $result['caption_entities'] ?? null,
+            disableContentTypeDetection: $result['disable_content_type_detection'] ?? null,
+        );
+    }
 }

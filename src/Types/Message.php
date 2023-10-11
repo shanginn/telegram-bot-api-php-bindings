@@ -156,4 +156,184 @@ class Message implements TypeInterface
         public ?InlineKeyboardMarkup $replyMarkup = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'message_id',
+            'date',
+            'chat',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            messageId: $result['message_id'],
+            date: $result['date'],
+            chat: \Shanginn\TelegramBotApiBindings\Types\Chat::fromResponseResult($result['chat']),
+            messageThreadId: $result['message_thread_id'] ?? null,
+            from: $result['from'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['from'])
+                : null,
+            senderChat: $result['sender_chat'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Chat::fromResponseResult($result['sender_chat'])
+                : null,
+            forwardFrom: $result['forward_from'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['forward_from'])
+                : null,
+            forwardFromChat: $result['forward_from_chat'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Chat::fromResponseResult($result['forward_from_chat'])
+                : null,
+            forwardFromMessageId: $result['forward_from_message_id'] ?? null,
+            forwardSignature: $result['forward_signature'] ?? null,
+            forwardSenderName: $result['forward_sender_name'] ?? null,
+            forwardDate: $result['forward_date'] ?? null,
+            isTopicMessage: $result['is_topic_message'] ?? true,
+            isAutomaticForward: $result['is_automatic_forward'] ?? true,
+            replyToMessage: $result['reply_to_message'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['reply_to_message'])
+                : null,
+            viaBot: $result['via_bot'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['via_bot'])
+                : null,
+            editDate: $result['edit_date'] ?? null,
+            hasProtectedContent: $result['has_protected_content'] ?? true,
+            mediaGroupId: $result['media_group_id'] ?? null,
+            authorSignature: $result['author_signature'] ?? null,
+            text: $result['text'] ?? null,
+            entities: $result['entities'] ?? null,
+            animation: $result['animation'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Animation::fromResponseResult($result['animation'])
+                : null,
+            audio: $result['audio'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Audio::fromResponseResult($result['audio'])
+                : null,
+            document: $result['document'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Document::fromResponseResult($result['document'])
+                : null,
+            photo: $result['photo'] ?? null,
+            sticker: $result['sticker'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Sticker::fromResponseResult($result['sticker'])
+                : null,
+            story: $result['story'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Story::fromResponseResult($result['story'])
+                : null,
+            video: $result['video'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Video::fromResponseResult($result['video'])
+                : null,
+            videoNote: $result['video_note'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\VideoNote::fromResponseResult($result['video_note'])
+                : null,
+            voice: $result['voice'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Voice::fromResponseResult($result['voice'])
+                : null,
+            caption: $result['caption'] ?? null,
+            captionEntities: $result['caption_entities'] ?? null,
+            hasMediaSpoiler: $result['has_media_spoiler'] ?? true,
+            contact: $result['contact'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Contact::fromResponseResult($result['contact'])
+                : null,
+            dice: $result['dice'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Dice::fromResponseResult($result['dice'])
+                : null,
+            game: $result['game'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Game::fromResponseResult($result['game'])
+                : null,
+            poll: $result['poll'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Poll::fromResponseResult($result['poll'])
+                : null,
+            venue: $result['venue'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Venue::fromResponseResult($result['venue'])
+                : null,
+            location: $result['location'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Location::fromResponseResult($result['location'])
+                : null,
+            newChatMembers: $result['new_chat_members'] ?? null,
+            leftChatMember: $result['left_chat_member'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['left_chat_member'])
+                : null,
+            newChatTitle: $result['new_chat_title'] ?? null,
+            newChatPhoto: $result['new_chat_photo'] ?? null,
+            deleteChatPhoto: $result['delete_chat_photo'] ?? true,
+            groupChatCreated: $result['group_chat_created'] ?? true,
+            supergroupChatCreated: $result['supergroup_chat_created'] ?? true,
+            channelChatCreated: $result['channel_chat_created'] ?? true,
+            messageAutoDeleteTimerChanged: $result['message_auto_delete_timer_changed'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\MessageAutoDeleteTimerChanged::fromResponseResult($result['message_auto_delete_timer_changed'])
+                : null,
+            migrateToChatId: $result['migrate_to_chat_id'] ?? null,
+            migrateFromChatId: $result['migrate_from_chat_id'] ?? null,
+            pinnedMessage: $result['pinned_message'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['pinned_message'])
+                : null,
+            invoice: $result['invoice'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\Invoice::fromResponseResult($result['invoice'])
+                : null,
+            successfulPayment: $result['successful_payment'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\SuccessfulPayment::fromResponseResult($result['successful_payment'])
+                : null,
+            userShared: $result['user_shared'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\UserShared::fromResponseResult($result['user_shared'])
+                : null,
+            chatShared: $result['chat_shared'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatShared::fromResponseResult($result['chat_shared'])
+                : null,
+            connectedWebsite: $result['connected_website'] ?? null,
+            writeAccessAllowed: $result['write_access_allowed'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\WriteAccessAllowed::fromResponseResult($result['write_access_allowed'])
+                : null,
+            passportData: $result['passport_data'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\PassportData::fromResponseResult($result['passport_data'])
+                : null,
+            proximityAlertTriggered: $result['proximity_alert_triggered'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ProximityAlertTriggered::fromResponseResult($result['proximity_alert_triggered'])
+                : null,
+            forumTopicCreated: $result['forum_topic_created'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ForumTopicCreated::fromResponseResult($result['forum_topic_created'])
+                : null,
+            forumTopicEdited: $result['forum_topic_edited'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ForumTopicEdited::fromResponseResult($result['forum_topic_edited'])
+                : null,
+            forumTopicClosed: $result['forum_topic_closed'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ForumTopicClosed::fromResponseResult($result['forum_topic_closed'])
+                : null,
+            forumTopicReopened: $result['forum_topic_reopened'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ForumTopicReopened::fromResponseResult($result['forum_topic_reopened'])
+                : null,
+            generalForumTopicHidden: $result['general_forum_topic_hidden'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\GeneralForumTopicHidden::fromResponseResult($result['general_forum_topic_hidden'])
+                : null,
+            generalForumTopicUnhidden: $result['general_forum_topic_unhidden'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\GeneralForumTopicUnhidden::fromResponseResult($result['general_forum_topic_unhidden'])
+                : null,
+            videoChatScheduled: $result['video_chat_scheduled'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\VideoChatScheduled::fromResponseResult($result['video_chat_scheduled'])
+                : null,
+            videoChatStarted: $result['video_chat_started'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\VideoChatStarted::fromResponseResult($result['video_chat_started'])
+                : null,
+            videoChatEnded: $result['video_chat_ended'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\VideoChatEnded::fromResponseResult($result['video_chat_ended'])
+                : null,
+            videoChatParticipantsInvited: $result['video_chat_participants_invited'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\VideoChatParticipantsInvited::fromResponseResult($result['video_chat_participants_invited'])
+                : null,
+            webAppData: $result['web_app_data'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\WebAppData::fromResponseResult($result['web_app_data'])
+                : null,
+            replyMarkup: $result['reply_markup'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup::fromResponseResult($result['reply_markup'])
+                : null,
+        );
+    }
 }

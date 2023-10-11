@@ -18,4 +18,31 @@ class GameHighScore implements TypeInterface
         public int $score,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'position',
+            'user',
+            'score',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            position: $result['position'],
+            user: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['user']),
+            score: $result['score'],
+        );
+    }
 }

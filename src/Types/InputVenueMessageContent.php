@@ -28,4 +28,37 @@ class InputVenueMessageContent extends InputMessageContent
         public ?string $googlePlaceType = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'latitude',
+            'longitude',
+            'title',
+            'address',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            latitude: $result['latitude'],
+            longitude: $result['longitude'],
+            title: $result['title'],
+            address: $result['address'],
+            foursquareId: $result['foursquare_id'] ?? null,
+            foursquareType: $result['foursquare_type'] ?? null,
+            googlePlaceId: $result['google_place_id'] ?? null,
+            googlePlaceType: $result['google_place_type'] ?? null,
+        );
+    }
 }

@@ -52,4 +52,51 @@ class InputInvoiceMessageContent extends InputMessageContent
         public ?bool $isFlexible = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'title',
+            'description',
+            'payload',
+            'provider_token',
+            'currency',
+            'prices',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            title: $result['title'],
+            description: $result['description'],
+            payload: $result['payload'],
+            providerToken: $result['provider_token'],
+            currency: $result['currency'],
+            prices: $result['prices'],
+            maxTipAmount: $result['max_tip_amount'],
+            suggestedTipAmounts: $result['suggested_tip_amounts'] ?? null,
+            providerData: $result['provider_data'] ?? null,
+            photoUrl: $result['photo_url'] ?? null,
+            photoSize: $result['photo_size'] ?? null,
+            photoWidth: $result['photo_width'] ?? null,
+            photoHeight: $result['photo_height'] ?? null,
+            needName: $result['need_name'] ?? null,
+            needPhoneNumber: $result['need_phone_number'] ?? null,
+            needEmail: $result['need_email'] ?? null,
+            needShippingAddress: $result['need_shipping_address'] ?? null,
+            sendPhoneNumberToProvider: $result['send_phone_number_to_provider'] ?? null,
+            sendEmailToProvider: $result['send_email_to_provider'] ?? null,
+            isFlexible: $result['is_flexible'] ?? null,
+        );
+    }
 }

@@ -20,4 +20,33 @@ class ShippingQuery implements TypeInterface
         public ShippingAddress $shippingAddress,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'id',
+            'from',
+            'invoice_payload',
+            'shipping_address',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            id: $result['id'],
+            from: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['from']),
+            invoicePayload: $result['invoice_payload'],
+            shippingAddress: \Shanginn\TelegramBotApiBindings\Types\ShippingAddress::fromResponseResult($result['shipping_address']),
+        );
+    }
 }

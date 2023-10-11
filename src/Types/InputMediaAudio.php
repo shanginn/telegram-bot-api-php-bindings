@@ -30,4 +30,37 @@ class InputMediaAudio extends InputMedia
         public ?string $title = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'media',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            media: $result['media'],
+            type: $result['type'] ?? 'audio',
+            thumbnail: $result['thumbnail'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\InputFile | string::fromResponseResult($result['thumbnail'])
+                : null,
+            caption: $result['caption'] ?? null,
+            parseMode: $result['parse_mode'] ?? null,
+            captionEntities: $result['caption_entities'] ?? null,
+            duration: $result['duration'] ?? null,
+            performer: $result['performer'] ?? null,
+            title: $result['title'] ?? null,
+        );
+    }
 }

@@ -18,4 +18,31 @@ class ProximityAlertTriggered implements TypeInterface
         public int $distance,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'traveler',
+            'watcher',
+            'distance',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            traveler: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['traveler']),
+            watcher: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['watcher']),
+            distance: $result['distance'],
+        );
+    }
 }

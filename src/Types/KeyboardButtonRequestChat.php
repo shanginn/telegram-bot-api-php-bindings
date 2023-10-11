@@ -28,4 +28,39 @@ class KeyboardButtonRequestChat implements TypeInterface
         public ?bool $botIsMember = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'request_id',
+            'chat_is_channel',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            requestId: $result['request_id'],
+            chatIsChannel: $result['chat_is_channel'],
+            chatIsForum: $result['chat_is_forum'] ?? null,
+            chatHasUsername: $result['chat_has_username'] ?? null,
+            chatIsCreated: $result['chat_is_created'] ?? null,
+            userAdministratorRights: $result['user_administrator_rights'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatAdministratorRights::fromResponseResult($result['user_administrator_rights'])
+                : null,
+            botAdministratorRights: $result['bot_administrator_rights'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\ChatAdministratorRights::fromResponseResult($result['bot_administrator_rights'])
+                : null,
+            botIsMember: $result['bot_is_member'] ?? null,
+        );
+    }
 }

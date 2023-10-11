@@ -48,4 +48,61 @@ class ChatMemberRestricted extends ChatMember
         public int $untilDate,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'status',
+            'user',
+            'is_member',
+            'can_send_messages',
+            'can_send_audios',
+            'can_send_documents',
+            'can_send_photos',
+            'can_send_videos',
+            'can_send_video_notes',
+            'can_send_voice_notes',
+            'can_send_polls',
+            'can_send_other_messages',
+            'can_add_web_page_previews',
+            'can_change_info',
+            'can_invite_users',
+            'can_pin_messages',
+            'can_manage_topics',
+            'until_date',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            status: $result['status'],
+            user: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['user']),
+            isMember: $result['is_member'],
+            canSendMessages: $result['can_send_messages'],
+            canSendAudios: $result['can_send_audios'],
+            canSendDocuments: $result['can_send_documents'],
+            canSendPhotos: $result['can_send_photos'],
+            canSendVideos: $result['can_send_videos'],
+            canSendVideoNotes: $result['can_send_video_notes'],
+            canSendVoiceNotes: $result['can_send_voice_notes'],
+            canSendPolls: $result['can_send_polls'],
+            canSendOtherMessages: $result['can_send_other_messages'],
+            canAddWebPagePreviews: $result['can_add_web_page_previews'],
+            canChangeInfo: $result['can_change_info'],
+            canInviteUsers: $result['can_invite_users'],
+            canPinMessages: $result['can_pin_messages'],
+            canManageTopics: $result['can_manage_topics'],
+            untilDate: $result['until_date'],
+        );
+    }
 }

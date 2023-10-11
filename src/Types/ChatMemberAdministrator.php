@@ -50,4 +50,55 @@ class ChatMemberAdministrator extends ChatMember
         public ?string $customTitle = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'status',
+            'user',
+            'can_be_edited',
+            'is_anonymous',
+            'can_manage_chat',
+            'can_delete_messages',
+            'can_manage_video_chats',
+            'can_restrict_members',
+            'can_promote_members',
+            'can_change_info',
+            'can_invite_users',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            status: $result['status'],
+            user: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['user']),
+            canBeEdited: $result['can_be_edited'],
+            isAnonymous: $result['is_anonymous'],
+            canManageChat: $result['can_manage_chat'],
+            canDeleteMessages: $result['can_delete_messages'],
+            canManageVideoChats: $result['can_manage_video_chats'],
+            canRestrictMembers: $result['can_restrict_members'],
+            canPromoteMembers: $result['can_promote_members'],
+            canChangeInfo: $result['can_change_info'],
+            canInviteUsers: $result['can_invite_users'],
+            canPostMessages: $result['can_post_messages'] ?? null,
+            canEditMessages: $result['can_edit_messages'] ?? null,
+            canPinMessages: $result['can_pin_messages'] ?? null,
+            canPostStories: $result['can_post_stories'] ?? null,
+            canEditStories: $result['can_edit_stories'] ?? null,
+            canDeleteStories: $result['can_delete_stories'] ?? null,
+            canManageTopics: $result['can_manage_topics'] ?? null,
+            customTitle: $result['custom_title'] ?? null,
+        );
+    }
 }

@@ -22,4 +22,34 @@ class PassportElementErrorDataField extends PassportElementError
         public string $source = 'data',
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'type',
+            'field_name',
+            'data_hash',
+            'message',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            type: $result['type'],
+            fieldName: $result['field_name'],
+            dataHash: $result['data_hash'],
+            message: $result['message'],
+            source: $result['source'] ?? 'data',
+        );
+    }
 }

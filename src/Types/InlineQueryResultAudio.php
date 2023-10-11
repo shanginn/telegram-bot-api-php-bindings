@@ -34,4 +34,43 @@ class InlineQueryResultAudio extends InlineQueryResult
         public ?InputMessageContent $inputMessageContent = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'id',
+            'audio_url',
+            'title',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            id: $result['id'],
+            audioUrl: $result['audio_url'],
+            title: $result['title'],
+            type: $result['type'] ?? 'audio',
+            caption: $result['caption'] ?? null,
+            parseMode: $result['parse_mode'] ?? null,
+            captionEntities: $result['caption_entities'] ?? null,
+            performer: $result['performer'] ?? null,
+            audioDuration: $result['audio_duration'] ?? null,
+            replyMarkup: $result['reply_markup'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup::fromResponseResult($result['reply_markup'])
+                : null,
+            inputMessageContent: $result['input_message_content'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\InputMessageContent::fromResponseResult($result['input_message_content'])
+                : null,
+        );
+    }
 }

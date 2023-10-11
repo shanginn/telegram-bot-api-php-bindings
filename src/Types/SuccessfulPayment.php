@@ -26,4 +26,39 @@ class SuccessfulPayment implements TypeInterface
         public ?OrderInfo $orderInfo = null,
     ) {
     }
+
+    public static function fromResponseResult(array $result): self
+    {
+        $requiredFields = [
+            'currency',
+            'total_amount',
+            'invoice_payload',
+            'telegram_payment_charge_id',
+            'provider_payment_charge_id',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+        }
+
+        return new self(
+            currency: $result['currency'],
+            totalAmount: $result['total_amount'],
+            invoicePayload: $result['invoice_payload'],
+            telegramPaymentChargeId: $result['telegram_payment_charge_id'],
+            providerPaymentChargeId: $result['provider_payment_charge_id'],
+            shippingOptionId: $result['shipping_option_id'] ?? null,
+            orderInfo: $result['order_info'] !== null
+                ? \Shanginn\TelegramBotApiBindings\Types\OrderInfo::fromResponseResult($result['order_info'])
+                : null,
+        );
+    }
 }
