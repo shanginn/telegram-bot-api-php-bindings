@@ -7,13 +7,13 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class UserProfilePhotos implements TypeInterface
 {
-	/**
-	 * @param int $totalCount Total number of profile pictures the target user has
-	 * @param array<array<PhotoSize>> $photos Requested profile pictures (in up to 4 sizes each)
-	 */
-	public function __construct(
-		public int $totalCount,
-		public array $photos,
-	) {
-	}
+    /**
+     * @param int                     $totalCount Total number of profile pictures the target user has
+     * @param array<array<PhotoSize>> $photos     Requested profile pictures (in up to 4 sizes each)
+     */
+    public function __construct(
+        public int $totalCount,
+        public array $photos,
+    ) {
+    }
 }

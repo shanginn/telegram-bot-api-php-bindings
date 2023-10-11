@@ -7,11 +7,11 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class VideoChatParticipantsInvited implements TypeInterface
 {
-	/**
-	 * @param array<User> $users New members that were invited to the video chat
-	 */
-	public function __construct(
-		public array $users,
-	) {
-	}
+    /**
+     * @param array<User> $users New members that were invited to the video chat
+     */
+    public function __construct(
+        public array $users,
+    ) {
+    }
 }

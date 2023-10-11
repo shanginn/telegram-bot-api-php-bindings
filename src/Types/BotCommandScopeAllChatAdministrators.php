@@ -7,11 +7,11 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class BotCommandScopeAllChatAdministrators extends BotCommandScope
 {
-	/**
-	 * @param string $type Scope type, must be all_chat_administrators
-	 */
-	public function __construct(
-		public string $type = 'all_chat_administrators',
-	) {
-	}
+    /**
+     * @param string $type Scope type, must be all_chat_administrators
+     */
+    public function __construct(
+        public string $type = 'all_chat_administrators',
+    ) {
+    }
 }

@@ -7,11 +7,11 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class InlineKeyboardMarkup implements TypeInterface
 {
-	/**
-	 * @param array<array<InlineKeyboardButton>> $inlineKeyboard Array of button rows, each represented by an Array of InlineKeyboardButton objects
-	 */
-	public function __construct(
-		public array $inlineKeyboard,
-	) {
-	}
+    /**
+     * @param array<array<InlineKeyboardButton>> $inlineKeyboard Array of button rows, each represented by an Array of InlineKeyboardButton objects
+     */
+    public function __construct(
+        public array $inlineKeyboard,
+    ) {
+    }
 }

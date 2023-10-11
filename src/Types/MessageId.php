@@ -7,11 +7,11 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class MessageId implements TypeInterface
 {
-	/**
-	 * @param int $messageId Unique message identifier
-	 */
-	public function __construct(
-		public int $messageId,
-	) {
-	}
+    /**
+     * @param int $messageId Unique message identifier
+     */
+    public function __construct(
+        public int $messageId,
+    ) {
+    }
 }

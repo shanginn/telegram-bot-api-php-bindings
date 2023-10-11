@@ -7,7 +7,7 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class CallbackGame implements TypeInterface
 {
-	public function __construct()
-	{
-	}
+    public function __construct()
+    {
+    }
 }

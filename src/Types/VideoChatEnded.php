@@ -7,11 +7,11 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class VideoChatEnded implements TypeInterface
 {
-	/**
-	 * @param int $duration Video chat duration in seconds
-	 */
-	public function __construct(
-		public int $duration,
-	) {
-	}
+    /**
+     * @param int $duration Video chat duration in seconds
+     */
+    public function __construct(
+        public int $duration,
+    ) {
+    }
 }

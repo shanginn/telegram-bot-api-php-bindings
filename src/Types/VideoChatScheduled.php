@@ -7,11 +7,11 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class VideoChatScheduled implements TypeInterface
 {
-	/**
-	 * @param int $startDate Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator
-	 */
-	public function __construct(
-		public int $startDate,
-	) {
-	}
+    /**
+     * @param int $startDate Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator
+     */
+    public function __construct(
+        public int $startDate,
+    ) {
+    }
 }

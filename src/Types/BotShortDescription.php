@@ -7,11 +7,11 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class BotShortDescription implements TypeInterface
 {
-	/**
-	 * @param string $shortDescription The bot's short description
-	 */
-	public function __construct(
-		public string $shortDescription,
-	) {
-	}
+    /**
+     * @param string $shortDescription The bot's short description
+     */
+    public function __construct(
+        public string $shortDescription,
+    ) {
+    }
 }

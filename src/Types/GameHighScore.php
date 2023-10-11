@@ -7,15 +7,15 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class GameHighScore implements TypeInterface
 {
-	/**
-	 * @param int $position Position in high score table for the game
-	 * @param User $user User
-	 * @param int $score Score
-	 */
-	public function __construct(
-		public int $position,
-		public User $user,
-		public int $score,
-	) {
-	}
+    /**
+     * @param int  $position Position in high score table for the game
+     * @param User $user     User
+     * @param int  $score    Score
+     */
+    public function __construct(
+        public int $position,
+        public User $user,
+        public int $score,
+    ) {
+    }
 }

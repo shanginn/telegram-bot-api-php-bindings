@@ -7,17 +7,17 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class PassportElementErrorUnspecified extends PassportElementError
 {
-	/**
-	 * @param string $type Type of element of the user's Telegram Passport which has the issue
-	 * @param string $elementHash Base64-encoded element hash
-	 * @param string $message Error message
-	 * @param string $source Error source, must be unspecified
-	 */
-	public function __construct(
-		public string $type,
-		public string $elementHash,
-		public string $message,
-		public string $source = 'unspecified',
-	) {
-	}
+    /**
+     * @param string $type        Type of element of the user's Telegram Passport which has the issue
+     * @param string $elementHash Base64-encoded element hash
+     * @param string $message     Error message
+     * @param string $source      Error source, must be unspecified
+     */
+    public function __construct(
+        public string $type,
+        public string $elementHash,
+        public string $message,
+        public string $source = 'unspecified',
+    ) {
+    }
 }

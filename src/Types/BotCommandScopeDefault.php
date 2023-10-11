@@ -7,11 +7,11 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class BotCommandScopeDefault extends BotCommandScope
 {
-	/**
-	 * @param string $type Scope type, must be default
-	 */
-	public function __construct(
-		public string $type = 'default',
-	) {
-	}
+    /**
+     * @param string $type Scope type, must be default
+     */
+    public function __construct(
+        public string $type = 'default',
+    ) {
+    }
 }

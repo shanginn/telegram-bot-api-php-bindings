@@ -7,11 +7,11 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class MenuButtonDefault extends MenuButton
 {
-	/**
-	 * @param string $type Type of the button, must be default
-	 */
-	public function __construct(
-		public string $type = 'default',
-	) {
-	}
+    /**
+     * @param string $type Type of the button, must be default
+     */
+    public function __construct(
+        public string $type = 'default',
+    ) {
+    }
 }

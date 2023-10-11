@@ -7,13 +7,13 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class ChatMemberLeft extends ChatMember
 {
-	/**
-	 * @param string $status The member's status in the chat, always “left”
-	 * @param User $user Information about the user
-	 */
-	public function __construct(
-		public string $status,
-		public User $user,
-	) {
-	}
+    /**
+     * @param string $status The member's status in the chat, always “left”
+     * @param User   $user   Information about the user
+     */
+    public function __construct(
+        public string $status,
+        public User $user,
+    ) {
+    }
 }

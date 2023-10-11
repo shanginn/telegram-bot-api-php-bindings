@@ -7,17 +7,17 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class PassportFile implements TypeInterface
 {
-	/**
-	 * @param string $fileId Identifier for this file, which can be used to download or reuse the file
-	 * @param string $fileUniqueId Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
-	 * @param int $fileSize File size in bytes
-	 * @param int $fileDate Unix time when the file was uploaded
-	 */
-	public function __construct(
-		public string $fileId,
-		public string $fileUniqueId,
-		public int $fileSize,
-		public int $fileDate,
-	) {
-	}
+    /**
+     * @param string $fileId       Identifier for this file, which can be used to download or reuse the file
+     * @param string $fileUniqueId Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
+     * @param int    $fileSize     File size in bytes
+     * @param int    $fileDate     Unix time when the file was uploaded
+     */
+    public function __construct(
+        public string $fileId,
+        public string $fileUniqueId,
+        public int $fileSize,
+        public int $fileDate,
+    ) {
+    }
 }

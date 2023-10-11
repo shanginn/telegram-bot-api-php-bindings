@@ -7,15 +7,15 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  */
 class ProximityAlertTriggered implements TypeInterface
 {
-	/**
-	 * @param User $traveler User that triggered the alert
-	 * @param User $watcher User that set the alert
-	 * @param int $distance The distance between the users
-	 */
-	public function __construct(
-		public User $traveler,
-		public User $watcher,
-		public int $distance,
-	) {
-	}
+    /**
+     * @param User $traveler User that triggered the alert
+     * @param User $watcher  User that set the alert
+     * @param int  $distance The distance between the users
+     */
+    public function __construct(
+        public User $traveler,
+        public User $watcher,
+        public int $distance,
+    ) {
+    }
 }
