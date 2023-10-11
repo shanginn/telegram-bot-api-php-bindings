@@ -73,10 +73,11 @@ class TelegramBotApi
         int $timeout = null,
         array $allowedUpdates = null,
     ): array {
+        $args = get_defined_vars();
         $returnTypes = ["array<Shanginn\TelegramBotApiBindings\Types\Update>"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -102,10 +103,11 @@ class TelegramBotApi
         bool $dropPendingUpdates = null,
         string $secretToken = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -117,10 +119,11 @@ class TelegramBotApi
      */
     public function deleteWebhook(bool $dropPendingUpdates = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -130,10 +133,11 @@ class TelegramBotApi
      */
     public function getWebhookInfo(): WebhookInfo
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\WebhookInfo"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -143,10 +147,11 @@ class TelegramBotApi
      */
     public function getMe(): User
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\User"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -156,10 +161,11 @@ class TelegramBotApi
      */
     public function logOut(): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -169,10 +175,11 @@ class TelegramBotApi
      */
     public function close(): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -205,10 +212,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -231,10 +239,11 @@ class TelegramBotApi
         bool $disableNotification = null,
         bool $protectContent = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -269,10 +278,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): MessageId {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\MessageId"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -307,10 +317,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -352,10 +363,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -392,10 +404,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -440,10 +453,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -486,10 +500,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -524,10 +539,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -560,10 +576,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -590,10 +607,11 @@ class TelegramBotApi
         int $replyToMessageId = null,
         bool $allowSendingWithoutReply = null,
     ): array {
+        $args = get_defined_vars();
         $returnTypes = ["array<Shanginn\TelegramBotApiBindings\Types\Message>"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -630,10 +648,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -674,10 +693,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -710,10 +730,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -762,10 +783,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -792,10 +814,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -810,10 +833,11 @@ class TelegramBotApi
      */
     public function sendChatAction(int|string $chatId, string $action, int $messageThreadId = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -827,10 +851,11 @@ class TelegramBotApi
      */
     public function getUserProfilePhotos(int $userId, int $offset = null, ?int $limit = 100): UserProfilePhotos
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\UserProfilePhotos"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -842,10 +867,11 @@ class TelegramBotApi
      */
     public function getFile(string $fileId): File
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\File"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -864,10 +890,11 @@ class TelegramBotApi
         int $untilDate = null,
         bool $revokeMessages = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -881,10 +908,11 @@ class TelegramBotApi
      */
     public function unbanChatMember(int|string $chatId, int $userId, bool $onlyIfBanned = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -905,10 +933,11 @@ class TelegramBotApi
         bool $useIndependentChatPermissions = null,
         int $untilDate = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -953,10 +982,11 @@ class TelegramBotApi
         bool $canDeleteStories = null,
         bool $canManageTopics = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -970,10 +1000,11 @@ class TelegramBotApi
      */
     public function setChatAdministratorCustomTitle(int|string $chatId, int $userId, string $customTitle): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -986,10 +1017,11 @@ class TelegramBotApi
      */
     public function banChatSenderChat(int|string $chatId, int $senderChatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1002,10 +1034,11 @@ class TelegramBotApi
      */
     public function unbanChatSenderChat(int|string $chatId, int $senderChatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1022,10 +1055,11 @@ class TelegramBotApi
         ChatPermissions $permissions,
         bool $useIndependentChatPermissions = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1037,10 +1071,11 @@ class TelegramBotApi
      */
     public function exportChatInviteLink(int|string $chatId): string
     {
+        $args = get_defined_vars();
         $returnTypes = ['string'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1061,10 +1096,11 @@ class TelegramBotApi
         int $memberLimit = null,
         bool $createsJoinRequest = null,
     ): ChatInviteLink {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\ChatInviteLink"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1087,10 +1123,11 @@ class TelegramBotApi
         int $memberLimit = null,
         bool $createsJoinRequest = null,
     ): ChatInviteLink {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\ChatInviteLink"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1103,10 +1140,11 @@ class TelegramBotApi
      */
     public function revokeChatInviteLink(int|string $chatId, string $inviteLink): ChatInviteLink
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\ChatInviteLink"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1119,10 +1157,11 @@ class TelegramBotApi
      */
     public function approveChatJoinRequest(int|string $chatId, int $userId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1135,10 +1174,11 @@ class TelegramBotApi
      */
     public function declineChatJoinRequest(int|string $chatId, int $userId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1151,10 +1191,11 @@ class TelegramBotApi
      */
     public function setChatPhoto(int|string $chatId, InputFile $photo): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1166,10 +1207,11 @@ class TelegramBotApi
      */
     public function deleteChatPhoto(int|string $chatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1182,10 +1224,11 @@ class TelegramBotApi
      */
     public function setChatTitle(int|string $chatId, string $title): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1198,10 +1241,11 @@ class TelegramBotApi
      */
     public function setChatDescription(int|string $chatId, string $description = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1215,10 +1259,11 @@ class TelegramBotApi
      */
     public function pinChatMessage(int|string $chatId, int $messageId, bool $disableNotification = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1231,10 +1276,11 @@ class TelegramBotApi
      */
     public function unpinChatMessage(int|string $chatId, int $messageId = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1246,10 +1292,11 @@ class TelegramBotApi
      */
     public function unpinAllChatMessages(int|string $chatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1261,10 +1308,11 @@ class TelegramBotApi
      */
     public function leaveChat(int|string $chatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1276,10 +1324,11 @@ class TelegramBotApi
      */
     public function getChat(int|string $chatId): Chat
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Chat"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1293,10 +1342,11 @@ class TelegramBotApi
      */
     public function getChatAdministrators(int|string $chatId): array
     {
+        $args = get_defined_vars();
         $returnTypes = ["array<Shanginn\TelegramBotApiBindings\Types\ChatMember>"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1308,10 +1358,11 @@ class TelegramBotApi
      */
     public function getChatMemberCount(int|string $chatId): int
     {
+        $args = get_defined_vars();
         $returnTypes = ['int'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1324,10 +1375,11 @@ class TelegramBotApi
      */
     public function getChatMember(int|string $chatId, int $userId): ChatMember
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\ChatMember"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1340,10 +1392,11 @@ class TelegramBotApi
      */
     public function setChatStickerSet(int|string $chatId, string $stickerSetName): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1355,10 +1408,11 @@ class TelegramBotApi
      */
     public function deleteChatStickerSet(int|string $chatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1370,10 +1424,11 @@ class TelegramBotApi
      */
     public function getForumTopicIconStickers(): array
     {
+        $args = get_defined_vars();
         $returnTypes = ["array<Shanginn\TelegramBotApiBindings\Types\Sticker>"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1392,10 +1447,11 @@ class TelegramBotApi
         int $iconColor = null,
         string $iconCustomEmojiId = null,
     ): ForumTopic {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\ForumTopic"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1414,10 +1470,11 @@ class TelegramBotApi
         string $name = null,
         string $iconCustomEmojiId = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1430,10 +1487,11 @@ class TelegramBotApi
      */
     public function closeForumTopic(int|string $chatId, int $messageThreadId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1446,10 +1504,11 @@ class TelegramBotApi
      */
     public function reopenForumTopic(int|string $chatId, int $messageThreadId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1462,10 +1521,11 @@ class TelegramBotApi
      */
     public function deleteForumTopic(int|string $chatId, int $messageThreadId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1478,10 +1538,11 @@ class TelegramBotApi
      */
     public function unpinAllForumTopicMessages(int|string $chatId, int $messageThreadId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1494,10 +1555,11 @@ class TelegramBotApi
      */
     public function editGeneralForumTopic(int|string $chatId, string $name): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1509,10 +1571,11 @@ class TelegramBotApi
      */
     public function closeGeneralForumTopic(int|string $chatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1524,10 +1587,11 @@ class TelegramBotApi
      */
     public function reopenGeneralForumTopic(int|string $chatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1539,10 +1603,11 @@ class TelegramBotApi
      */
     public function hideGeneralForumTopic(int|string $chatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1554,10 +1619,11 @@ class TelegramBotApi
      */
     public function unhideGeneralForumTopic(int|string $chatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1569,10 +1635,11 @@ class TelegramBotApi
      */
     public function unpinAllGeneralForumTopicMessages(int|string $chatId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1593,10 +1660,11 @@ class TelegramBotApi
         string $url = null,
         int $cacheTime = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1610,10 +1678,11 @@ class TelegramBotApi
      */
     public function setMyCommands(array $commands, BotCommandScope $scope = null, string $languageCode = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1626,10 +1695,11 @@ class TelegramBotApi
      */
     public function deleteMyCommands(BotCommandScope $scope = null, string $languageCode = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1644,10 +1714,11 @@ class TelegramBotApi
      */
     public function getMyCommands(BotCommandScope $scope = null, string $languageCode = null): array
     {
+        $args = get_defined_vars();
         $returnTypes = ["array<Shanginn\TelegramBotApiBindings\Types\BotCommand>"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1660,10 +1731,11 @@ class TelegramBotApi
      */
     public function setMyName(string $name = null, string $languageCode = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1675,10 +1747,11 @@ class TelegramBotApi
      */
     public function getMyName(string $languageCode = null): BotName
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\BotName"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1691,10 +1764,11 @@ class TelegramBotApi
      */
     public function setMyDescription(string $description = null, string $languageCode = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1706,10 +1780,11 @@ class TelegramBotApi
      */
     public function getMyDescription(string $languageCode = null): BotDescription
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\BotDescription"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1722,10 +1797,11 @@ class TelegramBotApi
      */
     public function setMyShortDescription(string $shortDescription = null, string $languageCode = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1737,10 +1813,11 @@ class TelegramBotApi
      */
     public function getMyShortDescription(string $languageCode = null): BotShortDescription
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\BotShortDescription"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1753,10 +1830,11 @@ class TelegramBotApi
      */
     public function setChatMenuButton(int $chatId = null, MenuButton $menuButton = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1768,10 +1846,11 @@ class TelegramBotApi
      */
     public function getChatMenuButton(int $chatId = null): MenuButton
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\MenuButton"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1786,10 +1865,11 @@ class TelegramBotApi
         ChatAdministratorRights $rights = null,
         bool $forChannels = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1801,10 +1881,11 @@ class TelegramBotApi
      */
     public function getMyDefaultAdministratorRights(bool $forChannels = null): ChatAdministratorRights
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\ChatAdministratorRights"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1831,10 +1912,11 @@ class TelegramBotApi
         bool $disableWebPagePreview = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): Message|bool {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1859,10 +1941,11 @@ class TelegramBotApi
         array $captionEntities = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): Message|bool {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1883,10 +1966,11 @@ class TelegramBotApi
         string $inlineMessageId = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): Message|bool {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1915,10 +1999,11 @@ class TelegramBotApi
         int $proximityAlertRadius = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): Message|bool {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1937,10 +2022,11 @@ class TelegramBotApi
         string $inlineMessageId = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): Message|bool {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1959,10 +2045,11 @@ class TelegramBotApi
         string $inlineMessageId = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): Message|bool {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1976,10 +2063,11 @@ class TelegramBotApi
      */
     public function stopPoll(int|string $chatId, int $messageId, InlineKeyboardMarkup $replyMarkup = null): Poll
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Poll"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -1992,10 +2080,11 @@ class TelegramBotApi
      */
     public function deleteMessage(int|string $chatId, int $messageId): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2024,10 +2113,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2039,10 +2129,11 @@ class TelegramBotApi
      */
     public function getStickerSet(string $name): StickerSet
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\StickerSet"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2056,10 +2147,11 @@ class TelegramBotApi
      */
     public function getCustomEmojiStickers(array $customEmojiIds): array
     {
+        $args = get_defined_vars();
         $returnTypes = ["array<Shanginn\TelegramBotApiBindings\Types\Sticker>"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2073,10 +2165,11 @@ class TelegramBotApi
      */
     public function uploadStickerFile(int $userId, InputFile $sticker, string $stickerFormat): File
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\File"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2101,10 +2194,11 @@ class TelegramBotApi
         string $stickerType = null,
         bool $needsRepainting = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2118,10 +2212,11 @@ class TelegramBotApi
      */
     public function addStickerToSet(int $userId, string $name, InputSticker $sticker): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2134,10 +2229,11 @@ class TelegramBotApi
      */
     public function setStickerPositionInSet(string $sticker, int $position): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2149,10 +2245,11 @@ class TelegramBotApi
      */
     public function deleteStickerFromSet(string $sticker): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2165,10 +2262,11 @@ class TelegramBotApi
      */
     public function setStickerEmojiList(string $sticker, array $emojiList): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2181,10 +2279,11 @@ class TelegramBotApi
      */
     public function setStickerKeywords(string $sticker, array $keywords = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2197,10 +2296,11 @@ class TelegramBotApi
      */
     public function setStickerMaskPosition(string $sticker, MaskPosition $maskPosition = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2213,10 +2313,11 @@ class TelegramBotApi
      */
     public function setStickerSetTitle(string $name, string $title): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2230,10 +2331,11 @@ class TelegramBotApi
      */
     public function setStickerSetThumbnail(string $name, int $userId, InputFile|string $thumbnail = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2246,10 +2348,11 @@ class TelegramBotApi
      */
     public function setCustomEmojiStickerSetThumbnail(string $name, string $customEmojiId = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2261,10 +2364,11 @@ class TelegramBotApi
      */
     public function deleteStickerSet(string $name): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2287,10 +2391,11 @@ class TelegramBotApi
         string $nextOffset = null,
         InlineQueryResultsButton $button = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2303,10 +2408,11 @@ class TelegramBotApi
      */
     public function answerWebAppQuery(string $webAppQueryId, InlineQueryResult $result): SentWebAppMessage
     {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\SentWebAppMessage"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2373,10 +2479,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2427,10 +2534,11 @@ class TelegramBotApi
         bool $sendEmailToProvider = null,
         bool $isFlexible = null,
     ): string {
+        $args = get_defined_vars();
         $returnTypes = ['string'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2449,10 +2557,11 @@ class TelegramBotApi
         array $shippingOptions = null,
         string $errorMessage = null,
     ): bool {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2466,10 +2575,11 @@ class TelegramBotApi
      */
     public function answerPreCheckoutQuery(string $preCheckoutQueryId, bool $ok, string $errorMessage = null): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2483,10 +2593,11 @@ class TelegramBotApi
      */
     public function setPassportDataErrors(int $userId, array $errors): bool
     {
+        $args = get_defined_vars();
         $returnTypes = ['bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2513,10 +2624,11 @@ class TelegramBotApi
         bool $allowSendingWithoutReply = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): Message {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2541,10 +2653,11 @@ class TelegramBotApi
         int $messageId = null,
         string $inlineMessageId = null,
     ): Message|bool {
+        $args = get_defined_vars();
         $returnTypes = ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool'];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
@@ -2565,10 +2678,11 @@ class TelegramBotApi
         int $messageId = null,
         string $inlineMessageId = null,
     ): array {
+        $args = get_defined_vars();
         $returnTypes = ["array<Shanginn\TelegramBotApiBindings\Types\GameHighScore>"];
 
         return $this->client->convertResponseToType(
-            $this->client->sendRequest(__FUNCTION__, get_defined_vars()),
+            $this->client->sendRequest(__FUNCTION__, $args),
             $returnTypes
         );
     }
