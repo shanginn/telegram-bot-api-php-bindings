@@ -24,37 +24,4 @@ class InlineQuery implements TypeInterface
         public ?Location $location = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'id',
-            'from',
-            'query',
-            'offset',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            id: $result['id'],
-            from: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['from']),
-            query: $result['query'],
-            offset: $result['offset'],
-            chatType: $result['chat_type'] ?? null,
-            location: ($result['location'] ?? null) !== null
-                ? \Shanginn\TelegramBotApiBindings\Types\Location::fromResponseResult($result['location'])
-                : null,
-        );
-    }
 }

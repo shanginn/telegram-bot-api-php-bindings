@@ -20,32 +20,4 @@ class ChatMemberOwner extends ChatMember
         public ?string $customTitle = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'status',
-            'user',
-            'is_anonymous',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            status: $result['status'],
-            user: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['user']),
-            isAnonymous: $result['is_anonymous'],
-            customTitle: $result['custom_title'] ?? null,
-        );
-    }
 }

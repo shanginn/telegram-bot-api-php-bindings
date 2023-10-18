@@ -22,30 +22,4 @@ class SwitchInlineQueryChosenChat implements TypeInterface
         public ?bool $allowChannelChats = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            query: $result['query'] ?? null,
-            allowUserChats: $result['allow_user_chats'] ?? null,
-            allowBotChats: $result['allow_bot_chats'] ?? null,
-            allowGroupChats: $result['allow_group_chats'] ?? null,
-            allowChannelChats: $result['allow_channel_chats'] ?? null,
-        );
-    }
 }

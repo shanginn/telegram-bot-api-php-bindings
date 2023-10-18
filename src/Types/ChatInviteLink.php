@@ -30,39 +30,4 @@ class ChatInviteLink implements TypeInterface
         public ?int $pendingJoinRequestCount = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'invite_link',
-            'creator',
-            'creates_join_request',
-            'is_primary',
-            'is_revoked',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            inviteLink: $result['invite_link'],
-            creator: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['creator']),
-            createsJoinRequest: $result['creates_join_request'],
-            isPrimary: $result['is_primary'],
-            isRevoked: $result['is_revoked'],
-            name: $result['name'] ?? null,
-            expireDate: $result['expire_date'] ?? null,
-            memberLimit: $result['member_limit'] ?? null,
-            pendingJoinRequestCount: $result['pending_join_request_count'] ?? null,
-        );
-    }
 }

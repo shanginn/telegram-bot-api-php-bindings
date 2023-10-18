@@ -38,46 +38,4 @@ class Poll implements TypeInterface
         public ?int $closeDate = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'id',
-            'question',
-            'options',
-            'total_voter_count',
-            'is_closed',
-            'is_anonymous',
-            'type',
-            'allows_multiple_answers',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            id: $result['id'],
-            question: $result['question'],
-            options: $result['options'],
-            totalVoterCount: $result['total_voter_count'],
-            isClosed: $result['is_closed'],
-            isAnonymous: $result['is_anonymous'],
-            type: $result['type'],
-            allowsMultipleAnswers: $result['allows_multiple_answers'],
-            correctOptionId: $result['correct_option_id'] ?? null,
-            explanation: $result['explanation'] ?? null,
-            explanationEntities: $result['explanation_entities'] ?? null,
-            openPeriod: $result['open_period'] ?? null,
-            closeDate: $result['close_date'] ?? null,
-        );
-    }
 }

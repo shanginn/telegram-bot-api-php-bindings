@@ -16,29 +16,4 @@ class PassportData implements TypeInterface
         public EncryptedCredentials $credentials,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'data',
-            'credentials',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            data: $result['data'],
-            credentials: \Shanginn\TelegramBotApiBindings\Types\EncryptedCredentials::fromResponseResult($result['credentials']),
-        );
-    }
 }

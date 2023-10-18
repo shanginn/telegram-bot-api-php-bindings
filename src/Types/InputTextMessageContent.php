@@ -20,30 +20,4 @@ class InputTextMessageContent extends InputMessageContent
         public ?bool $disableWebPagePreview = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'message_text',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            messageText: $result['message_text'],
-            parseMode: $result['parse_mode'] ?? null,
-            entities: $result['entities'] ?? null,
-            disableWebPagePreview: $result['disable_web_page_preview'] ?? null,
-        );
-    }
 }

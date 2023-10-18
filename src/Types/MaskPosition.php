@@ -20,33 +20,4 @@ class MaskPosition implements TypeInterface
         public float $scale,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'point',
-            'x_shift',
-            'y_shift',
-            'scale',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            point: $result['point'],
-            xShift: $result['x_shift'],
-            yShift: $result['y_shift'],
-            scale: $result['scale'],
-        );
-    }
 }

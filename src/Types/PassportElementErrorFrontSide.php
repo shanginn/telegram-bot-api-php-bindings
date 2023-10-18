@@ -20,32 +20,4 @@ class PassportElementErrorFrontSide extends PassportElementError
         public string $source = 'front_side',
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'type',
-            'file_hash',
-            'message',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            type: $result['type'],
-            fileHash: $result['file_hash'],
-            message: $result['message'],
-            source: $result['source'] ?? 'front_side',
-        );
-    }
 }

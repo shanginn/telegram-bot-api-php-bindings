@@ -22,34 +22,4 @@ class PhotoSize implements TypeInterface
         public ?int $fileSize = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'file_id',
-            'file_unique_id',
-            'width',
-            'height',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            fileId: $result['file_id'],
-            fileUniqueId: $result['file_unique_id'],
-            width: $result['width'],
-            height: $result['height'],
-            fileSize: $result['file_size'] ?? null,
-        );
-    }
 }

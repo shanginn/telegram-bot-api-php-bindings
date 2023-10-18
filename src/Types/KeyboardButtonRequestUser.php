@@ -18,29 +18,4 @@ class KeyboardButtonRequestUser implements TypeInterface
         public ?bool $userIsPremium = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'request_id',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            requestId: $result['request_id'],
-            userIsBot: $result['user_is_bot'] ?? null,
-            userIsPremium: $result['user_is_premium'] ?? null,
-        );
-    }
 }

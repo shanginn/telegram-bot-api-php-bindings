@@ -24,32 +24,4 @@ class ReplyKeyboardMarkup implements TypeInterface
         public ?bool $selective = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'keyboard',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            keyboard: $result['keyboard'],
-            isPersistent: $result['is_persistent'] ?? null,
-            resizeKeyboard: $result['resize_keyboard'] ?? null,
-            oneTimeKeyboard: $result['one_time_keyboard'] ?? null,
-            inputFieldPlaceholder: $result['input_field_placeholder'] ?? null,
-            selective: $result['selective'] ?? null,
-        );
-    }
 }

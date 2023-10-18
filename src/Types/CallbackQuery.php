@@ -26,37 +26,4 @@ class CallbackQuery implements TypeInterface
         public ?string $gameShortName = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'id',
-            'from',
-            'chat_instance',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            id: $result['id'],
-            from: \Shanginn\TelegramBotApiBindings\Types\User::fromResponseResult($result['from']),
-            chatInstance: $result['chat_instance'],
-            message: ($result['message'] ?? null) !== null
-                ? \Shanginn\TelegramBotApiBindings\Types\Message::fromResponseResult($result['message'])
-                : null,
-            inlineMessageId: $result['inline_message_id'] ?? null,
-            data: $result['data'] ?? null,
-            gameShortName: $result['game_short_name'] ?? null,
-        );
-    }
 }

@@ -24,33 +24,4 @@ class InputLocationMessageContent extends InputMessageContent
         public ?int $proximityAlertRadius = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'latitude',
-            'longitude',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            latitude: $result['latitude'],
-            longitude: $result['longitude'],
-            horizontalAccuracy: $result['horizontal_accuracy'] ?? null,
-            livePeriod: $result['live_period'] ?? null,
-            heading: $result['heading'] ?? null,
-            proximityAlertRadius: $result['proximity_alert_radius'] ?? null,
-        );
-    }
 }

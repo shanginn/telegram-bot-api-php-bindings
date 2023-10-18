@@ -20,32 +20,4 @@ class PassportElementErrorUnspecified extends PassportElementError
         public string $source = 'unspecified',
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'type',
-            'element_hash',
-            'message',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            type: $result['type'],
-            elementHash: $result['element_hash'],
-            message: $result['message'],
-            source: $result['source'] ?? 'unspecified',
-        );
-    }
 }

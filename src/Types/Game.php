@@ -24,36 +24,4 @@ class Game implements TypeInterface
         public ?Animation $animation = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'title',
-            'description',
-            'photo',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            title: $result['title'],
-            description: $result['description'],
-            photo: $result['photo'],
-            text: $result['text'] ?? null,
-            textEntities: $result['text_entities'] ?? null,
-            animation: ($result['animation'] ?? null) !== null
-                ? \Shanginn\TelegramBotApiBindings\Types\Animation::fromResponseResult($result['animation'])
-                : null,
-        );
-    }
 }

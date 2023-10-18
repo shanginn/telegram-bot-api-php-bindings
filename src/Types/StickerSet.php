@@ -26,40 +26,4 @@ class StickerSet implements TypeInterface
         public ?PhotoSize $thumbnail = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'name',
-            'title',
-            'sticker_type',
-            'is_animated',
-            'is_video',
-            'stickers',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            name: $result['name'],
-            title: $result['title'],
-            stickerType: $result['sticker_type'],
-            isAnimated: $result['is_animated'],
-            isVideo: $result['is_video'],
-            stickers: $result['stickers'],
-            thumbnail: ($result['thumbnail'] ?? null) !== null
-                ? \Shanginn\TelegramBotApiBindings\Types\PhotoSize::fromResponseResult($result['thumbnail'])
-                : null,
-        );
-    }
 }

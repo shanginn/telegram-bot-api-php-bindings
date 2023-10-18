@@ -22,32 +22,4 @@ class Contact implements TypeInterface
         public ?string $vcard = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'phone_number',
-            'first_name',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            phoneNumber: $result['phone_number'],
-            firstName: $result['first_name'],
-            lastName: $result['last_name'] ?? null,
-            userId: $result['user_id'] ?? null,
-            vcard: $result['vcard'] ?? null,
-        );
-    }
 }

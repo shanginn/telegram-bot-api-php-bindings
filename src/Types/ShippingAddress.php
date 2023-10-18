@@ -24,37 +24,4 @@ class ShippingAddress implements TypeInterface
         public string $postCode,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'country_code',
-            'state',
-            'city',
-            'street_line1',
-            'street_line2',
-            'post_code',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            countryCode: $result['country_code'],
-            state: $result['state'],
-            city: $result['city'],
-            streetLine1: $result['street_line1'],
-            streetLine2: $result['street_line2'],
-            postCode: $result['post_code'],
-        );
-    }
 }

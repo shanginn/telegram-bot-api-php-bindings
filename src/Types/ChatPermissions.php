@@ -40,39 +40,4 @@ class ChatPermissions implements TypeInterface
         public ?bool $canManageTopics = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            canSendMessages: $result['can_send_messages'] ?? null,
-            canSendAudios: $result['can_send_audios'] ?? null,
-            canSendDocuments: $result['can_send_documents'] ?? null,
-            canSendPhotos: $result['can_send_photos'] ?? null,
-            canSendVideos: $result['can_send_videos'] ?? null,
-            canSendVideoNotes: $result['can_send_video_notes'] ?? null,
-            canSendVoiceNotes: $result['can_send_voice_notes'] ?? null,
-            canSendPolls: $result['can_send_polls'] ?? null,
-            canSendOtherMessages: $result['can_send_other_messages'] ?? null,
-            canAddWebPagePreviews: $result['can_add_web_page_previews'] ?? null,
-            canChangeInfo: $result['can_change_info'] ?? null,
-            canInviteUsers: $result['can_invite_users'] ?? null,
-            canPinMessages: $result['can_pin_messages'] ?? null,
-            canManageTopics: $result['can_manage_topics'] ?? null,
-        );
-    }
 }

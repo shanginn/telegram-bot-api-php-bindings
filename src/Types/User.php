@@ -34,39 +34,4 @@ class User implements TypeInterface
         public ?bool $supportsInlineQueries = null,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'id',
-            'is_bot',
-            'first_name',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            id: $result['id'],
-            isBot: $result['is_bot'],
-            firstName: $result['first_name'],
-            lastName: $result['last_name'] ?? null,
-            username: $result['username'] ?? null,
-            languageCode: $result['language_code'] ?? null,
-            isPremium: $result['is_premium'] ?? null,
-            addedToAttachmentMenu: $result['added_to_attachment_menu'] ?? null,
-            canJoinGroups: $result['can_join_groups'] ?? null,
-            canReadAllGroupMessages: $result['can_read_all_group_messages'] ?? null,
-            supportsInlineQueries: $result['supports_inline_queries'] ?? null,
-        );
-    }
 }

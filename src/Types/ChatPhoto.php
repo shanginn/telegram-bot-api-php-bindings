@@ -20,33 +20,4 @@ class ChatPhoto implements TypeInterface
         public string $bigFileUniqueId,
     ) {
     }
-
-    public static function fromResponseResult(array $result): self
-    {
-        $requiredFields = [
-            'small_file_id',
-            'small_file_unique_id',
-            'big_file_id',
-            'big_file_unique_id',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
-        return new self(
-            smallFileId: $result['small_file_id'],
-            smallFileUniqueId: $result['small_file_unique_id'],
-            bigFileId: $result['big_file_id'],
-            bigFileUniqueId: $result['big_file_unique_id'],
-        );
-    }
 }
