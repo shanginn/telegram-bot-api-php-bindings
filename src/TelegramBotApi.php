@@ -50,6 +50,7 @@ class TelegramBotApi implements TelegramBotApiInterface
 {
     public function __construct(
         protected TelegramBotApiClientInterface $client,
+        protected TelegramBotApiSerializerInterface $serializer,
     ) {
     }
 
@@ -58,9 +59,9 @@ class TelegramBotApi implements TelegramBotApiInterface
         return $this->client
             ->sendRequest(
                 $method,
-                $this->client->serialize($args)
+                $this->serializer->serialize($args)
             )
-            ->then(fn ($response) => $this->client->deserialize(
+            ->then(fn ($response) => $this->serializer->deserialize(
                 $response,
                 $returnTypes
             ));
