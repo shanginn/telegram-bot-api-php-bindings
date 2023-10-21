@@ -398,7 +398,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             mediaGroupId: $data['media_group_id'] ?? null,
             authorSignature: $data['author_signature'] ?? null,
             text: $data['text'] ?? null,
-            entities: $data['entities'] ?? null,
+            entities: ($data['entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['entities'])
+                : null,
             animation: ($data['animation'] ?? null) !== null
                 ? $this->denormalizeAnimation($data['animation'])
                 : null,
@@ -408,7 +410,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             document: ($data['document'] ?? null) !== null
                 ? $this->denormalizeDocument($data['document'])
                 : null,
-            photo: $data['photo'] ?? null,
+            photo: ($data['photo'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizePhotoSize($item), $data['photo'])
+                : null,
             sticker: ($data['sticker'] ?? null) !== null
                 ? $this->denormalizeSticker($data['sticker'])
                 : null,
@@ -425,7 +429,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 ? $this->denormalizeVoice($data['voice'])
                 : null,
             caption: $data['caption'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             hasMediaSpoiler: $data['has_media_spoiler'] ?? null,
             contact: ($data['contact'] ?? null) !== null
                 ? $this->denormalizeContact($data['contact'])
@@ -445,12 +451,16 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             location: ($data['location'] ?? null) !== null
                 ? $this->denormalizeLocation($data['location'])
                 : null,
-            newChatMembers: $data['new_chat_members'] ?? null,
+            newChatMembers: ($data['new_chat_members'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeUser($item), $data['new_chat_members'])
+                : null,
             leftChatMember: ($data['left_chat_member'] ?? null) !== null
                 ? $this->denormalizeUser($data['left_chat_member'])
                 : null,
             newChatTitle: $data['new_chat_title'] ?? null,
-            newChatPhoto: $data['new_chat_photo'] ?? null,
+            newChatPhoto: ($data['new_chat_photo'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizePhotoSize($item), $data['new_chat_photo'])
+                : null,
             deleteChatPhoto: $data['delete_chat_photo'] ?? null,
             groupChatCreated: $data['group_chat_created'] ?? null,
             supergroupChatCreated: $data['supergroup_chat_created'] ?? null,
@@ -954,7 +964,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new Poll(
             id: $data['id'],
             question: $data['question'],
-            options: $data['options'],
+            options: array_map(fn (array $item) => $this->denormalizePollOption($item), $data['options']),
             totalVoterCount: $data['total_voter_count'],
             isClosed: $data['is_closed'],
             isAnonymous: $data['is_anonymous'],
@@ -962,7 +972,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             allowsMultipleAnswers: $data['allows_multiple_answers'],
             correctOptionId: $data['correct_option_id'] ?? null,
             explanation: $data['explanation'] ?? null,
-            explanationEntities: $data['explanation_entities'] ?? null,
+            explanationEntities: ($data['explanation_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['explanation_entities'])
+                : null,
             openPeriod: $data['open_period'] ?? null,
             closeDate: $data['close_date'] ?? null,
         );
@@ -1286,7 +1298,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         return new VideoChatParticipantsInvited(
-            users: $data['users'],
+            users: array_map(fn (array $item) => $this->denormalizeUser($item), $data['users']),
         );
     }
 
@@ -1311,7 +1323,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
         return new UserProfilePhotos(
             totalCount: $data['total_count'],
-            photos: $data['photos'],
+            photos: array_map(
+                fn (array $item0) => array_map(
+                    fn (array $item1) => $this->denormalizePhotoSize($item1),
+                    $item0
+                ),
+                $data['photos']
+            ),
         );
     }
 
@@ -1384,7 +1402,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         return new ReplyKeyboardMarkup(
-            keyboard: $data['keyboard'],
+            keyboard: array_map(
+                fn (array $item0) => array_map(
+                    fn (array $item1) => $this->denormalizeKeyboardButton($item1),
+                    $item0
+                ),
+                $data['keyboard']
+            ),
             isPersistent: $data['is_persistent'] ?? null,
             resizeKeyboard: $data['resize_keyboard'] ?? null,
             oneTimeKeyboard: $data['one_time_keyboard'] ?? null,
@@ -1524,7 +1548,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         return new InlineKeyboardMarkup(
-            inlineKeyboard: $data['inline_keyboard'],
+            inlineKeyboard: array_map(
+                fn (array $item0) => array_map(
+                    fn (array $item1) => $this->denormalizeInlineKeyboardButton($item1),
+                    $item0
+                ),
+                $data['inline_keyboard']
+            ),
         );
     }
 
@@ -2396,7 +2426,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             type: $data['type'] ?? 'photo',
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             hasSpoiler: $data['has_spoiler'] ?? null,
         );
     }
@@ -2427,7 +2459,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             width: $data['width'] ?? null,
             height: $data['height'] ?? null,
             duration: $data['duration'] ?? null,
@@ -2462,7 +2496,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             width: $data['width'] ?? null,
             height: $data['height'] ?? null,
             duration: $data['duration'] ?? null,
@@ -2496,7 +2532,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             duration: $data['duration'] ?? null,
             performer: $data['performer'] ?? null,
             title: $data['title'] ?? null,
@@ -2529,7 +2567,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             disableContentTypeDetection: $data['disable_content_type_detection'] ?? null,
         );
     }
@@ -2617,7 +2657,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             stickerType: $data['sticker_type'],
             isAnimated: $data['is_animated'],
             isVideo: $data['is_video'],
-            stickers: $data['stickers'],
+            stickers: array_map(fn (array $item) => $this->denormalizeSticker($item), $data['stickers']),
             thumbnail: ($data['thumbnail'] ?? null) !== null
                 ? $this->denormalizePhotoSize($data['thumbnail'])
                 : null,
@@ -2815,7 +2855,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             description: $data['description'] ?? null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -2857,7 +2899,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             title: $data['title'] ?? null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -2899,7 +2943,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             title: $data['title'] ?? null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -2940,7 +2986,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             type: $data['type'] ?? 'video',
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             videoWidth: $data['video_width'] ?? null,
             videoHeight: $data['video_height'] ?? null,
             videoDuration: $data['video_duration'] ?? null,
@@ -2981,7 +3029,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             type: $data['type'] ?? 'audio',
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             performer: $data['performer'] ?? null,
             audioDuration: $data['audio_duration'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
@@ -3020,7 +3070,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             type: $data['type'] ?? 'voice',
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             voiceDuration: $data['voice_duration'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
@@ -3060,7 +3112,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             type: $data['type'] ?? 'document',
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             description: $data['description'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
@@ -3257,7 +3311,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             description: $data['description'] ?? null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -3293,7 +3349,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             title: $data['title'] ?? null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -3329,7 +3387,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             title: $data['title'] ?? null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -3399,7 +3459,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             description: $data['description'] ?? null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -3437,7 +3499,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             description: $data['description'] ?? null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -3474,7 +3538,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             type: $data['type'] ?? 'voice',
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -3509,7 +3575,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             type: $data['type'] ?? 'audio',
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
-            captionEntities: $data['caption_entities'] ?? null,
+            captionEntities: ($data['caption_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
+                : null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -3545,7 +3613,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new InputTextMessageContent(
             messageText: $data['message_text'],
             parseMode: $data['parse_mode'] ?? null,
-            entities: $data['entities'] ?? null,
+            entities: ($data['entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['entities'])
+                : null,
             disableWebPagePreview: $data['disable_web_page_preview'] ?? null,
         );
     }
@@ -3668,7 +3738,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             payload: $data['payload'],
             providerToken: $data['provider_token'],
             currency: $data['currency'],
-            prices: $data['prices'],
+            prices: array_map(fn (array $item) => $this->denormalizeLabeledPrice($item), $data['prices']),
             maxTipAmount: $data['max_tip_amount'] ?? null,
             suggestedTipAmounts: $data['suggested_tip_amounts'] ?? null,
             providerData: $data['provider_data'] ?? null,
@@ -3848,7 +3918,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new ShippingOption(
             id: $data['id'],
             title: $data['title'],
-            prices: $data['prices'],
+            prices: array_map(fn (array $item) => $this->denormalizeLabeledPrice($item), $data['prices']),
         );
     }
 
@@ -3971,7 +4041,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         return new PassportData(
-            data: $data['data'],
+            data: array_map(fn (array $item) => $this->denormalizeEncryptedPassportElement($item), $data['data']),
             credentials: $this->denormalizeEncryptedCredentials($data['credentials']),
         );
     }
@@ -4030,7 +4100,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             data: $data['data'] ?? null,
             phoneNumber: $data['phone_number'] ?? null,
             email: $data['email'] ?? null,
-            files: $data['files'] ?? null,
+            files: ($data['files'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizePassportFile($item), $data['files'])
+                : null,
             frontSide: ($data['front_side'] ?? null) !== null
                 ? $this->denormalizePassportFile($data['front_side'])
                 : null,
@@ -4040,7 +4112,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             selfie: ($data['selfie'] ?? null) !== null
                 ? $this->denormalizePassportFile($data['selfie'])
                 : null,
-            translation: $data['translation'] ?? null,
+            translation: ($data['translation'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizePassportFile($item), $data['translation'])
+                : null,
         );
     }
 
@@ -4353,9 +4427,11 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new Game(
             title: $data['title'],
             description: $data['description'],
-            photo: $data['photo'],
+            photo: array_map(fn (array $item) => $this->denormalizePhotoSize($item), $data['photo']),
             text: $data['text'] ?? null,
-            textEntities: $data['text_entities'] ?? null,
+            textEntities: ($data['text_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['text_entities'])
+                : null,
             animation: ($data['animation'] ?? null) !== null
                 ? $this->denormalizeAnimation($data['animation'])
                 : null,
@@ -4401,9 +4477,11 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function deserialize(string $data, array $types): mixed
     {
-        $response = json_decode($data, true);
+        $decoded = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
 
-        return $this->denormalize($response, $types);
+        return is_array($decoded)
+            ? $this->denormalize($decoded, $types)
+            : $decoded;
     }
 
     public function denormalize(array $data, array $types): mixed
@@ -4411,12 +4489,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         foreach ($types as $type) {
             if (class_exists($type) && is_subclass_of($type, TypeInterface::class)) {
                 return $this->denormalizeType($data, $type);
-            } elseif ($type === 'bool') {
-                return (bool) $data;
-            } elseif ($type === 'int') {
-                return (int) $data;
-            } elseif ($type === 'string') {
-                return (string) $data;
             } elseif (str_starts_with($type, 'array<')) {
                 preg_match('/array<(.+)>/', $type, $matches);
                 $innerType = $matches[1];
