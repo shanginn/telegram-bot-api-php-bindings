@@ -4403,22 +4403,27 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
     {
         $response = json_decode($data, true);
 
+        return $this->denormalize($response, $types);
+    }
+
+    public function denormalize(array $data, array $types): mixed
+    {
         foreach ($types as $type) {
             if (class_exists($type) && is_subclass_of($type, TypeInterface::class)) {
-                return $this->denormalizeType($response, $type);
+                return $this->denormalizeType($data, $type);
             } elseif ($type === 'bool') {
-                return (bool) $response;
+                return (bool) $data;
             } elseif ($type === 'int') {
-                return (int) $response;
+                return (int) $data;
             } elseif ($type === 'string') {
-                return (string) $response;
+                return (string) $data;
             } elseif (str_starts_with($type, 'array<')) {
                 preg_match('/array<(.+)>/', $type, $matches);
                 $innerType = $matches[1];
                 $resultArray = [];
 
-                foreach ($response as $item) {
-                    $resultArray[] = $this->deserialize($item, [$innerType]);
+                foreach ($data as $item) {
+                    $resultArray[] = $this->denormalize($item, [$innerType]);
                 }
 
                 return $resultArray;
