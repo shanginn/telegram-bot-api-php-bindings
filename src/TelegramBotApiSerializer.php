@@ -1136,21 +1136,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeForumTopicEdited(array $data): ForumTopicEdited
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new ForumTopicEdited(
             name: $data['name'] ?? null,
             iconCustomEmojiId: $data['icon_custom_emoji_id'] ?? null,
@@ -1224,21 +1209,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeWriteAccessAllowed(array $data): WriteAccessAllowed
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new WriteAccessAllowed(
             fromRequest: $data['from_request'] ?? null,
             webAppName: $data['web_app_name'] ?? null,
@@ -1522,21 +1492,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeKeyboardButtonPollType(array $data): KeyboardButtonPollType
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new KeyboardButtonPollType(
             type: $data['type'] ?? null,
         );
@@ -1544,21 +1499,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeReplyKeyboardRemove(array $data): ReplyKeyboardRemove
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new ReplyKeyboardRemove(
             removeKeyboard: $data['remove_keyboard'] ?? true,
             selective: $data['selective'] ?? null,
@@ -1656,21 +1596,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeSwitchInlineQueryChosenChat(array $data): SwitchInlineQueryChosenChat
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new SwitchInlineQueryChosenChat(
             query: $data['query'] ?? null,
             allowUserChats: $data['allow_user_chats'] ?? null,
@@ -1715,21 +1640,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeForceReply(array $data): ForceReply
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new ForceReply(
             forceReply: $data['force_reply'] ?? true,
             inputFieldPlaceholder: $data['input_field_placeholder'] ?? null,
@@ -1847,7 +1757,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeChatMember(array $data): Types\ChatMember
     {
-        return new ChatMember();
+        throw new \RuntimeException('class ChatMember is abstract and not yet implemented');
     }
 
     public function denormalizeChatMemberOwner(array $data): ChatMemberOwner
@@ -2133,21 +2043,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeChatPermissions(array $data): ChatPermissions
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new ChatPermissions(
             canSendMessages: $data['can_send_messages'] ?? null,
             canSendAudios: $data['can_send_audios'] ?? null,
@@ -2246,26 +2141,11 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeBotCommandScope(array $data): Types\BotCommandScope
     {
-        return new BotCommandScope();
+        throw new \RuntimeException('class BotCommandScope is abstract and not yet implemented');
     }
 
     public function denormalizeBotCommandScopeDefault(array $data): BotCommandScopeDefault
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new BotCommandScopeDefault(
             type: $data['type'] ?? 'default',
         );
@@ -2273,21 +2153,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeBotCommandScopeAllPrivateChats(array $data): BotCommandScopeAllPrivateChats
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new BotCommandScopeAllPrivateChats(
             type: $data['type'] ?? 'all_private_chats',
         );
@@ -2295,21 +2160,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeBotCommandScopeAllGroupChats(array $data): BotCommandScopeAllGroupChats
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new BotCommandScopeAllGroupChats(
             type: $data['type'] ?? 'all_group_chats',
         );
@@ -2317,21 +2167,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeBotCommandScopeAllChatAdministrators(array $data): BotCommandScopeAllChatAdministrators
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new BotCommandScopeAllChatAdministrators(
             type: $data['type'] ?? 'all_chat_administrators',
         );
@@ -2356,7 +2191,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         return new BotCommandScopeChat(
-            chatId: $this->denormalizeint | string($data['chat_id']),
+            chatId: $data['chat_id'],
             type: $data['type'] ?? 'chat',
         );
     }
@@ -2380,7 +2215,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         return new BotCommandScopeChatAdministrators(
-            chatId: $this->denormalizeint | string($data['chat_id']),
+            chatId: $data['chat_id'],
             type: $data['type'] ?? 'chat_administrators',
         );
     }
@@ -2405,7 +2240,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         return new BotCommandScopeChatMember(
-            chatId: $this->denormalizeint | string($data['chat_id']),
+            chatId: $data['chat_id'],
             userId: $data['user_id'],
             type: $data['type'] ?? 'chat_member',
         );
@@ -2482,26 +2317,11 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeMenuButton(array $data): Types\MenuButton
     {
-        return new MenuButton();
+        throw new \RuntimeException('class MenuButton is abstract and not yet implemented');
     }
 
     public function denormalizeMenuButtonCommands(array $data): MenuButtonCommands
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new MenuButtonCommands(
             type: $data['type'] ?? 'commands',
         );
@@ -2535,21 +2355,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeMenuButtonDefault(array $data): MenuButtonDefault
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new MenuButtonDefault(
             type: $data['type'] ?? 'default',
         );
@@ -2557,21 +2362,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeResponseParameters(array $data): ResponseParameters
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new ResponseParameters(
             migrateToChatId: $data['migrate_to_chat_id'] ?? null,
             retryAfter: $data['retry_after'] ?? null,
@@ -2580,7 +2370,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeInputMedia(array $data): Types\InputMedia
     {
-        return new InputMedia();
+        throw new \RuntimeException('class InputMedia is abstract and not yet implemented');
     }
 
     public function denormalizeInputMediaPhoto(array $data): InputMediaPhoto
@@ -2633,7 +2423,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             media: $data['media'],
             type: $data['type'] ?? 'video',
             thumbnail: ($data['thumbnail'] ?? null) !== null
-                ? $this->denormalizeInputFile | string($data['thumbnail'])
+                ? $this->denormalizeInputFile($data['thumbnail'])
                 : null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
@@ -2668,7 +2458,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             media: $data['media'],
             type: $data['type'] ?? 'animation',
             thumbnail: ($data['thumbnail'] ?? null) !== null
-                ? $this->denormalizeInputFile | string($data['thumbnail'])
+                ? $this->denormalizeInputFile($data['thumbnail'])
                 : null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
@@ -2702,7 +2492,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             media: $data['media'],
             type: $data['type'] ?? 'audio',
             thumbnail: ($data['thumbnail'] ?? null) !== null
-                ? $this->denormalizeInputFile | string($data['thumbnail'])
+                ? $this->denormalizeInputFile($data['thumbnail'])
                 : null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
@@ -2735,7 +2525,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             media: $data['media'],
             type: $data['type'] ?? 'document',
             thumbnail: ($data['thumbnail'] ?? null) !== null
-                ? $this->denormalizeInputFile | string($data['thumbnail'])
+                ? $this->denormalizeInputFile($data['thumbnail'])
                 : null,
             caption: $data['caption'] ?? null,
             parseMode: $data['parse_mode'] ?? null,
@@ -2883,7 +2673,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         return new InputSticker(
-            sticker: $this->denormalizeInputFile | string($data['sticker']),
+            sticker: $this->denormalizeInputFile($data['sticker']),
             emojiList: $data['emoji_list'],
             maskPosition: ($data['mask_position'] ?? null) !== null
                 ? $this->denormalizeMaskPosition($data['mask_position'])
@@ -2954,7 +2744,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeInlineQueryResult(array $data): Types\InlineQueryResult
     {
-        return new InlineQueryResult();
+        throw new \RuntimeException('class InlineQueryResult is abstract and not yet implemented');
     }
 
     public function denormalizeInlineQueryResultArticle(array $data): InlineQueryResultArticle
@@ -3731,7 +3521,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeInputMessageContent(array $data): Types\InputMessageContent
     {
-        return new InputMessageContent();
+        throw new \RuntimeException('class InputMessageContent is abstract and not yet implemented');
     }
 
     public function denormalizeInputTextMessageContent(array $data): InputTextMessageContent
@@ -3929,21 +3719,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeSentWebAppMessage(array $data): SentWebAppMessage
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new SentWebAppMessage(
             inlineMessageId: $data['inline_message_id'] ?? null,
         );
@@ -4040,21 +3815,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeOrderInfo(array $data): OrderInfo
     {
-        $requiredFields = [
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
-        }
-
         return new OrderInfo(
             name: $data['name'] ?? null,
             phoneNumber: $data['phone_number'] ?? null,
@@ -4313,7 +4073,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizePassportElementError(array $data): Types\PassportElementError
     {
-        return new PassportElementError();
+        throw new \RuntimeException('class PassportElementError is abstract and not yet implemented');
     }
 
     public function denormalizePassportElementErrorDataField(array $data): PassportElementErrorDataField
@@ -4642,6 +4402,30 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
     public function deserialize(string $data, array $types): mixed
     {
         $response = json_decode($data, true);
+
+        foreach ($types as $type) {
+            if (class_exists($type) && is_subclass_of($type, TypeInterface::class)) {
+                return $this->denormalizeType($response, $type);
+            } elseif ($type === 'bool') {
+                return (bool) $response;
+            } elseif ($type === 'int') {
+                return (int) $response;
+            } elseif ($type === 'string') {
+                return (string) $response;
+            } elseif (str_starts_with($type, 'array<')) {
+                preg_match('/array<(.+)>/', $type, $matches);
+                $innerType = $matches[1];
+                $resultArray = [];
+
+                foreach ($response as $item) {
+                    $resultArray[] = $this->deserialize($item, [$innerType]);
+                }
+
+                return $resultArray;
+            }
+        }
+
+        throw new \UnexpectedValueException(sprintf('Failed to decode response to any of the expected types: %s', implode(', ', $types)));
     }
 
     private function denormalizeType(array $data, string $type): TypeInterface
@@ -4799,6 +4583,26 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
     private function normalize(array $data): array
     {
         $result = [];
+
+        foreach ($data as $key => $value) {
+            if (is_null($value)) {
+                continue;
+            }
+
+            $snakeKey = $this->camelToSnake($key);
+
+            if ($value instanceof TypeInterface) {
+                $value = get_object_vars($value);
+            }
+
+            if (is_array($value)) {
+                $result[$snakeKey] = json_encode($this->normalize($value));
+            } else {
+                $result[$snakeKey] = $value;
+            }
+        }
+
+        return $result;
     }
 
     private function camelToSnake(string $input): string
