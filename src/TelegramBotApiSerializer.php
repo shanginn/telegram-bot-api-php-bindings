@@ -160,13 +160,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Update missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Update(
@@ -227,13 +227,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class WebhookInfo missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new WebhookInfo(
@@ -260,13 +260,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class User missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new User(
@@ -294,13 +294,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Chat missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Chat(
@@ -355,13 +355,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Message missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Message(
@@ -533,13 +533,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class MessageId missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new MessageId(
@@ -558,13 +558,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class MessageEntity missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new MessageEntity(
@@ -592,13 +592,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PhotoSize missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PhotoSize(
@@ -623,13 +623,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Animation missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Animation(
@@ -658,13 +658,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Audio missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Audio(
@@ -692,13 +692,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Document missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Document(
@@ -731,13 +731,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Video missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Video(
@@ -767,13 +767,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class VideoNote missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new VideoNote(
@@ -799,13 +799,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Voice missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Voice(
@@ -827,13 +827,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Contact missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Contact(
@@ -855,13 +855,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Dice missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Dice(
@@ -880,13 +880,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PollOption missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PollOption(
@@ -905,13 +905,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PollAnswer missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PollAnswer(
@@ -942,13 +942,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Poll missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Poll(
@@ -978,13 +978,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Location missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Location(
@@ -1008,13 +1008,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Venue missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Venue(
@@ -1038,13 +1038,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class WebAppData missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new WebAppData(
@@ -1064,13 +1064,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ProximityAlertTriggered missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ProximityAlertTriggered(
@@ -1089,13 +1089,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class MessageAutoDeleteTimerChanged missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new MessageAutoDeleteTimerChanged(
@@ -1113,13 +1113,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ForumTopicCreated missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ForumTopicCreated(
@@ -1167,13 +1167,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class UserShared missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new UserShared(
@@ -1192,13 +1192,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatShared missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatShared(
@@ -1225,13 +1225,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class VideoChatScheduled missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new VideoChatScheduled(
@@ -1253,13 +1253,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class VideoChatEnded missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new VideoChatEnded(
@@ -1276,13 +1276,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class VideoChatParticipantsInvited missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new VideoChatParticipantsInvited(
@@ -1300,13 +1300,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class UserProfilePhotos missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new UserProfilePhotos(
@@ -1325,13 +1325,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class File missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new File(
@@ -1351,13 +1351,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class WebAppInfo missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new WebAppInfo(
@@ -1374,13 +1374,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ReplyKeyboardMarkup missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ReplyKeyboardMarkup(
@@ -1402,13 +1402,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class KeyboardButton missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new KeyboardButton(
@@ -1439,13 +1439,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class KeyboardButtonRequestUser missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new KeyboardButtonRequestUser(
@@ -1465,13 +1465,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class KeyboardButtonRequestChat missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new KeyboardButtonRequestChat(
@@ -1514,13 +1514,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineKeyboardMarkup missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineKeyboardMarkup(
@@ -1537,13 +1537,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineKeyboardButton missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineKeyboardButton(
@@ -1577,13 +1577,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class LoginUrl missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new LoginUrl(
@@ -1616,13 +1616,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class CallbackQuery missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new CallbackQuery(
@@ -1659,13 +1659,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatPhoto missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatPhoto(
@@ -1689,13 +1689,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatInviteLink missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatInviteLink(
@@ -1727,13 +1727,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatAdministratorRights missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatAdministratorRights(
@@ -1771,13 +1771,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatMemberOwner missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatMemberOwner(
@@ -1807,13 +1807,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatMemberAdministrator missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatMemberAdministrator(
@@ -1849,13 +1849,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatMemberMember missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatMemberMember(
@@ -1890,13 +1890,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatMemberRestricted missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatMemberRestricted(
@@ -1931,13 +1931,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatMemberLeft missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatMemberLeft(
@@ -1957,13 +1957,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatMemberBanned missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatMemberBanned(
@@ -1986,13 +1986,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatMemberUpdated missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatMemberUpdated(
@@ -2020,13 +2020,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatJoinRequest missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatJoinRequest(
@@ -2071,13 +2071,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChatLocation missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChatLocation(
@@ -2097,13 +2097,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ForumTopic missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ForumTopic(
@@ -2124,13 +2124,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class BotCommand missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new BotCommand(
@@ -2181,13 +2181,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class BotCommandScopeChat missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new BotCommandScopeChat(
@@ -2205,13 +2205,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class BotCommandScopeChatAdministrators missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new BotCommandScopeChatAdministrators(
@@ -2230,13 +2230,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class BotCommandScopeChatMember missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new BotCommandScopeChatMember(
@@ -2255,13 +2255,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class BotName missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new BotName(
@@ -2278,13 +2278,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class BotDescription missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new BotDescription(
@@ -2301,13 +2301,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class BotShortDescription missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new BotShortDescription(
@@ -2337,13 +2337,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class MenuButtonWebApp missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new MenuButtonWebApp(
@@ -2382,13 +2382,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputMediaPhoto missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputMediaPhoto(
@@ -2410,13 +2410,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputMediaVideo missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputMediaVideo(
@@ -2445,13 +2445,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputMediaAnimation missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputMediaAnimation(
@@ -2479,13 +2479,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputMediaAudio missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputMediaAudio(
@@ -2512,13 +2512,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputMediaDocument missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputMediaDocument(
@@ -2554,13 +2554,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Sticker missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Sticker(
@@ -2602,13 +2602,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class StickerSet missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new StickerSet(
@@ -2636,13 +2636,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class MaskPosition missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new MaskPosition(
@@ -2663,13 +2663,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputSticker missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputSticker(
@@ -2694,13 +2694,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQuery missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQuery(
@@ -2724,13 +2724,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultsButton missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultsButton(
@@ -2758,13 +2758,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultArticle missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultArticle(
@@ -2795,13 +2795,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultPhoto missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultPhoto(
@@ -2836,13 +2836,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultGif missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultGif(
@@ -2878,13 +2878,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultMpeg4Gif missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultMpeg4Gif(
@@ -2922,13 +2922,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultVideo missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultVideo(
@@ -2965,13 +2965,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultAudio missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultAudio(
@@ -3004,13 +3004,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultVoice missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultVoice(
@@ -3043,13 +3043,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultDocument missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultDocument(
@@ -3086,13 +3086,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultLocation missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultLocation(
@@ -3130,13 +3130,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultVenue missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultVenue(
@@ -3173,13 +3173,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultContact missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultContact(
@@ -3211,13 +3211,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultGame missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultGame(
@@ -3240,13 +3240,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultCachedPhoto missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultCachedPhoto(
@@ -3277,13 +3277,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultCachedGif missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultCachedGif(
@@ -3313,13 +3313,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultCachedMpeg4Gif missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultCachedMpeg4Gif(
@@ -3349,13 +3349,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultCachedSticker missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultCachedSticker(
@@ -3382,13 +3382,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultCachedDocument missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultCachedDocument(
@@ -3420,13 +3420,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultCachedVideo missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultCachedVideo(
@@ -3458,13 +3458,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultCachedVoice missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultCachedVoice(
@@ -3494,13 +3494,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InlineQueryResultCachedAudio missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InlineQueryResultCachedAudio(
@@ -3533,13 +3533,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputTextMessageContent missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputTextMessageContent(
@@ -3560,13 +3560,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputLocationMessageContent missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputLocationMessageContent(
@@ -3591,13 +3591,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputVenueMessageContent missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputVenueMessageContent(
@@ -3622,13 +3622,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputContactMessageContent missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputContactMessageContent(
@@ -3653,13 +3653,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class InputInvoiceMessageContent missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new InputInvoiceMessageContent(
@@ -3697,13 +3697,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ChosenInlineResult missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ChosenInlineResult(
@@ -3734,13 +3734,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class LabeledPrice missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new LabeledPrice(
@@ -3762,13 +3762,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Invoice missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Invoice(
@@ -3794,13 +3794,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ShippingAddress missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ShippingAddress(
@@ -3836,13 +3836,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ShippingOption missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ShippingOption(
@@ -3865,13 +3865,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class SuccessfulPayment missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new SuccessfulPayment(
@@ -3899,13 +3899,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class ShippingQuery missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new ShippingQuery(
@@ -3929,13 +3929,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PreCheckoutQuery missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PreCheckoutQuery(
@@ -3961,13 +3961,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportData missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportData(
@@ -3988,13 +3988,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportFile missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportFile(
@@ -4015,13 +4015,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class EncryptedPassportElement missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new EncryptedPassportElement(
@@ -4055,13 +4055,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class EncryptedCredentials missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new EncryptedCredentials(
@@ -4088,13 +4088,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportElementErrorDataField missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportElementErrorDataField(
@@ -4117,13 +4117,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportElementErrorFrontSide missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportElementErrorFrontSide(
@@ -4145,13 +4145,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportElementErrorReverseSide missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportElementErrorReverseSide(
@@ -4173,13 +4173,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportElementErrorSelfie missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportElementErrorSelfie(
@@ -4201,13 +4201,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportElementErrorFile missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportElementErrorFile(
@@ -4229,13 +4229,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportElementErrorFiles missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportElementErrorFiles(
@@ -4257,13 +4257,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportElementErrorTranslationFile missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportElementErrorTranslationFile(
@@ -4285,13 +4285,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportElementErrorTranslationFiles missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportElementErrorTranslationFiles(
@@ -4313,13 +4313,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class PassportElementErrorUnspecified missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new PassportElementErrorUnspecified(
@@ -4341,13 +4341,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class Game missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new Game(
@@ -4378,13 +4378,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         $missingFields = [];
 
         foreach ($requiredFields as $field) {
-            if (!isset($result[$field])) {
+            if (!isset($data[$field])) {
                 $missingFields[] = $field;
             }
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class %s missing some fields from the result array: %s', static::class, implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class GameHighScore missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
         return new GameHighScore(
