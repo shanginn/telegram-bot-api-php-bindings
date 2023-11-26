@@ -4673,7 +4673,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             }
 
             if (is_array($value)) {
-                $result[$snakeKey] = json_encode($this->normalize($value));
+                $result[$snakeKey] = $this->normalize($value);
             } else {
                 $result[$snakeKey] = $value;
             }

@@ -1,7 +1,7 @@
 {
     "name": "shanginn/telegram-bot-api-bindings",
     "description": "Low level type-safe PHP bindings for the Telegram Bot API",
-    "version": "0.8.0",
+    "version": "0.9.0",
     "type": "library",
     "license": "MIT",
     "autoload": {
