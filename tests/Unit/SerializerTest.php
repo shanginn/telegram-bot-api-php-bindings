@@ -1,6 +1,7 @@
 <?php
 
 use Shanginn\TelegramBotApiBindings\TelegramBotApiSerializer;
+use Shanginn\TelegramBotApiBindings\Types\ChatMemberMember;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardButton;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup;
 
@@ -46,4 +47,55 @@ test('InlineKeyboardMarkup is a valid json', function () {
     ]);
 
     expect($json)->toBe(json_encode($arrayKeyboard));
+});
+
+test('abstract ChatMember deserialize into concrete class', function () {
+    $updatesData = [
+        [
+            "update_id" => 1,
+            "my_chat_member" => [
+                "chat" => [
+                    "id" => -1234567890,
+                    "title" => "FakeChatTitle",
+                    "type" => "group",
+                ],
+                "date" => 1600000000,
+                "from" => [
+                    "first_name" => "John",
+                    "id" => 99999999,
+                    "is_bot" => false,
+                    "is_premium" => false,
+                    "language_code" => "en",
+                    "username" => "fakeuser",
+                ],
+                "new_chat_member" => [
+                    "status" => "member",
+                    "user" => [
+                        "first_name" => "Alice",
+                        "id" => 88888888,
+                        "is_bot" => true,
+                        "username" => "fakebot",
+                    ],
+                ],
+                "old_chat_member" => [
+                    "status" => "left",
+                    "user" => [
+                        "first_name" => "Alice",
+                        "id" => 88888888,
+                        "is_bot" => true,
+                        "username" => "fakebot",
+                    ],
+                ],
+            ],
+        ],
+    ];
+
+    $serializer = new TelegramBotApiSerializer();
+    $updates = $serializer->deserialize(
+        data: json_encode($updatesData),
+        types: ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]
+    );
+
+    expect($updates[0]->myChatMember->newChatMember)
+        ->toBeInstanceOf(ChatMemberMember::class);
 });
