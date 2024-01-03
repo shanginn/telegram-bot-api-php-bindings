@@ -4,6 +4,7 @@ use Shanginn\TelegramBotApiBindings\TelegramBotApiSerializer;
 use Shanginn\TelegramBotApiBindings\Types\ChatMemberMember;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardButton;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup;
+use Shanginn\TelegramBotApiBindings\Types\Message;
 
 test('InlineKeyboardMarkup is a valid json', function () {
     $serializer = new TelegramBotApiSerializer();
@@ -52,38 +53,38 @@ test('InlineKeyboardMarkup is a valid json', function () {
 test('abstract ChatMember deserialize into concrete class', function () {
     $updatesData = [
         [
-            "update_id" => 1,
-            "my_chat_member" => [
-                "chat" => [
-                    "id" => -1234567890,
-                    "title" => "FakeChatTitle",
-                    "type" => "group",
+            'update_id' => 1,
+            'my_chat_member' => [
+                'chat' => [
+                    'id' => -1234567890,
+                    'title' => 'FakeChatTitle',
+                    'type' => 'group',
                 ],
-                "date" => 1600000000,
-                "from" => [
-                    "first_name" => "John",
-                    "id" => 99999999,
-                    "is_bot" => false,
-                    "is_premium" => false,
-                    "language_code" => "en",
-                    "username" => "fakeuser",
+                'date' => 1600000000,
+                'from' => [
+                    'first_name' => 'John',
+                    'id' => 99999999,
+                    'is_bot' => false,
+                    'is_premium' => false,
+                    'language_code' => 'en',
+                    'username' => 'fakeuser',
                 ],
-                "new_chat_member" => [
-                    "status" => "member",
-                    "user" => [
-                        "first_name" => "Alice",
-                        "id" => 88888888,
-                        "is_bot" => true,
-                        "username" => "fakebot",
+                'new_chat_member' => [
+                    'status' => 'member',
+                    'user' => [
+                        'first_name' => 'Alice',
+                        'id' => 88888888,
+                        'is_bot' => true,
+                        'username' => 'fakebot',
                     ],
                 ],
-                "old_chat_member" => [
-                    "status" => "left",
-                    "user" => [
-                        "first_name" => "Alice",
-                        "id" => 88888888,
-                        "is_bot" => true,
-                        "username" => "fakebot",
+                'old_chat_member' => [
+                    'status' => 'left',
+                    'user' => [
+                        'first_name' => 'Alice',
+                        'id' => 88888888,
+                        'is_bot' => true,
+                        'username' => 'fakebot',
                     ],
                 ],
             ],
@@ -98,4 +99,58 @@ test('abstract ChatMember deserialize into concrete class', function () {
 
     expect($updates[0]->myChatMember->newChatMember)
         ->toBeInstanceOf(ChatMemberMember::class);
+});
+
+test('abstract MaybeInaccessibleMessage deserialize into concrete class', function () {
+    $updatesData = [
+        [
+            'update_id' => 1,
+            'callback_query' => [
+                'id' => '123456789012345678',
+                'from' => [
+                    'id' => 12345678,
+                    'is_bot' => false,
+                    'first_name' => 'John',
+                    'username' => 'john_doe',
+                    'language_code' => 'en',
+                    'is_premium' => false,
+                ],
+                'message' => [
+                    'message_id' => 12345,
+                    'from' => [
+                        'id' => 9876543210,
+                        'is_bot' => true,
+                        'first_name' => 'Test Bot',
+                        'username' => 'test_bot',
+                    ],
+                    'chat' => [
+                        'id' => 12345678,
+                        'first_name' => 'John',
+                        'username' => 'john_doe',
+                        'type' => 'private',
+                    ],
+                    'date' => 1234567890,
+                    'text' => 'This is a test message',
+                    'reply_markup' => [
+                        'inline_keyboard' => [
+                            [
+                                ['text' => 'Option 1', 'callback_data' => 'option1'],
+                            ],
+                        ],
+                    ],
+                ],
+                'chat_instance' => '-123456789012345678',
+                'data' => 'download:file123',
+            ],
+        ],
+    ];
+
+    $serializer = new TelegramBotApiSerializer();
+    $updates = $serializer->deserialize(
+        data: json_encode($updatesData),
+        types: ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]
+    );
+
+    expect($updates[0]->callbackQuery->message)
+        ->toBeInstanceOf(Message::class);
 });

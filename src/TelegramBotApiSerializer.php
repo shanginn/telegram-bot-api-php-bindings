@@ -645,7 +645,11 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeMaybeInaccessibleMessage(array $data): Types\MaybeInaccessibleMessage
     {
-        throw new \RuntimeException('class MaybeInaccessibleMessage is abstract and not yet implemented');
+        if ($data['date'] === 0) {
+            return $this->denormalizeInaccessibleMessage($data);
+        } else {
+            return $this->denormalizeMessage($data);
+        }
     }
 
     public function denormalizeMessageEntity(array $data): MessageEntity
@@ -2288,7 +2292,15 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeChatMember(array $data): Types\ChatMember
     {
-        throw new \RuntimeException('class ChatMember is abstract and not yet implemented');
+        return match ($data['status']) {
+            'creator' => $this->denormalizeChatMemberOwner($data),
+            'administrator' => $this->denormalizeChatMemberAdministrator($data),
+            'member' => $this->denormalizeChatMemberMember($data),
+            'restricted' => $this->denormalizeChatMemberRestricted($data),
+            'left' => $this->denormalizeChatMemberLeft($data),
+            'banned' => $this->denormalizeChatMemberBanned($data),
+            default => throw new \InvalidArgumentException(sprintf('Invalid status value: %s', $data['status'])),
+        };
     }
 
     public function denormalizeChatMemberOwner(array $data): ChatMemberOwner
