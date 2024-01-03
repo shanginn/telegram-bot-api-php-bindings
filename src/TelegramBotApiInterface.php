@@ -28,6 +28,7 @@ use Shanginn\TelegramBotApiBindings\Types\InputMediaPhoto;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaVideo;
 use Shanginn\TelegramBotApiBindings\Types\InputSticker;
 use Shanginn\TelegramBotApiBindings\Types\LabeledPrice;
+use Shanginn\TelegramBotApiBindings\Types\LinkPreviewOptions;
 use Shanginn\TelegramBotApiBindings\Types\MaskPosition;
 use Shanginn\TelegramBotApiBindings\Types\MenuButton;
 use Shanginn\TelegramBotApiBindings\Types\Message;
@@ -35,14 +36,17 @@ use Shanginn\TelegramBotApiBindings\Types\MessageEntity;
 use Shanginn\TelegramBotApiBindings\Types\MessageId;
 use Shanginn\TelegramBotApiBindings\Types\PassportElementError;
 use Shanginn\TelegramBotApiBindings\Types\Poll;
+use Shanginn\TelegramBotApiBindings\Types\ReactionType;
 use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardMarkup;
 use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardRemove;
+use Shanginn\TelegramBotApiBindings\Types\ReplyParameters;
 use Shanginn\TelegramBotApiBindings\Types\SentWebAppMessage;
 use Shanginn\TelegramBotApiBindings\Types\ShippingOption;
 use Shanginn\TelegramBotApiBindings\Types\Sticker;
 use Shanginn\TelegramBotApiBindings\Types\StickerSet;
 use Shanginn\TelegramBotApiBindings\Types\Update;
 use Shanginn\TelegramBotApiBindings\Types\User;
+use Shanginn\TelegramBotApiBindings\Types\UserChatBoosts;
 use Shanginn\TelegramBotApiBindings\Types\UserProfilePhotos;
 use Shanginn\TelegramBotApiBindings\Types\WebhookInfo;
 
@@ -54,7 +58,7 @@ interface TelegramBotApiInterface
      * @param int|null           $offset         Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. All previous updates will be forgotten.
      * @param int|null           $limit          Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.
      * @param int|null           $timeout        Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.
-     * @param array<string>|null $allowedUpdates A JSON-serialized list of the update types you want your bot to receive. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
+     * @param array<string>|null $allowedUpdates A JSON-serialized list of the update types you want your bot to receive. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member, message_reaction, and message_reaction_count (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
      *
      * @return PromiseInterface<array<Update>>
      */
@@ -73,7 +77,7 @@ interface TelegramBotApiInterface
      * @param InputFile|null     $certificate        Upload your public key certificate so that the root certificate in use can be checked. See our self-signed guide for details.
      * @param string|null        $ipAddress          The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS
      * @param int|null           $maxConnections     The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput.
-     * @param array<string>|null $allowedUpdates     A JSON-serialized list of the update types you want your bot to receive. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+     * @param array<string>|null $allowedUpdates     A JSON-serialized list of the update types you want your bot to receive. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member, message_reaction, and message_reaction_count (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
      * @param bool|null          $dropPendingUpdates Pass True to drop all pending updates
      * @param string|null        $secretToken        A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed. The header is useful to ensure that the request comes from a webhook set by you.
      *
@@ -129,17 +133,16 @@ interface TelegramBotApiInterface
     /**
      * Use this method to send text messages. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param string                                                                       $text                     Text of the message to be sent, 1-4096 characters after entities parsing
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param string|null                                                                  $parseMode                Mode for parsing entities in the message text. See formatting options for more details.
-     * @param array<MessageEntity>|null                                                    $entities                 A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode
-     * @param bool|null                                                                    $disableWebPagePreview    Disables link previews for links in this message
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param string                                                                       $text                Text of the message to be sent, 1-4096 characters after entities parsing
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param string|null                                                                  $parseMode           Mode for parsing entities in the message text. See formatting options for more details.
+     * @param array<MessageEntity>|null                                                    $entities            A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode
+     * @param LinkPreviewOptions|null                                                      $linkPreviewOptions  Link preview generation options for the message
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -149,16 +152,15 @@ interface TelegramBotApiInterface
         int $messageThreadId = null,
         string $parseMode = null,
         array $entities = null,
-        bool $disableWebPagePreview = null,
+        LinkPreviewOptions $linkPreviewOptions = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
-     * Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent Message is returned.
+     * Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
      *
      * @param int|string $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param int|string $fromChatId          Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -179,20 +181,40 @@ interface TelegramBotApiInterface
     ): PromiseInterface;
 
     /**
-     * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int|string                                                                   $fromChatId               Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
-     * @param int                                                                          $messageId                Message identifier in the chat specified in from_chat_id
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param string|null                                                                  $caption                  New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept
-     * @param string|null                                                                  $parseMode                Mode for parsing entities in the new caption. See formatting options for more details.
-     * @param array<MessageEntity>|null                                                    $captionEntities          A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of parse_mode
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|string $fromChatId          Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
+     * @param array<int> $messageIds          Identifiers of 1-100 messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order.
+     * @param int|null   $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param bool|null  $disableNotification Sends the messages silently. Users will receive a notification with no sound.
+     * @param bool|null  $protectContent      Protects the contents of the forwarded messages from forwarding and saving
+     *
+     * @return PromiseInterface<array<MessageId>>
+     */
+    public function forwardMessages(
+        int|string $chatId,
+        int|string $fromChatId,
+        array $messageIds,
+        int $messageThreadId = null,
+        bool $disableNotification = null,
+        bool $protectContent = null,
+    ): PromiseInterface;
+
+    /**
+     * Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     *
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|string                                                                   $fromChatId          Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+     * @param int                                                                          $messageId           Message identifier in the chat specified in from_chat_id
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param string|null                                                                  $caption             New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept
+     * @param string|null                                                                  $parseMode           Mode for parsing entities in the new caption. See formatting options for more details.
+     * @param array<MessageEntity>|null                                                    $captionEntities     A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of parse_mode
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<MessageId>
      */
@@ -206,26 +228,47 @@ interface TelegramBotApiInterface
         array $captionEntities = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+    ): PromiseInterface;
+
+    /**
+     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
+     *
+     * @param int|string $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|string $fromChatId          Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
+     * @param array<int> $messageIds          Identifiers of 1-100 messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order.
+     * @param int|null   $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param bool|null  $disableNotification Sends the messages silently. Users will receive a notification with no sound.
+     * @param bool|null  $protectContent      Protects the contents of the sent messages from forwarding and saving
+     * @param bool|null  $removeCaption       Pass True to copy the messages without their captions
+     *
+     * @return PromiseInterface<array<MessageId>>
+     */
+    public function copyMessages(
+        int|string $chatId,
+        int|string $fromChatId,
+        array $messageIds,
+        int $messageThreadId = null,
+        bool $disableNotification = null,
+        bool $protectContent = null,
+        bool $removeCaption = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send photos. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param InputFile|string                                                             $photo                    Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. More information on Sending Files »
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param string|null                                                                  $caption                  Photo caption (may also be used when resending photos by file_id), 0-1024 characters after entities parsing
-     * @param string|null                                                                  $parseMode                Mode for parsing entities in the photo caption. See formatting options for more details.
-     * @param array<MessageEntity>|null                                                    $captionEntities          A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
-     * @param bool|null                                                                    $hasSpoiler               Pass True if the photo needs to be covered with a spoiler animation
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param InputFile|string                                                             $photo               Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. More information on Sending Files »
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param string|null                                                                  $caption             Photo caption (may also be used when resending photos by file_id), 0-1024 characters after entities parsing
+     * @param string|null                                                                  $parseMode           Mode for parsing entities in the photo caption. See formatting options for more details.
+     * @param array<MessageEntity>|null                                                    $captionEntities     A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
+     * @param bool|null                                                                    $hasSpoiler          Pass True if the photo needs to be covered with a spoiler animation
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -239,8 +282,7 @@ interface TelegramBotApiInterface
         bool $hasSpoiler = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
@@ -248,21 +290,20 @@ interface TelegramBotApiInterface
      * Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
      * For sending voice messages, use the sendVoice method instead.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param InputFile|string                                                             $audio                    Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param string|null                                                                  $caption                  Audio caption, 0-1024 characters after entities parsing
-     * @param string|null                                                                  $parseMode                Mode for parsing entities in the audio caption. See formatting options for more details.
-     * @param array<MessageEntity>|null                                                    $captionEntities          A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
-     * @param int|null                                                                     $duration                 Duration of the audio in seconds
-     * @param string|null                                                                  $performer                Performer
-     * @param string|null                                                                  $title                    Track name
-     * @param InputFile|string|null                                                        $thumbnail                Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param InputFile|string                                                             $audio               Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param string|null                                                                  $caption             Audio caption, 0-1024 characters after entities parsing
+     * @param string|null                                                                  $parseMode           Mode for parsing entities in the audio caption. See formatting options for more details.
+     * @param array<MessageEntity>|null                                                    $captionEntities     A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
+     * @param int|null                                                                     $duration            Duration of the audio in seconds
+     * @param string|null                                                                  $performer           Performer
+     * @param string|null                                                                  $title               Track name
+     * @param InputFile|string|null                                                        $thumbnail           Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -279,8 +320,7 @@ interface TelegramBotApiInterface
         InputFile|string $thumbnail = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
@@ -297,8 +337,7 @@ interface TelegramBotApiInterface
      * @param bool|null                                                                    $disableContentTypeDetection Disables automatic server-side content type detection for files uploaded using multipart/form-data
      * @param bool|null                                                                    $disableNotification         Sends the message silently. Users will receive a notification with no sound.
      * @param bool|null                                                                    $protectContent              Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId            If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply    Pass True if the message should be sent even if the specified replied-to message is not found
+     * @param ReplyParameters|null                                                         $replyParameters             Description of the message to reply to
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup                 Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
@@ -314,31 +353,29 @@ interface TelegramBotApiInterface
         bool $disableContentTypeDetection = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param InputFile|string                                                             $video                    Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More information on Sending Files »
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param int|null                                                                     $duration                 Duration of sent video in seconds
-     * @param int|null                                                                     $width                    Video width
-     * @param int|null                                                                     $height                   Video height
-     * @param InputFile|string|null                                                        $thumbnail                Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
-     * @param string|null                                                                  $caption                  Video caption (may also be used when resending videos by file_id), 0-1024 characters after entities parsing
-     * @param string|null                                                                  $parseMode                Mode for parsing entities in the video caption. See formatting options for more details.
-     * @param array<MessageEntity>|null                                                    $captionEntities          A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
-     * @param bool|null                                                                    $hasSpoiler               Pass True if the video needs to be covered with a spoiler animation
-     * @param bool|null                                                                    $supportsStreaming        Pass True if the uploaded video is suitable for streaming
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param InputFile|string                                                             $video               Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More information on Sending Files »
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param int|null                                                                     $duration            Duration of sent video in seconds
+     * @param int|null                                                                     $width               Video width
+     * @param int|null                                                                     $height              Video height
+     * @param InputFile|string|null                                                        $thumbnail           Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
+     * @param string|null                                                                  $caption             Video caption (may also be used when resending videos by file_id), 0-1024 characters after entities parsing
+     * @param string|null                                                                  $parseMode           Mode for parsing entities in the video caption. See formatting options for more details.
+     * @param array<MessageEntity>|null                                                    $captionEntities     A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
+     * @param bool|null                                                                    $hasSpoiler          Pass True if the video needs to be covered with a spoiler animation
+     * @param bool|null                                                                    $supportsStreaming   Pass True if the uploaded video is suitable for streaming
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -357,30 +394,28 @@ interface TelegramBotApiInterface
         bool $supportsStreaming = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param InputFile|string                                                             $animation                Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. More information on Sending Files »
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param int|null                                                                     $duration                 Duration of sent animation in seconds
-     * @param int|null                                                                     $width                    Animation width
-     * @param int|null                                                                     $height                   Animation height
-     * @param InputFile|string|null                                                        $thumbnail                Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
-     * @param string|null                                                                  $caption                  Animation caption (may also be used when resending animation by file_id), 0-1024 characters after entities parsing
-     * @param string|null                                                                  $parseMode                Mode for parsing entities in the animation caption. See formatting options for more details.
-     * @param array<MessageEntity>|null                                                    $captionEntities          A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
-     * @param bool|null                                                                    $hasSpoiler               Pass True if the animation needs to be covered with a spoiler animation
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param InputFile|string                                                             $animation           Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. More information on Sending Files »
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param int|null                                                                     $duration            Duration of sent animation in seconds
+     * @param int|null                                                                     $width               Animation width
+     * @param int|null                                                                     $height              Animation height
+     * @param InputFile|string|null                                                        $thumbnail           Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
+     * @param string|null                                                                  $caption             Animation caption (may also be used when resending animation by file_id), 0-1024 characters after entities parsing
+     * @param string|null                                                                  $parseMode           Mode for parsing entities in the animation caption. See formatting options for more details.
+     * @param array<MessageEntity>|null                                                    $captionEntities     A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
+     * @param bool|null                                                                    $hasSpoiler          Pass True if the animation needs to be covered with a spoiler animation
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -398,26 +433,24 @@ interface TelegramBotApiInterface
         bool $hasSpoiler = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param InputFile|string                                                             $voice                    Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param string|null                                                                  $caption                  Voice message caption, 0-1024 characters after entities parsing
-     * @param string|null                                                                  $parseMode                Mode for parsing entities in the voice message caption. See formatting options for more details.
-     * @param array<MessageEntity>|null                                                    $captionEntities          A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
-     * @param int|null                                                                     $duration                 Duration of the voice message in seconds
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param InputFile|string                                                             $voice               Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param string|null                                                                  $caption             Voice message caption, 0-1024 characters after entities parsing
+     * @param string|null                                                                  $parseMode           Mode for parsing entities in the voice message caption. See formatting options for more details.
+     * @param array<MessageEntity>|null                                                    $captionEntities     A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
+     * @param int|null                                                                     $duration            Duration of the voice message in seconds
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -431,25 +464,23 @@ interface TelegramBotApiInterface
         int $duration = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
      * As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param InputFile|string                                                             $videoNote                Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. More information on Sending Files ». Sending video notes by a URL is currently unsupported
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param int|null                                                                     $duration                 Duration of sent video in seconds
-     * @param int|null                                                                     $length                   Video width and height, i.e. diameter of the video message
-     * @param InputFile|string|null                                                        $thumbnail                Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param InputFile|string                                                             $videoNote           Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. More information on Sending Files ». Sending video notes by a URL is currently unsupported
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param int|null                                                                     $duration            Duration of sent video in seconds
+     * @param int|null                                                                     $length              Video width and height, i.e. diameter of the video message
+     * @param InputFile|string|null                                                        $thumbnail           Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -462,21 +493,19 @@ interface TelegramBotApiInterface
         InputFile|string $thumbnail = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.
      *
-     * @param int|string                                                                $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param array<InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo> $media                    A JSON-serialized array describing messages to be sent, must include 2-10 items
-     * @param int|null                                                                  $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param bool|null                                                                 $disableNotification      Sends messages silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                 $protectContent           Protects the contents of the sent messages from forwarding and saving
-     * @param int|null                                                                  $replyToMessageId         If the messages are a reply, ID of the original message
-     * @param bool|null                                                                 $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
+     * @param int|string                                                                $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param array<InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo> $media               A JSON-serialized array describing messages to be sent, must include 2-10 items
+     * @param int|null                                                                  $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param bool|null                                                                 $disableNotification Sends messages silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                 $protectContent      Protects the contents of the sent messages from forwarding and saving
+     * @param ReplyParameters|null                                                      $replyParameters     Description of the message to reply to
      *
      * @return PromiseInterface<array<Message>>
      */
@@ -486,26 +515,24 @@ interface TelegramBotApiInterface
         int $messageThreadId = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send point on the map. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param float                                                                        $latitude                 Latitude of the location
-     * @param float                                                                        $longitude                Longitude of the location
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param float|null                                                                   $horizontalAccuracy       The radius of uncertainty for the location, measured in meters; 0-1500
-     * @param int|null                                                                     $livePeriod               period in seconds for which the location will be updated (see Live Locations, should be between 60 and 86400
-     * @param int|null                                                                     $heading                  For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
-     * @param int|null                                                                     $proximityAlertRadius     For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId               Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param float                                                                        $latitude             Latitude of the location
+     * @param float                                                                        $longitude            Longitude of the location
+     * @param int|null                                                                     $messageThreadId      Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param float|null                                                                   $horizontalAccuracy   The radius of uncertainty for the location, measured in meters; 0-1500
+     * @param int|null                                                                     $livePeriod           period in seconds for which the location will be updated (see Live Locations, should be between 60 and 86400
+     * @param int|null                                                                     $heading              For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
+     * @param int|null                                                                     $proximityAlertRadius For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
+     * @param bool|null                                                                    $disableNotification  Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent       Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters      Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup          Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -520,29 +547,27 @@ interface TelegramBotApiInterface
         int $proximityAlertRadius = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send information about a venue. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param float                                                                        $latitude                 Latitude of the venue
-     * @param float                                                                        $longitude                Longitude of the venue
-     * @param string                                                                       $title                    Name of the venue
-     * @param string                                                                       $address                  Address of the venue
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param string|null                                                                  $foursquareId             Foursquare identifier of the venue
-     * @param string|null                                                                  $foursquareType           Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
-     * @param string|null                                                                  $googlePlaceId            Google Places identifier of the venue
-     * @param string|null                                                                  $googlePlaceType          Google Places type of the venue. (See supported types.)
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param float                                                                        $latitude            Latitude of the venue
+     * @param float                                                                        $longitude           Longitude of the venue
+     * @param string                                                                       $title               Name of the venue
+     * @param string                                                                       $address             Address of the venue
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param string|null                                                                  $foursquareId        Foursquare identifier of the venue
+     * @param string|null                                                                  $foursquareType      Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+     * @param string|null                                                                  $googlePlaceId       Google Places identifier of the venue
+     * @param string|null                                                                  $googlePlaceType     Google Places type of the venue. (See supported types.)
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -559,25 +584,23 @@ interface TelegramBotApiInterface
         string $googlePlaceType = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send phone contacts. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param string                                                                       $phoneNumber              Contact's phone number
-     * @param string                                                                       $firstName                Contact's first name
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param string|null                                                                  $lastName                 Contact's last name
-     * @param string|null                                                                  $vcard                    Additional data about the contact in the form of a vCard, 0-2048 bytes
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param string                                                                       $phoneNumber         Contact's phone number
+     * @param string                                                                       $firstName           Contact's first name
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param string|null                                                                  $lastName            Contact's last name
+     * @param string|null                                                                  $vcard               Additional data about the contact in the form of a vCard, 0-2048 bytes
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -590,33 +613,31 @@ interface TelegramBotApiInterface
         string $vcard = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send a native poll. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param string                                                                       $question                 Poll question, 1-300 characters
-     * @param array<string>                                                                $options                  A JSON-serialized list of answer options, 2-10 strings 1-100 characters each
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param bool|null                                                                    $isAnonymous              True, if the poll needs to be anonymous, defaults to True
-     * @param string|null                                                                  $type                     Poll type, “quiz” or “regular”, defaults to “regular”
-     * @param bool|null                                                                    $allowsMultipleAnswers    True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False
-     * @param int|null                                                                     $correctOptionId          0-based identifier of the correct answer option, required for polls in quiz mode
-     * @param string|null                                                                  $explanation              Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
-     * @param string|null                                                                  $explanationParseMode     Mode for parsing entities in the explanation. See formatting options for more details.
-     * @param array<MessageEntity>|null                                                    $explanationEntities      A JSON-serialized list of special entities that appear in the poll explanation, which can be specified instead of parse_mode
-     * @param int|null                                                                     $openPeriod               Amount of time in seconds the poll will be active after creation, 5-600. Can't be used together with close_date.
-     * @param int|null                                                                     $closeDate                Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
-     * @param bool|null                                                                    $isClosed                 Pass True if the poll needs to be immediately closed. This can be useful for poll preview.
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId                Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param string                                                                       $question              Poll question, 1-300 characters
+     * @param array<string>                                                                $options               A JSON-serialized list of answer options, 2-10 strings 1-100 characters each
+     * @param int|null                                                                     $messageThreadId       Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param bool|null                                                                    $isAnonymous           True, if the poll needs to be anonymous, defaults to True
+     * @param string|null                                                                  $type                  Poll type, “quiz” or “regular”, defaults to “regular”
+     * @param bool|null                                                                    $allowsMultipleAnswers True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False
+     * @param int|null                                                                     $correctOptionId       0-based identifier of the correct answer option, required for polls in quiz mode
+     * @param string|null                                                                  $explanation           Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
+     * @param string|null                                                                  $explanationParseMode  Mode for parsing entities in the explanation. See formatting options for more details.
+     * @param array<MessageEntity>|null                                                    $explanationEntities   A JSON-serialized list of special entities that appear in the poll explanation, which can be specified instead of parse_mode
+     * @param int|null                                                                     $openPeriod            Amount of time in seconds the poll will be active after creation, 5-600. Can't be used together with close_date.
+     * @param int|null                                                                     $closeDate             Point in time (Unix timestamp) when the poll will be automatically closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with open_period.
+     * @param bool|null                                                                    $isClosed              Pass True if the poll needs to be immediately closed. This can be useful for poll preview.
+     * @param bool|null                                                                    $disableNotification   Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent        Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters       Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup           Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -637,22 +658,20 @@ interface TelegramBotApiInterface
         bool $isClosed = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
     /**
      * Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param string|null                                                                  $emoji                    Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param string|null                                                                  $emoji               Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -662,8 +681,7 @@ interface TelegramBotApiInterface
         ?string $emoji = '🎲',
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
@@ -678,6 +696,23 @@ interface TelegramBotApiInterface
      * @return PromiseInterface<bool>
      */
     public function sendChatAction(int|string $chatId, string $action, int $messageThreadId = null): PromiseInterface;
+
+    /**
+     * Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Returns True on success.
+     *
+     * @param int|string               $chatId    Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int                      $messageId Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.
+     * @param array<ReactionType>|null $reaction  New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+     * @param bool|null                $isBig     Pass True to set the reaction with a big animation
+     *
+     * @return PromiseInterface<bool>
+     */
+    public function setMessageReaction(
+        int|string $chatId,
+        int $messageId,
+        array $reaction = null,
+        bool $isBig = null,
+    ): PromiseInterface;
 
     /**
      * Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
@@ -1001,7 +1036,7 @@ interface TelegramBotApiInterface
     public function leaveChat(int|string $chatId): PromiseInterface;
 
     /**
-     * Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
+     * Use this method to get up to date information about the chat. Returns a Chat object on success.
      *
      * @param int|string $chatId Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      *
@@ -1212,6 +1247,16 @@ interface TelegramBotApiInterface
     ): PromiseInterface;
 
     /**
+     * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object.
+     *
+     * @param int|string $chatId Unique identifier for the chat or username of the channel (in the format @channelusername)
+     * @param int        $userId Unique identifier of the target user
+     *
+     * @return PromiseInterface<UserChatBoosts>
+     */
+    public function getUserChatBoosts(int|string $chatId, int $userId): PromiseInterface;
+
+    /**
      * Use this method to change the list of the bot's commands. See this manual for more details about bot commands. Returns True on success.
      *
      * @param array<BotCommand>    $commands     A JSON-serialized list of bot commands to be set as the list of the bot's commands. At most 100 commands can be specified.
@@ -1350,14 +1395,14 @@ interface TelegramBotApiInterface
     /**
      * Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
-     * @param string                    $text                  New text of the message, 1-4096 characters after entities parsing
-     * @param int|string|null           $chatId                Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int|null                  $messageId             Required if inline_message_id is not specified. Identifier of the message to edit
-     * @param string|null               $inlineMessageId       Required if chat_id and message_id are not specified. Identifier of the inline message
-     * @param string|null               $parseMode             Mode for parsing entities in the message text. See formatting options for more details.
-     * @param array<MessageEntity>|null $entities              A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode
-     * @param bool|null                 $disableWebPagePreview Disables link previews for links in this message
-     * @param InlineKeyboardMarkup|null $replyMarkup           a JSON-serialized object for an inline keyboard
+     * @param string                    $text               New text of the message, 1-4096 characters after entities parsing
+     * @param int|string|null           $chatId             Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|null                  $messageId          Required if inline_message_id is not specified. Identifier of the message to edit
+     * @param string|null               $inlineMessageId    Required if chat_id and message_id are not specified. Identifier of the inline message
+     * @param string|null               $parseMode          Mode for parsing entities in the message text. See formatting options for more details.
+     * @param array<MessageEntity>|null $entities           A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode
+     * @param LinkPreviewOptions|null   $linkPreviewOptions Link preview generation options for the message
+     * @param InlineKeyboardMarkup|null $replyMarkup        a JSON-serialized object for an inline keyboard
      *
      * @return PromiseInterface<Message|bool>
      */
@@ -1368,7 +1413,7 @@ interface TelegramBotApiInterface
         string $inlineMessageId = null,
         string $parseMode = null,
         array $entities = null,
-        bool $disableWebPagePreview = null,
+        LinkPreviewOptions $linkPreviewOptions = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
@@ -1501,17 +1546,26 @@ interface TelegramBotApiInterface
     public function deleteMessage(int|string $chatId, int $messageId): PromiseInterface;
 
     /**
+     * Use this method to delete multiple messages simultaneously. If some of the specified messages can't be found, they are skipped. Returns True on success.
+     *
+     * @param int|string $chatId     Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param array<int> $messageIds Identifiers of 1-100 messages to delete. See deleteMessage for limitations on which messages can be deleted
+     *
+     * @return PromiseInterface<bool>
+     */
+    public function deleteMessages(int|string $chatId, array $messageIds): PromiseInterface;
+
+    /**
      * Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                   Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param InputFile|string                                                             $sticker                  Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP or .TGS sticker using multipart/form-data. More information on Sending Files ». Video stickers can only be sent by a file_id. Animated stickers can't be sent via an HTTP URL.
-     * @param int|null                                                                     $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param string|null                                                                  $emoji                    Emoji associated with the sticker; only for just uploaded stickers
-     * @param bool|null                                                                    $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                                                                    $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                                                                     $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                                                                    $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup              Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+     * @param int|string                                                                   $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param InputFile|string                                                             $sticker             Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP or .TGS sticker using multipart/form-data. More information on Sending Files ». Video stickers can only be sent by a file_id. Animated stickers can't be sent via an HTTP URL.
+     * @param int|null                                                                     $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param string|null                                                                  $emoji               Emoji associated with the sticker; only for just uploaded stickers
+     * @param bool|null                                                                    $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup         Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
      *
      * @return PromiseInterface<Message>
      */
@@ -1522,8 +1576,7 @@ interface TelegramBotApiInterface
         string $emoji = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface;
 
@@ -1742,8 +1795,7 @@ interface TelegramBotApiInterface
      * @param bool|null                 $isFlexible                Pass True if the final price depends on the shipping method
      * @param bool|null                 $disableNotification       Sends the message silently. Users will receive a notification with no sound.
      * @param bool|null                 $protectContent            Protects the contents of the sent message from forwarding and saving
-     * @param int|null                  $replyToMessageId          If the message is a reply, ID of the original message
-     * @param bool|null                 $allowSendingWithoutReply  Pass True if the message should be sent even if the specified replied-to message is not found
+     * @param ReplyParameters|null      $replyParameters           Description of the message to reply to
      * @param InlineKeyboardMarkup|null $replyMarkup               A JSON-serialized object for an inline keyboard. If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button.
      *
      * @return PromiseInterface<Message>
@@ -1774,8 +1826,7 @@ interface TelegramBotApiInterface
         bool $isFlexible = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
@@ -1874,14 +1925,13 @@ interface TelegramBotApiInterface
     /**
      * Use this method to send a game. On success, the sent Message is returned.
      *
-     * @param int                       $chatId                   Unique identifier for the target chat
-     * @param string                    $gameShortName            Short name of the game, serves as the unique identifier for the game. Set up your games via @BotFather.
-     * @param int|null                  $messageThreadId          Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
-     * @param bool|null                 $disableNotification      Sends the message silently. Users will receive a notification with no sound.
-     * @param bool|null                 $protectContent           Protects the contents of the sent message from forwarding and saving
-     * @param int|null                  $replyToMessageId         If the message is a reply, ID of the original message
-     * @param bool|null                 $allowSendingWithoutReply Pass True if the message should be sent even if the specified replied-to message is not found
-     * @param InlineKeyboardMarkup|null $replyMarkup              A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game.
+     * @param int                       $chatId              Unique identifier for the target chat
+     * @param string                    $gameShortName       Short name of the game, serves as the unique identifier for the game. Set up your games via @BotFather.
+     * @param int|null                  $messageThreadId     Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+     * @param bool|null                 $disableNotification Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                 $protectContent      Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null      $replyParameters     Description of the message to reply to
+     * @param InlineKeyboardMarkup|null $replyMarkup         A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game.
      *
      * @return PromiseInterface<Message>
      */
@@ -1891,8 +1941,7 @@ interface TelegramBotApiInterface
         int $messageThreadId = null,
         bool $disableNotification = null,
         bool $protectContent = null,
-        int $replyToMessageId = null,
-        bool $allowSendingWithoutReply = null,
+        ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 

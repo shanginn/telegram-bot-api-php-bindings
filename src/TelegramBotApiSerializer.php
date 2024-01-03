@@ -19,6 +19,12 @@ use Shanginn\TelegramBotApiBindings\Types\CallbackGame;
 use Shanginn\TelegramBotApiBindings\Types\CallbackQuery;
 use Shanginn\TelegramBotApiBindings\Types\Chat;
 use Shanginn\TelegramBotApiBindings\Types\ChatAdministratorRights;
+use Shanginn\TelegramBotApiBindings\Types\ChatBoost;
+use Shanginn\TelegramBotApiBindings\Types\ChatBoostRemoved;
+use Shanginn\TelegramBotApiBindings\Types\ChatBoostSourceGiftCode;
+use Shanginn\TelegramBotApiBindings\Types\ChatBoostSourceGiveaway;
+use Shanginn\TelegramBotApiBindings\Types\ChatBoostSourcePremium;
+use Shanginn\TelegramBotApiBindings\Types\ChatBoostUpdated;
 use Shanginn\TelegramBotApiBindings\Types\ChatInviteLink;
 use Shanginn\TelegramBotApiBindings\Types\ChatJoinRequest;
 use Shanginn\TelegramBotApiBindings\Types\ChatLocation;
@@ -38,6 +44,7 @@ use Shanginn\TelegramBotApiBindings\Types\Dice;
 use Shanginn\TelegramBotApiBindings\Types\Document;
 use Shanginn\TelegramBotApiBindings\Types\EncryptedCredentials;
 use Shanginn\TelegramBotApiBindings\Types\EncryptedPassportElement;
+use Shanginn\TelegramBotApiBindings\Types\ExternalReplyInfo;
 use Shanginn\TelegramBotApiBindings\Types\File;
 use Shanginn\TelegramBotApiBindings\Types\ForceReply;
 use Shanginn\TelegramBotApiBindings\Types\ForumTopic;
@@ -49,6 +56,11 @@ use Shanginn\TelegramBotApiBindings\Types\Game;
 use Shanginn\TelegramBotApiBindings\Types\GameHighScore;
 use Shanginn\TelegramBotApiBindings\Types\GeneralForumTopicHidden;
 use Shanginn\TelegramBotApiBindings\Types\GeneralForumTopicUnhidden;
+use Shanginn\TelegramBotApiBindings\Types\Giveaway;
+use Shanginn\TelegramBotApiBindings\Types\GiveawayCompleted;
+use Shanginn\TelegramBotApiBindings\Types\GiveawayCreated;
+use Shanginn\TelegramBotApiBindings\Types\GiveawayWinners;
+use Shanginn\TelegramBotApiBindings\Types\InaccessibleMessage;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardButton;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup;
 use Shanginn\TelegramBotApiBindings\Types\InlineQuery;
@@ -89,8 +101,9 @@ use Shanginn\TelegramBotApiBindings\Types\Invoice;
 use Shanginn\TelegramBotApiBindings\Types\KeyboardButton;
 use Shanginn\TelegramBotApiBindings\Types\KeyboardButtonPollType;
 use Shanginn\TelegramBotApiBindings\Types\KeyboardButtonRequestChat;
-use Shanginn\TelegramBotApiBindings\Types\KeyboardButtonRequestUser;
+use Shanginn\TelegramBotApiBindings\Types\KeyboardButtonRequestUsers;
 use Shanginn\TelegramBotApiBindings\Types\LabeledPrice;
+use Shanginn\TelegramBotApiBindings\Types\LinkPreviewOptions;
 use Shanginn\TelegramBotApiBindings\Types\Location;
 use Shanginn\TelegramBotApiBindings\Types\LoginUrl;
 use Shanginn\TelegramBotApiBindings\Types\MaskPosition;
@@ -101,6 +114,12 @@ use Shanginn\TelegramBotApiBindings\Types\Message;
 use Shanginn\TelegramBotApiBindings\Types\MessageAutoDeleteTimerChanged;
 use Shanginn\TelegramBotApiBindings\Types\MessageEntity;
 use Shanginn\TelegramBotApiBindings\Types\MessageId;
+use Shanginn\TelegramBotApiBindings\Types\MessageOriginChannel;
+use Shanginn\TelegramBotApiBindings\Types\MessageOriginChat;
+use Shanginn\TelegramBotApiBindings\Types\MessageOriginHiddenUser;
+use Shanginn\TelegramBotApiBindings\Types\MessageOriginUser;
+use Shanginn\TelegramBotApiBindings\Types\MessageReactionCountUpdated;
+use Shanginn\TelegramBotApiBindings\Types\MessageReactionUpdated;
 use Shanginn\TelegramBotApiBindings\Types\OrderInfo;
 use Shanginn\TelegramBotApiBindings\Types\PassportData;
 use Shanginn\TelegramBotApiBindings\Types\PassportElementErrorDataField;
@@ -119,8 +138,12 @@ use Shanginn\TelegramBotApiBindings\Types\PollAnswer;
 use Shanginn\TelegramBotApiBindings\Types\PollOption;
 use Shanginn\TelegramBotApiBindings\Types\PreCheckoutQuery;
 use Shanginn\TelegramBotApiBindings\Types\ProximityAlertTriggered;
+use Shanginn\TelegramBotApiBindings\Types\ReactionCount;
+use Shanginn\TelegramBotApiBindings\Types\ReactionTypeCustomEmoji;
+use Shanginn\TelegramBotApiBindings\Types\ReactionTypeEmoji;
 use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardMarkup;
 use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardRemove;
+use Shanginn\TelegramBotApiBindings\Types\ReplyParameters;
 use Shanginn\TelegramBotApiBindings\Types\ResponseParameters;
 use Shanginn\TelegramBotApiBindings\Types\SentWebAppMessage;
 use Shanginn\TelegramBotApiBindings\Types\ShippingAddress;
@@ -131,11 +154,13 @@ use Shanginn\TelegramBotApiBindings\Types\StickerSet;
 use Shanginn\TelegramBotApiBindings\Types\Story;
 use Shanginn\TelegramBotApiBindings\Types\SuccessfulPayment;
 use Shanginn\TelegramBotApiBindings\Types\SwitchInlineQueryChosenChat;
+use Shanginn\TelegramBotApiBindings\Types\TextQuote;
 use Shanginn\TelegramBotApiBindings\Types\TypeInterface;
 use Shanginn\TelegramBotApiBindings\Types\Update;
 use Shanginn\TelegramBotApiBindings\Types\User;
+use Shanginn\TelegramBotApiBindings\Types\UserChatBoosts;
 use Shanginn\TelegramBotApiBindings\Types\UserProfilePhotos;
-use Shanginn\TelegramBotApiBindings\Types\UserShared;
+use Shanginn\TelegramBotApiBindings\Types\UsersShared;
 use Shanginn\TelegramBotApiBindings\Types\Venue;
 use Shanginn\TelegramBotApiBindings\Types\Video;
 use Shanginn\TelegramBotApiBindings\Types\VideoChatEnded;
@@ -183,6 +208,12 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             editedChannelPost: ($data['edited_channel_post'] ?? null) !== null
                 ? $this->denormalizeMessage($data['edited_channel_post'])
                 : null,
+            messageReaction: ($data['message_reaction'] ?? null) !== null
+                ? $this->denormalizeMessageReactionUpdated($data['message_reaction'])
+                : null,
+            messageReactionCount: ($data['message_reaction_count'] ?? null) !== null
+                ? $this->denormalizeMessageReactionCountUpdated($data['message_reaction_count'])
+                : null,
             inlineQuery: ($data['inline_query'] ?? null) !== null
                 ? $this->denormalizeInlineQuery($data['inline_query'])
                 : null,
@@ -212,6 +243,12 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             chatJoinRequest: ($data['chat_join_request'] ?? null) !== null
                 ? $this->denormalizeChatJoinRequest($data['chat_join_request'])
+                : null,
+            chatBoost: ($data['chat_boost'] ?? null) !== null
+                ? $this->denormalizeChatBoostUpdated($data['chat_boost'])
+                : null,
+            removedChatBoost: ($data['removed_chat_boost'] ?? null) !== null
+                ? $this->denormalizeChatBoostRemoved($data['removed_chat_boost'])
                 : null,
         );
     }
@@ -315,6 +352,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 ? $this->denormalizeChatPhoto($data['photo'])
                 : null,
             activeUsernames: $data['active_usernames'] ?? null,
+            availableReactions: ($data['available_reactions'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeReactionType($item), $data['available_reactions'])
+                : null,
+            accentColorId: $data['accent_color_id'] ?? null,
+            backgroundCustomEmojiId: $data['background_custom_emoji_id'] ?? null,
+            profileAccentColorId: $data['profile_accent_color_id'] ?? null,
+            profileBackgroundCustomEmojiId: $data['profile_background_custom_emoji_id'] ?? null,
             emojiStatusCustomEmojiId: $data['emoji_status_custom_emoji_id'] ?? null,
             emojiStatusExpirationDate: $data['emoji_status_expiration_date'] ?? null,
             bio: $data['bio'] ?? null,
@@ -335,6 +379,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             hasAggressiveAntiSpamEnabled: $data['has_aggressive_anti_spam_enabled'] ?? null,
             hasHiddenMembers: $data['has_hidden_members'] ?? null,
             hasProtectedContent: $data['has_protected_content'] ?? null,
+            hasVisibleHistory: $data['has_visible_history'] ?? null,
             stickerSetName: $data['sticker_set_name'] ?? null,
             canSetStickerSet: $data['can_set_sticker_set'] ?? null,
             linkedChatId: $data['linked_chat_id'] ?? null,
@@ -375,20 +420,19 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             senderChat: ($data['sender_chat'] ?? null) !== null
                 ? $this->denormalizeChat($data['sender_chat'])
                 : null,
-            forwardFrom: ($data['forward_from'] ?? null) !== null
-                ? $this->denormalizeUser($data['forward_from'])
+            forwardOrigin: ($data['forward_origin'] ?? null) !== null
+                ? $this->denormalizeMessageOrigin($data['forward_origin'])
                 : null,
-            forwardFromChat: ($data['forward_from_chat'] ?? null) !== null
-                ? $this->denormalizeChat($data['forward_from_chat'])
-                : null,
-            forwardFromMessageId: $data['forward_from_message_id'] ?? null,
-            forwardSignature: $data['forward_signature'] ?? null,
-            forwardSenderName: $data['forward_sender_name'] ?? null,
-            forwardDate: $data['forward_date'] ?? null,
             isTopicMessage: $data['is_topic_message'] ?? null,
             isAutomaticForward: $data['is_automatic_forward'] ?? null,
             replyToMessage: ($data['reply_to_message'] ?? null) !== null
                 ? $this->denormalizeMessage($data['reply_to_message'])
+                : null,
+            externalReply: ($data['external_reply'] ?? null) !== null
+                ? $this->denormalizeExternalReplyInfo($data['external_reply'])
+                : null,
+            quote: ($data['quote'] ?? null) !== null
+                ? $this->denormalizeTextQuote($data['quote'])
                 : null,
             viaBot: ($data['via_bot'] ?? null) !== null
                 ? $this->denormalizeUser($data['via_bot'])
@@ -400,6 +444,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             text: $data['text'] ?? null,
             entities: ($data['entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['entities'])
+                : null,
+            linkPreviewOptions: ($data['link_preview_options'] ?? null) !== null
+                ? $this->denormalizeLinkPreviewOptions($data['link_preview_options'])
                 : null,
             animation: ($data['animation'] ?? null) !== null
                 ? $this->denormalizeAnimation($data['animation'])
@@ -471,7 +518,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             migrateToChatId: $data['migrate_to_chat_id'] ?? null,
             migrateFromChatId: $data['migrate_from_chat_id'] ?? null,
             pinnedMessage: ($data['pinned_message'] ?? null) !== null
-                ? $this->denormalizeMessage($data['pinned_message'])
+                ? $this->denormalizeMaybeInaccessibleMessage($data['pinned_message'])
                 : null,
             invoice: ($data['invoice'] ?? null) !== null
                 ? $this->denormalizeInvoice($data['invoice'])
@@ -479,8 +526,8 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             successfulPayment: ($data['successful_payment'] ?? null) !== null
                 ? $this->denormalizeSuccessfulPayment($data['successful_payment'])
                 : null,
-            userShared: ($data['user_shared'] ?? null) !== null
-                ? $this->denormalizeUserShared($data['user_shared'])
+            usersShared: ($data['users_shared'] ?? null) !== null
+                ? $this->denormalizeUsersShared($data['users_shared'])
                 : null,
             chatShared: ($data['chat_shared'] ?? null) !== null
                 ? $this->denormalizeChatShared($data['chat_shared'])
@@ -512,6 +559,18 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             generalForumTopicUnhidden: ($data['general_forum_topic_unhidden'] ?? null) !== null
                 ? $this->denormalizeGeneralForumTopicUnhidden($data['general_forum_topic_unhidden'])
+                : null,
+            giveawayCreated: ($data['giveaway_created'] ?? null) !== null
+                ? $this->denormalizeGiveawayCreated($data['giveaway_created'])
+                : null,
+            giveaway: ($data['giveaway'] ?? null) !== null
+                ? $this->denormalizeGiveaway($data['giveaway'])
+                : null,
+            giveawayWinners: ($data['giveaway_winners'] ?? null) !== null
+                ? $this->denormalizeGiveawayWinners($data['giveaway_winners'])
+                : null,
+            giveawayCompleted: ($data['giveaway_completed'] ?? null) !== null
+                ? $this->denormalizeGiveawayCompleted($data['giveaway_completed'])
                 : null,
             videoChatScheduled: ($data['video_chat_scheduled'] ?? null) !== null
                 ? $this->denormalizeVideoChatScheduled($data['video_chat_scheduled'])
@@ -557,6 +616,38 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         );
     }
 
+    public function denormalizeInaccessibleMessage(array $data): InaccessibleMessage
+    {
+        $requiredFields = [
+            'chat',
+            'message_id',
+            'date',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class InaccessibleMessage missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new InaccessibleMessage(
+            chat: $this->denormalizeChat($data['chat']),
+            messageId: $data['message_id'],
+            date: $data['date'],
+        );
+    }
+
+    public function denormalizeMaybeInaccessibleMessage(array $data): Types\MaybeInaccessibleMessage
+    {
+        throw new \RuntimeException('class MaybeInaccessibleMessage is abstract and not yet implemented');
+    }
+
     public function denormalizeMessageEntity(array $data): MessageEntity
     {
         $requiredFields = [
@@ -587,6 +678,268 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             language: $data['language'] ?? null,
             customEmojiId: $data['custom_emoji_id'] ?? null,
+        );
+    }
+
+    public function denormalizeTextQuote(array $data): TextQuote
+    {
+        $requiredFields = [
+            'text',
+            'position',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class TextQuote missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new TextQuote(
+            text: $data['text'],
+            position: $data['position'],
+            entities: ($data['entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['entities'])
+                : null,
+            isManual: $data['is_manual'] ?? null,
+        );
+    }
+
+    public function denormalizeExternalReplyInfo(array $data): ExternalReplyInfo
+    {
+        $requiredFields = [
+            'origin',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ExternalReplyInfo missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ExternalReplyInfo(
+            origin: $this->denormalizeMessageOrigin($data['origin']),
+            chat: ($data['chat'] ?? null) !== null
+                ? $this->denormalizeChat($data['chat'])
+                : null,
+            messageId: $data['message_id'] ?? null,
+            linkPreviewOptions: ($data['link_preview_options'] ?? null) !== null
+                ? $this->denormalizeLinkPreviewOptions($data['link_preview_options'])
+                : null,
+            animation: ($data['animation'] ?? null) !== null
+                ? $this->denormalizeAnimation($data['animation'])
+                : null,
+            audio: ($data['audio'] ?? null) !== null
+                ? $this->denormalizeAudio($data['audio'])
+                : null,
+            document: ($data['document'] ?? null) !== null
+                ? $this->denormalizeDocument($data['document'])
+                : null,
+            photo: ($data['photo'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizePhotoSize($item), $data['photo'])
+                : null,
+            sticker: ($data['sticker'] ?? null) !== null
+                ? $this->denormalizeSticker($data['sticker'])
+                : null,
+            story: ($data['story'] ?? null) !== null
+                ? $this->denormalizeStory($data['story'])
+                : null,
+            video: ($data['video'] ?? null) !== null
+                ? $this->denormalizeVideo($data['video'])
+                : null,
+            videoNote: ($data['video_note'] ?? null) !== null
+                ? $this->denormalizeVideoNote($data['video_note'])
+                : null,
+            voice: ($data['voice'] ?? null) !== null
+                ? $this->denormalizeVoice($data['voice'])
+                : null,
+            hasMediaSpoiler: $data['has_media_spoiler'] ?? null,
+            contact: ($data['contact'] ?? null) !== null
+                ? $this->denormalizeContact($data['contact'])
+                : null,
+            dice: ($data['dice'] ?? null) !== null
+                ? $this->denormalizeDice($data['dice'])
+                : null,
+            game: ($data['game'] ?? null) !== null
+                ? $this->denormalizeGame($data['game'])
+                : null,
+            giveaway: ($data['giveaway'] ?? null) !== null
+                ? $this->denormalizeGiveaway($data['giveaway'])
+                : null,
+            giveawayWinners: ($data['giveaway_winners'] ?? null) !== null
+                ? $this->denormalizeGiveawayWinners($data['giveaway_winners'])
+                : null,
+            invoice: ($data['invoice'] ?? null) !== null
+                ? $this->denormalizeInvoice($data['invoice'])
+                : null,
+            location: ($data['location'] ?? null) !== null
+                ? $this->denormalizeLocation($data['location'])
+                : null,
+            poll: ($data['poll'] ?? null) !== null
+                ? $this->denormalizePoll($data['poll'])
+                : null,
+            venue: ($data['venue'] ?? null) !== null
+                ? $this->denormalizeVenue($data['venue'])
+                : null,
+        );
+    }
+
+    public function denormalizeReplyParameters(array $data): ReplyParameters
+    {
+        $requiredFields = [
+            'message_id',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ReplyParameters missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ReplyParameters(
+            messageId: $data['message_id'],
+            chatId: $data['chat_id'] ?? null,
+            allowSendingWithoutReply: $data['allow_sending_without_reply'] ?? null,
+            quote: $data['quote'] ?? null,
+            quoteParseMode: $data['quote_parse_mode'] ?? null,
+            quoteEntities: ($data['quote_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['quote_entities'])
+                : null,
+            quotePosition: $data['quote_position'] ?? null,
+        );
+    }
+
+    public function denormalizeMessageOrigin(array $data): Types\MessageOrigin
+    {
+        throw new \RuntimeException('class MessageOrigin is abstract and not yet implemented');
+    }
+
+    public function denormalizeMessageOriginUser(array $data): MessageOriginUser
+    {
+        $requiredFields = [
+            'type',
+            'date',
+            'sender_user',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class MessageOriginUser missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new MessageOriginUser(
+            type: $data['type'],
+            date: $data['date'],
+            senderUser: $this->denormalizeUser($data['sender_user']),
+        );
+    }
+
+    public function denormalizeMessageOriginHiddenUser(array $data): MessageOriginHiddenUser
+    {
+        $requiredFields = [
+            'type',
+            'date',
+            'sender_user_name',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class MessageOriginHiddenUser missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new MessageOriginHiddenUser(
+            type: $data['type'],
+            date: $data['date'],
+            senderUserName: $data['sender_user_name'],
+        );
+    }
+
+    public function denormalizeMessageOriginChat(array $data): MessageOriginChat
+    {
+        $requiredFields = [
+            'type',
+            'date',
+            'sender_chat',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class MessageOriginChat missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new MessageOriginChat(
+            type: $data['type'],
+            date: $data['date'],
+            senderChat: $this->denormalizeChat($data['sender_chat']),
+            authorSignature: $data['author_signature'] ?? null,
+        );
+    }
+
+    public function denormalizeMessageOriginChannel(array $data): MessageOriginChannel
+    {
+        $requiredFields = [
+            'type',
+            'date',
+            'chat',
+            'message_id',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class MessageOriginChannel missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new MessageOriginChannel(
+            type: $data['type'],
+            date: $data['date'],
+            chat: $this->denormalizeChat($data['chat']),
+            messageId: $data['message_id'],
+            authorSignature: $data['author_signature'] ?? null,
         );
     }
 
@@ -1169,11 +1522,11 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new GeneralForumTopicUnhidden();
     }
 
-    public function denormalizeUserShared(array $data): UserShared
+    public function denormalizeUsersShared(array $data): UsersShared
     {
         $requiredFields = [
             'request_id',
-            'user_id',
+            'user_ids',
         ];
 
         $missingFields = [];
@@ -1185,12 +1538,12 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class UserShared missing some fields from the data array: %s', implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class UsersShared missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
-        return new UserShared(
+        return new UsersShared(
             requestId: $data['request_id'],
-            userId: $data['user_id'],
+            userIds: $data['user_ids'],
         );
     }
 
@@ -1299,6 +1652,118 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
         return new VideoChatParticipantsInvited(
             users: array_map(fn (array $item) => $this->denormalizeUser($item), $data['users']),
+        );
+    }
+
+    public function denormalizeGiveawayCreated(array $data): GiveawayCreated
+    {
+        return new GiveawayCreated();
+    }
+
+    public function denormalizeGiveaway(array $data): Giveaway
+    {
+        $requiredFields = [
+            'chats',
+            'winners_selection_date',
+            'winner_count',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class Giveaway missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new Giveaway(
+            chats: array_map(fn (array $item) => $this->denormalizeChat($item), $data['chats']),
+            winnersSelectionDate: $data['winners_selection_date'],
+            winnerCount: $data['winner_count'],
+            onlyNewMembers: $data['only_new_members'] ?? null,
+            hasPublicWinners: $data['has_public_winners'] ?? null,
+            prizeDescription: $data['prize_description'] ?? null,
+            countryCodes: $data['country_codes'] ?? null,
+            premiumSubscriptionMonthCount: $data['premium_subscription_month_count'] ?? null,
+        );
+    }
+
+    public function denormalizeGiveawayWinners(array $data): GiveawayWinners
+    {
+        $requiredFields = [
+            'chat',
+            'giveaway_message_id',
+            'winners_selection_date',
+            'winner_count',
+            'winners',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class GiveawayWinners missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new GiveawayWinners(
+            chat: $this->denormalizeChat($data['chat']),
+            giveawayMessageId: $data['giveaway_message_id'],
+            winnersSelectionDate: $data['winners_selection_date'],
+            winnerCount: $data['winner_count'],
+            winners: array_map(fn (array $item) => $this->denormalizeUser($item), $data['winners']),
+            additionalChatCount: $data['additional_chat_count'] ?? null,
+            premiumSubscriptionMonthCount: $data['premium_subscription_month_count'] ?? null,
+            unclaimedPrizeCount: $data['unclaimed_prize_count'] ?? null,
+            onlyNewMembers: $data['only_new_members'] ?? null,
+            wasRefunded: $data['was_refunded'] ?? null,
+            prizeDescription: $data['prize_description'] ?? null,
+        );
+    }
+
+    public function denormalizeGiveawayCompleted(array $data): GiveawayCompleted
+    {
+        $requiredFields = [
+            'winner_count',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class GiveawayCompleted missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new GiveawayCompleted(
+            winnerCount: $data['winner_count'],
+            unclaimedPrizeCount: $data['unclaimed_prize_count'] ?? null,
+            giveawayMessage: ($data['giveaway_message'] ?? null) !== null
+                ? $this->denormalizeMessage($data['giveaway_message'])
+                : null,
+        );
+    }
+
+    public function denormalizeLinkPreviewOptions(array $data): LinkPreviewOptions
+    {
+        return new LinkPreviewOptions(
+            isDisabled: $data['is_disabled'] ?? null,
+            url: $data['url'] ?? null,
+            preferSmallMedia: $data['prefer_small_media'] ?? null,
+            preferLargeMedia: $data['prefer_large_media'] ?? null,
+            showAboveText: $data['show_above_text'] ?? null,
         );
     }
 
@@ -1437,8 +1902,8 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
         return new KeyboardButton(
             text: $data['text'],
-            requestUser: ($data['request_user'] ?? null) !== null
-                ? $this->denormalizeKeyboardButtonRequestUser($data['request_user'])
+            requestUsers: ($data['request_users'] ?? null) !== null
+                ? $this->denormalizeKeyboardButtonRequestUsers($data['request_users'])
                 : null,
             requestChat: ($data['request_chat'] ?? null) !== null
                 ? $this->denormalizeKeyboardButtonRequestChat($data['request_chat'])
@@ -1454,7 +1919,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         );
     }
 
-    public function denormalizeKeyboardButtonRequestUser(array $data): KeyboardButtonRequestUser
+    public function denormalizeKeyboardButtonRequestUsers(array $data): KeyboardButtonRequestUsers
     {
         $requiredFields = [
             'request_id',
@@ -1469,13 +1934,14 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         }
 
         if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class KeyboardButtonRequestUser missing some fields from the data array: %s', implode(', ', $missingFields)));
+            throw new \InvalidArgumentException(sprintf('Class KeyboardButtonRequestUsers missing some fields from the data array: %s', implode(', ', $missingFields)));
         }
 
-        return new KeyboardButtonRequestUser(
+        return new KeyboardButtonRequestUsers(
             requestId: $data['request_id'],
             userIsBot: $data['user_is_bot'] ?? null,
             userIsPremium: $data['user_is_premium'] ?? null,
+            maxQuantity: $data['max_quantity'] ?? null,
         );
     }
 
@@ -1660,7 +2126,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             from: $this->denormalizeUser($data['from']),
             chatInstance: $data['chat_instance'],
             message: ($data['message'] ?? null) !== null
-                ? $this->denormalizeMessage($data['message'])
+                ? $this->denormalizeMaybeInaccessibleMessage($data['message'])
                 : null,
             inlineMessageId: $data['inline_message_id'] ?? null,
             data: $data['data'] ?? null,
@@ -1782,6 +2248,41 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             canEditStories: $data['can_edit_stories'] ?? null,
             canDeleteStories: $data['can_delete_stories'] ?? null,
             canManageTopics: $data['can_manage_topics'] ?? null,
+        );
+    }
+
+    public function denormalizeChatMemberUpdated(array $data): ChatMemberUpdated
+    {
+        $requiredFields = [
+            'chat',
+            'from',
+            'date',
+            'old_chat_member',
+            'new_chat_member',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatMemberUpdated missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatMemberUpdated(
+            chat: $this->denormalizeChat($data['chat']),
+            from: $this->denormalizeUser($data['from']),
+            date: $data['date'],
+            oldChatMember: $this->denormalizeChatMember($data['old_chat_member']),
+            newChatMember: $this->denormalizeChatMember($data['new_chat_member']),
+            inviteLink: ($data['invite_link'] ?? null) !== null
+                ? $this->denormalizeChatInviteLink($data['invite_link'])
+                : null,
+            viaChatFolderInviteLink: $data['via_chat_folder_invite_link'] ?? null,
         );
     }
 
@@ -2003,41 +2504,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         );
     }
 
-    public function denormalizeChatMemberUpdated(array $data): ChatMemberUpdated
-    {
-        $requiredFields = [
-            'chat',
-            'from',
-            'date',
-            'old_chat_member',
-            'new_chat_member',
-        ];
-
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($data[$field])) {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (count($missingFields) > 0) {
-            throw new \InvalidArgumentException(sprintf('Class ChatMemberUpdated missing some fields from the data array: %s', implode(', ', $missingFields)));
-        }
-
-        return new ChatMemberUpdated(
-            chat: $this->denormalizeChat($data['chat']),
-            from: $this->denormalizeUser($data['from']),
-            date: $data['date'],
-            oldChatMember: $this->denormalizeChatMember($data['old_chat_member']),
-            newChatMember: $this->denormalizeChatMember($data['new_chat_member']),
-            inviteLink: ($data['invite_link'] ?? null) !== null
-                ? $this->denormalizeChatInviteLink($data['invite_link'])
-                : null,
-            viaChatFolderInviteLink: $data['via_chat_folder_invite_link'] ?? null,
-        );
-    }
-
     public function denormalizeChatJoinRequest(array $data): ChatJoinRequest
     {
         $requiredFields = [
@@ -2113,6 +2579,152 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new ChatLocation(
             location: $this->denormalizeLocation($data['location']),
             address: $data['address'],
+        );
+    }
+
+    public function denormalizeReactionType(array $data): Types\ReactionType
+    {
+        throw new \RuntimeException('class ReactionType is abstract and not yet implemented');
+    }
+
+    public function denormalizeReactionTypeEmoji(array $data): ReactionTypeEmoji
+    {
+        $requiredFields = [
+            'type',
+            'emoji',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ReactionTypeEmoji missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ReactionTypeEmoji(
+            type: $data['type'],
+            emoji: $data['emoji'],
+        );
+    }
+
+    public function denormalizeReactionTypeCustomEmoji(array $data): ReactionTypeCustomEmoji
+    {
+        $requiredFields = [
+            'type',
+            'custom_emoji_id',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ReactionTypeCustomEmoji missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ReactionTypeCustomEmoji(
+            type: $data['type'],
+            customEmojiId: $data['custom_emoji_id'],
+        );
+    }
+
+    public function denormalizeReactionCount(array $data): ReactionCount
+    {
+        $requiredFields = [
+            'type',
+            'total_count',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ReactionCount missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ReactionCount(
+            type: $this->denormalizeReactionType($data['type']),
+            totalCount: $data['total_count'],
+        );
+    }
+
+    public function denormalizeMessageReactionUpdated(array $data): MessageReactionUpdated
+    {
+        $requiredFields = [
+            'chat',
+            'message_id',
+            'date',
+            'old_reaction',
+            'new_reaction',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class MessageReactionUpdated missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new MessageReactionUpdated(
+            chat: $this->denormalizeChat($data['chat']),
+            messageId: $data['message_id'],
+            date: $data['date'],
+            oldReaction: array_map(fn (array $item) => $this->denormalizeReactionType($item), $data['old_reaction']),
+            newReaction: array_map(fn (array $item) => $this->denormalizeReactionType($item), $data['new_reaction']),
+            user: ($data['user'] ?? null) !== null
+                ? $this->denormalizeUser($data['user'])
+                : null,
+            actorChat: ($data['actor_chat'] ?? null) !== null
+                ? $this->denormalizeChat($data['actor_chat'])
+                : null,
+        );
+    }
+
+    public function denormalizeMessageReactionCountUpdated(array $data): MessageReactionCountUpdated
+    {
+        $requiredFields = [
+            'chat',
+            'message_id',
+            'date',
+            'reactions',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class MessageReactionCountUpdated missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new MessageReactionCountUpdated(
+            chat: $this->denormalizeChat($data['chat']),
+            messageId: $data['message_id'],
+            date: $data['date'],
+            reactions: array_map(fn (array $item) => $this->denormalizeReactionCount($item), $data['reactions']),
         );
     }
 
@@ -2387,6 +2999,196 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
     {
         return new MenuButtonDefault(
             type: $data['type'] ?? 'default',
+        );
+    }
+
+    public function denormalizeChatBoostSource(array $data): Types\ChatBoostSource
+    {
+        throw new \RuntimeException('class ChatBoostSource is abstract and not yet implemented');
+    }
+
+    public function denormalizeChatBoostSourcePremium(array $data): ChatBoostSourcePremium
+    {
+        $requiredFields = [
+            'source',
+            'user',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatBoostSourcePremium missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatBoostSourcePremium(
+            source: $data['source'],
+            user: $this->denormalizeUser($data['user']),
+        );
+    }
+
+    public function denormalizeChatBoostSourceGiftCode(array $data): ChatBoostSourceGiftCode
+    {
+        $requiredFields = [
+            'source',
+            'user',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatBoostSourceGiftCode missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatBoostSourceGiftCode(
+            source: $data['source'],
+            user: $this->denormalizeUser($data['user']),
+        );
+    }
+
+    public function denormalizeChatBoostSourceGiveaway(array $data): ChatBoostSourceGiveaway
+    {
+        $requiredFields = [
+            'source',
+            'giveaway_message_id',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatBoostSourceGiveaway missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatBoostSourceGiveaway(
+            source: $data['source'],
+            giveawayMessageId: $data['giveaway_message_id'],
+            user: ($data['user'] ?? null) !== null
+                ? $this->denormalizeUser($data['user'])
+                : null,
+            isUnclaimed: $data['is_unclaimed'] ?? null,
+        );
+    }
+
+    public function denormalizeChatBoost(array $data): ChatBoost
+    {
+        $requiredFields = [
+            'boost_id',
+            'add_date',
+            'expiration_date',
+            'source',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatBoost missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatBoost(
+            boostId: $data['boost_id'],
+            addDate: $data['add_date'],
+            expirationDate: $data['expiration_date'],
+            source: $this->denormalizeChatBoostSource($data['source']),
+        );
+    }
+
+    public function denormalizeChatBoostUpdated(array $data): ChatBoostUpdated
+    {
+        $requiredFields = [
+            'chat',
+            'boost',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatBoostUpdated missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatBoostUpdated(
+            chat: $this->denormalizeChat($data['chat']),
+            boost: $this->denormalizeChatBoost($data['boost']),
+        );
+    }
+
+    public function denormalizeChatBoostRemoved(array $data): ChatBoostRemoved
+    {
+        $requiredFields = [
+            'chat',
+            'boost_id',
+            'remove_date',
+            'source',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatBoostRemoved missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatBoostRemoved(
+            chat: $this->denormalizeChat($data['chat']),
+            boostId: $data['boost_id'],
+            removeDate: $data['remove_date'],
+            source: $this->denormalizeChatBoostSource($data['source']),
+        );
+    }
+
+    public function denormalizeUserChatBoosts(array $data): UserChatBoosts
+    {
+        $requiredFields = [
+            'boosts',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class UserChatBoosts missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new UserChatBoosts(
+            boosts: array_map(fn (array $item) => $this->denormalizeChatBoost($item), $data['boosts']),
         );
     }
 
@@ -3616,7 +4418,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             entities: ($data['entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['entities'])
                 : null,
-            disableWebPagePreview: $data['disable_web_page_preview'] ?? null,
+            linkPreviewOptions: ($data['link_preview_options'] ?? null) !== null
+                ? $this->denormalizeLinkPreviewOptions($data['link_preview_options'])
+                : null,
         );
     }
 
@@ -4514,7 +5318,15 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             Chat::class => $this->denormalizeChat($data),
             Message::class => $this->denormalizeMessage($data),
             MessageId::class => $this->denormalizeMessageId($data),
+            InaccessibleMessage::class => $this->denormalizeInaccessibleMessage($data),
             MessageEntity::class => $this->denormalizeMessageEntity($data),
+            TextQuote::class => $this->denormalizeTextQuote($data),
+            ExternalReplyInfo::class => $this->denormalizeExternalReplyInfo($data),
+            ReplyParameters::class => $this->denormalizeReplyParameters($data),
+            MessageOriginUser::class => $this->denormalizeMessageOriginUser($data),
+            MessageOriginHiddenUser::class => $this->denormalizeMessageOriginHiddenUser($data),
+            MessageOriginChat::class => $this->denormalizeMessageOriginChat($data),
+            MessageOriginChannel::class => $this->denormalizeMessageOriginChannel($data),
             PhotoSize::class => $this->denormalizePhotoSize($data),
             Animation::class => $this->denormalizeAnimation($data),
             Audio::class => $this->denormalizeAudio($data),
@@ -4539,19 +5351,24 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             ForumTopicReopened::class => $this->denormalizeForumTopicReopened($data),
             GeneralForumTopicHidden::class => $this->denormalizeGeneralForumTopicHidden($data),
             GeneralForumTopicUnhidden::class => $this->denormalizeGeneralForumTopicUnhidden($data),
-            UserShared::class => $this->denormalizeUserShared($data),
+            UsersShared::class => $this->denormalizeUsersShared($data),
             ChatShared::class => $this->denormalizeChatShared($data),
             WriteAccessAllowed::class => $this->denormalizeWriteAccessAllowed($data),
             VideoChatScheduled::class => $this->denormalizeVideoChatScheduled($data),
             VideoChatStarted::class => $this->denormalizeVideoChatStarted($data),
             VideoChatEnded::class => $this->denormalizeVideoChatEnded($data),
             VideoChatParticipantsInvited::class => $this->denormalizeVideoChatParticipantsInvited($data),
+            GiveawayCreated::class => $this->denormalizeGiveawayCreated($data),
+            Giveaway::class => $this->denormalizeGiveaway($data),
+            GiveawayWinners::class => $this->denormalizeGiveawayWinners($data),
+            GiveawayCompleted::class => $this->denormalizeGiveawayCompleted($data),
+            LinkPreviewOptions::class => $this->denormalizeLinkPreviewOptions($data),
             UserProfilePhotos::class => $this->denormalizeUserProfilePhotos($data),
             File::class => $this->denormalizeFile($data),
             WebAppInfo::class => $this->denormalizeWebAppInfo($data),
             ReplyKeyboardMarkup::class => $this->denormalizeReplyKeyboardMarkup($data),
             KeyboardButton::class => $this->denormalizeKeyboardButton($data),
-            KeyboardButtonRequestUser::class => $this->denormalizeKeyboardButtonRequestUser($data),
+            KeyboardButtonRequestUsers::class => $this->denormalizeKeyboardButtonRequestUsers($data),
             KeyboardButtonRequestChat::class => $this->denormalizeKeyboardButtonRequestChat($data),
             KeyboardButtonPollType::class => $this->denormalizeKeyboardButtonPollType($data),
             ReplyKeyboardRemove::class => $this->denormalizeReplyKeyboardRemove($data),
@@ -4564,16 +5381,21 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             ChatPhoto::class => $this->denormalizeChatPhoto($data),
             ChatInviteLink::class => $this->denormalizeChatInviteLink($data),
             ChatAdministratorRights::class => $this->denormalizeChatAdministratorRights($data),
+            ChatMemberUpdated::class => $this->denormalizeChatMemberUpdated($data),
             ChatMemberOwner::class => $this->denormalizeChatMemberOwner($data),
             ChatMemberAdministrator::class => $this->denormalizeChatMemberAdministrator($data),
             ChatMemberMember::class => $this->denormalizeChatMemberMember($data),
             ChatMemberRestricted::class => $this->denormalizeChatMemberRestricted($data),
             ChatMemberLeft::class => $this->denormalizeChatMemberLeft($data),
             ChatMemberBanned::class => $this->denormalizeChatMemberBanned($data),
-            ChatMemberUpdated::class => $this->denormalizeChatMemberUpdated($data),
             ChatJoinRequest::class => $this->denormalizeChatJoinRequest($data),
             ChatPermissions::class => $this->denormalizeChatPermissions($data),
             ChatLocation::class => $this->denormalizeChatLocation($data),
+            ReactionTypeEmoji::class => $this->denormalizeReactionTypeEmoji($data),
+            ReactionTypeCustomEmoji::class => $this->denormalizeReactionTypeCustomEmoji($data),
+            ReactionCount::class => $this->denormalizeReactionCount($data),
+            MessageReactionUpdated::class => $this->denormalizeMessageReactionUpdated($data),
+            MessageReactionCountUpdated::class => $this->denormalizeMessageReactionCountUpdated($data),
             ForumTopic::class => $this->denormalizeForumTopic($data),
             BotCommand::class => $this->denormalizeBotCommand($data),
             BotCommandScopeDefault::class => $this->denormalizeBotCommandScopeDefault($data),
@@ -4589,6 +5411,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             MenuButtonCommands::class => $this->denormalizeMenuButtonCommands($data),
             MenuButtonWebApp::class => $this->denormalizeMenuButtonWebApp($data),
             MenuButtonDefault::class => $this->denormalizeMenuButtonDefault($data),
+            ChatBoostSourcePremium::class => $this->denormalizeChatBoostSourcePremium($data),
+            ChatBoostSourceGiftCode::class => $this->denormalizeChatBoostSourceGiftCode($data),
+            ChatBoostSourceGiveaway::class => $this->denormalizeChatBoostSourceGiveaway($data),
+            ChatBoost::class => $this->denormalizeChatBoost($data),
+            ChatBoostUpdated::class => $this->denormalizeChatBoostUpdated($data),
+            ChatBoostRemoved::class => $this->denormalizeChatBoostRemoved($data),
+            UserChatBoosts::class => $this->denormalizeUserChatBoosts($data),
             ResponseParameters::class => $this->denormalizeResponseParameters($data),
             InputMediaPhoto::class => $this->denormalizeInputMediaPhoto($data),
             InputMediaVideo::class => $this->denormalizeInputMediaVideo($data),

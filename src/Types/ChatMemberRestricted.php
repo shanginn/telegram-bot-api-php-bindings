@@ -11,7 +11,7 @@ class ChatMemberRestricted extends ChatMember
      * @param string $status                The member's status in the chat, always “restricted”
      * @param User   $user                  Information about the user
      * @param bool   $isMember              True, if the user is a member of the chat at the moment of the request
-     * @param bool   $canSendMessages       True, if the user is allowed to send text messages, contacts, invoices, locations and venues
+     * @param bool   $canSendMessages       True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues
      * @param bool   $canSendAudios         True, if the user is allowed to send audios
      * @param bool   $canSendDocuments      True, if the user is allowed to send documents
      * @param bool   $canSendPhotos         True, if the user is allowed to send photos

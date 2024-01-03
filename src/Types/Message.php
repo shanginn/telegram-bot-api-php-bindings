@@ -5,24 +5,21 @@ namespace Shanginn\TelegramBotApiBindings\Types;
 /**
  * This object represents a message.
  */
-class Message implements TypeInterface
+class Message extends MaybeInaccessibleMessage
 {
     /**
      * @param int                                $messageId                     Unique message identifier inside this chat
-     * @param int                                $date                          Date the message was sent in Unix time
-     * @param Chat                               $chat                          Conversation the message belongs to
+     * @param int                                $date                          Date the message was sent in Unix time. It is always a positive number, representing a valid date.
+     * @param Chat                               $chat                          Chat the message belongs to
      * @param int|null                           $messageThreadId               Optional. Unique identifier of a message thread to which the message belongs; for supergroups only
      * @param User|null                          $from                          Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
      * @param Chat|null                          $senderChat                    Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
-     * @param User|null                          $forwardFrom                   Optional. For forwarded messages, sender of the original message
-     * @param Chat|null                          $forwardFromChat               Optional. For messages forwarded from channels or from anonymous administrators, information about the original sender chat
-     * @param int|null                           $forwardFromMessageId          Optional. For messages forwarded from channels, identifier of the original message in the channel
-     * @param string|null                        $forwardSignature              Optional. For forwarded messages that were originally sent in channels or by an anonymous chat administrator, signature of the message sender if present
-     * @param string|null                        $forwardSenderName             Optional. Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
-     * @param int|null                           $forwardDate                   Optional. For forwarded messages, date the original message was sent in Unix time
+     * @param MessageOrigin|null                 $forwardOrigin                 Optional. Information about the original message for forwarded messages
      * @param bool|null                          $isTopicMessage                Optional. True, if the message is sent to a forum topic
      * @param bool|null                          $isAutomaticForward            Optional. True, if the message is a channel post that was automatically forwarded to the connected discussion group
-     * @param Message|null                       $replyToMessage                Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+     * @param Message|null                       $replyToMessage                Optional. For replies in the same chat and message thread, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+     * @param ExternalReplyInfo|null             $externalReply                 Optional. Information about the message that is being replied to, which may come from another chat or forum topic
+     * @param TextQuote|null                     $quote                         Optional. For replies that quote part of the original message, the quoted part of the message
      * @param User|null                          $viaBot                        Optional. Bot through which the message was sent
      * @param int|null                           $editDate                      Optional. Date the message was last edited in Unix time
      * @param bool|null                          $hasProtectedContent           Optional. True, if the message can't be forwarded
@@ -30,6 +27,7 @@ class Message implements TypeInterface
      * @param string|null                        $authorSignature               Optional. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator
      * @param string|null                        $text                          Optional. For text messages, the actual UTF-8 text of the message
      * @param array<MessageEntity>|null          $entities                      Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+     * @param LinkPreviewOptions|null            $linkPreviewOptions            Optional. Options used for link preview generation for the message, if it is a text message and link preview options were changed
      * @param Animation|null                     $animation                     Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
      * @param Audio|null                         $audio                         Optional. Message is an audio file, information about the file
      * @param Document|null                      $document                      Optional. Message is a general file, information about the file
@@ -59,10 +57,10 @@ class Message implements TypeInterface
      * @param MessageAutoDeleteTimerChanged|null $messageAutoDeleteTimerChanged Optional. Service message: auto-delete timer settings changed in the chat
      * @param int|null                           $migrateToChatId               Optional. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
      * @param int|null                           $migrateFromChatId             Optional. The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
-     * @param Message|null                       $pinnedMessage                 Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
+     * @param MaybeInaccessibleMessage|null      $pinnedMessage                 Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
      * @param Invoice|null                       $invoice                       Optional. Message is an invoice for a payment, information about the invoice. More about payments »
      * @param SuccessfulPayment|null             $successfulPayment             Optional. Message is a service message about a successful payment, information about the payment. More about payments »
-     * @param UserShared|null                    $userShared                    Optional. Service message: a user was shared with the bot
+     * @param UsersShared|null                   $usersShared                   Optional. Service message: users were shared with the bot
      * @param ChatShared|null                    $chatShared                    Optional. Service message: a chat was shared with the bot
      * @param string|null                        $connectedWebsite              Optional. The domain name of the website on which the user has logged in. More about Telegram Login »
      * @param WriteAccessAllowed|null            $writeAccessAllowed            Optional. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess
@@ -74,6 +72,10 @@ class Message implements TypeInterface
      * @param ForumTopicReopened|null            $forumTopicReopened            Optional. Service message: forum topic reopened
      * @param GeneralForumTopicHidden|null       $generalForumTopicHidden       Optional. Service message: the 'General' forum topic hidden
      * @param GeneralForumTopicUnhidden|null     $generalForumTopicUnhidden     Optional. Service message: the 'General' forum topic unhidden
+     * @param GiveawayCreated|null               $giveawayCreated               Optional. Service message: a scheduled giveaway was created
+     * @param Giveaway|null                      $giveaway                      Optional. The message is a scheduled giveaway message
+     * @param GiveawayWinners|null               $giveawayWinners               Optional. A giveaway with public winners was completed
+     * @param GiveawayCompleted|null             $giveawayCompleted             Optional. Service message: a giveaway without public winners was completed
      * @param VideoChatScheduled|null            $videoChatScheduled            Optional. Service message: video chat scheduled
      * @param VideoChatStarted|null              $videoChatStarted              Optional. Service message: video chat started
      * @param VideoChatEnded|null                $videoChatEnded                Optional. Service message: video chat ended
@@ -88,15 +90,12 @@ class Message implements TypeInterface
         public ?int $messageThreadId = null,
         public ?User $from = null,
         public ?Chat $senderChat = null,
-        public ?User $forwardFrom = null,
-        public ?Chat $forwardFromChat = null,
-        public ?int $forwardFromMessageId = null,
-        public ?string $forwardSignature = null,
-        public ?string $forwardSenderName = null,
-        public ?int $forwardDate = null,
+        public ?MessageOrigin $forwardOrigin = null,
         public ?bool $isTopicMessage = null,
         public ?bool $isAutomaticForward = null,
         public ?Message $replyToMessage = null,
+        public ?ExternalReplyInfo $externalReply = null,
+        public ?TextQuote $quote = null,
         public ?User $viaBot = null,
         public ?int $editDate = null,
         public ?bool $hasProtectedContent = null,
@@ -104,6 +103,7 @@ class Message implements TypeInterface
         public ?string $authorSignature = null,
         public ?string $text = null,
         public ?array $entities = null,
+        public ?LinkPreviewOptions $linkPreviewOptions = null,
         public ?Animation $animation = null,
         public ?Audio $audio = null,
         public ?Document $document = null,
@@ -133,10 +133,10 @@ class Message implements TypeInterface
         public ?MessageAutoDeleteTimerChanged $messageAutoDeleteTimerChanged = null,
         public ?int $migrateToChatId = null,
         public ?int $migrateFromChatId = null,
-        public ?Message $pinnedMessage = null,
+        public ?MaybeInaccessibleMessage $pinnedMessage = null,
         public ?Invoice $invoice = null,
         public ?SuccessfulPayment $successfulPayment = null,
-        public ?UserShared $userShared = null,
+        public ?UsersShared $usersShared = null,
         public ?ChatShared $chatShared = null,
         public ?string $connectedWebsite = null,
         public ?WriteAccessAllowed $writeAccessAllowed = null,
@@ -148,6 +148,10 @@ class Message implements TypeInterface
         public ?ForumTopicReopened $forumTopicReopened = null,
         public ?GeneralForumTopicHidden $generalForumTopicHidden = null,
         public ?GeneralForumTopicUnhidden $generalForumTopicUnhidden = null,
+        public ?GiveawayCreated $giveawayCreated = null,
+        public ?Giveaway $giveaway = null,
+        public ?GiveawayWinners $giveawayWinners = null,
+        public ?GiveawayCompleted $giveawayCompleted = null,
         public ?VideoChatScheduled $videoChatScheduled = null,
         public ?VideoChatStarted $videoChatStarted = null,
         public ?VideoChatEnded $videoChatEnded = null,
