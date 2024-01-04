@@ -832,7 +832,13 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeMessageOrigin(array $data): Types\MessageOrigin
     {
-        throw new \RuntimeException('class MessageOrigin is abstract and not yet implemented');
+        return match ($data['type']) {
+            'user' => $this->denormalizeMessageOriginUser($data),
+            'hidden_user' => $this->denormalizeMessageOriginHiddenUser($data),
+            'chat' => $this->denormalizeMessageOriginChat($data),
+            'channel' => $this->denormalizeMessageOriginChannel($data),
+            default => throw new \InvalidArgumentException(sprintf('Invalid type "%s" given. Supported types are: "user", "hidden_user", "chat", "channel"', $data['type'])),
+        };
     }
 
     public function denormalizeMessageOriginUser(array $data): MessageOriginUser

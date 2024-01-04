@@ -5,6 +5,7 @@ use Shanginn\TelegramBotApiBindings\Types\ChatMemberMember;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardButton;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup;
 use Shanginn\TelegramBotApiBindings\Types\Message;
+use Shanginn\TelegramBotApiBindings\Types\MessageOriginUser;
 
 test('InlineKeyboardMarkup is a valid json', function () {
     $serializer = new TelegramBotApiSerializer();
@@ -153,4 +154,60 @@ test('abstract MaybeInaccessibleMessage deserialize into concrete class', functi
 
     expect($updates[0]->callbackQuery->message)
         ->toBeInstanceOf(Message::class);
+});
+
+test('abstract MessageOrigin into concrete class', function () {
+    $updatesData = [
+        [
+            'update_id' => 1,
+            'message' => [
+                'message_id' => 54321,
+                'from' => [
+                    'id' => 11223344,
+                    'is_bot' => false,
+                    'first_name' => 'John',
+                    'username' => 'johndoe',
+                    'language_code' => 'ru',
+                    'is_premium' => true,
+                ],
+                'chat' => [
+                    'id' => 11223344,
+                    'first_name' => 'John',
+                    'username' => 'johndoe',
+                    'type' => 'private',
+                ],
+                'date' => 1600000000,
+                'forward_origin' => [
+                    'type' => 'user',
+                    'sender_user' => [
+                        'id' => 11223344,
+                        'is_bot' => false,
+                        'first_name' => 'John',
+                        'username' => 'johndoe',
+                        'language_code' => 'ru',
+                        'is_premium' => true,
+                    ],
+                    'date' => 1600000500,
+                ],
+                'forward_from' => [
+                    'id' => 11223344,
+                    'is_bot' => false,
+                    'first_name' => 'John',
+                    'username' => 'johndoe',
+                    'language_code' => 'ru',
+                    'is_premium' => true,
+                ],
+                'forward_date' => 1600000500,
+            ],
+        ],
+    ];
+
+    $serializer = new TelegramBotApiSerializer();
+    $updates = $serializer->deserialize(
+        data: json_encode($updatesData),
+        types: ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]
+    );
+
+    expect($updates[0]->message->forwardOrigin)
+        ->toBeInstanceOf(MessageOriginUser::class);
 });
