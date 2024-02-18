@@ -3,11 +3,17 @@
 namespace Shanginn\TelegramBotApiBindings\Types;
 
 /**
- * This object represents a message about a forwarded story in the chat. Currently holds no information.
+ * This object represents a story.
  */
 class Story implements TypeInterface
 {
-    public function __construct()
-    {
+    /**
+     * @param Chat $chat Chat that posted the story
+     * @param int  $id   Unique identifier for the story in the chat
+     */
+    public function __construct(
+        public Chat $chat,
+        public int $id,
+    ) {
     }
 }

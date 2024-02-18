@@ -787,19 +787,19 @@ interface TelegramBotApiInterface
      * @param int|string $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param int        $userId              Unique identifier of the target user
      * @param bool|null  $isAnonymous         Pass True if the administrator's presence in the chat is hidden
-     * @param bool|null  $canManageChat       Pass True if the administrator can access the chat event log, boost list in channels, see channel members, report spam messages, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege
+     * @param bool|null  $canManageChat       Pass True if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages and ignore slow mode. Implied by any other administrator privilege.
      * @param bool|null  $canDeleteMessages   Pass True if the administrator can delete messages of other users
      * @param bool|null  $canManageVideoChats Pass True if the administrator can manage video chats
      * @param bool|null  $canRestrictMembers  Pass True if the administrator can restrict, ban or unban chat members, or access supergroup statistics
      * @param bool|null  $canPromoteMembers   Pass True if the administrator can add new administrators with a subset of their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by administrators that were appointed by him)
      * @param bool|null  $canChangeInfo       Pass True if the administrator can change chat title, photo and other settings
      * @param bool|null  $canInviteUsers      Pass True if the administrator can invite new users to the chat
+     * @param bool|null  $canPostStories      Pass True if the administrator can post stories to the chat
+     * @param bool|null  $canEditStories      Pass True if the administrator can edit stories posted by other users
+     * @param bool|null  $canDeleteStories    Pass True if the administrator can delete stories posted by other users
      * @param bool|null  $canPostMessages     Pass True if the administrator can post messages in the channel, or access channel statistics; channels only
      * @param bool|null  $canEditMessages     Pass True if the administrator can edit messages of other users and can pin messages; channels only
      * @param bool|null  $canPinMessages      Pass True if the administrator can pin messages, supergroups only
-     * @param bool|null  $canPostStories      Pass True if the administrator can post stories in the channel; channels only
-     * @param bool|null  $canEditStories      Pass True if the administrator can edit stories posted by other users; channels only
-     * @param bool|null  $canDeleteStories    Pass True if the administrator can delete stories posted by other users; channels only
      * @param bool|null  $canManageTopics     Pass True if the user is allowed to create, rename, close, and reopen forum topics, supergroups only
      *
      * @return PromiseInterface<bool>
@@ -815,12 +815,12 @@ interface TelegramBotApiInterface
         bool $canPromoteMembers = null,
         bool $canChangeInfo = null,
         bool $canInviteUsers = null,
-        bool $canPostMessages = null,
-        bool $canEditMessages = null,
-        bool $canPinMessages = null,
         bool $canPostStories = null,
         bool $canEditStories = null,
         bool $canDeleteStories = null,
+        bool $canPostMessages = null,
+        bool $canEditMessages = null,
+        bool $canPinMessages = null,
         bool $canManageTopics = null,
     ): PromiseInterface;
 

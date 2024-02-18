@@ -20,6 +20,7 @@ use Shanginn\TelegramBotApiBindings\Types\CallbackQuery;
 use Shanginn\TelegramBotApiBindings\Types\Chat;
 use Shanginn\TelegramBotApiBindings\Types\ChatAdministratorRights;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoost;
+use Shanginn\TelegramBotApiBindings\Types\ChatBoostAdded;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoostRemoved;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoostSourceGiftCode;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoostSourceGiveaway;
@@ -375,6 +376,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 ? $this->denormalizeChatPermissions($data['permissions'])
                 : null,
             slowModeDelay: $data['slow_mode_delay'] ?? null,
+            unrestrictBoostCount: $data['unrestrict_boost_count'] ?? null,
             messageAutoDeleteTime: $data['message_auto_delete_time'] ?? null,
             hasAggressiveAntiSpamEnabled: $data['has_aggressive_anti_spam_enabled'] ?? null,
             hasHiddenMembers: $data['has_hidden_members'] ?? null,
@@ -382,6 +384,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             hasVisibleHistory: $data['has_visible_history'] ?? null,
             stickerSetName: $data['sticker_set_name'] ?? null,
             canSetStickerSet: $data['can_set_sticker_set'] ?? null,
+            customEmojiStickerSetName: $data['custom_emoji_sticker_set_name'] ?? null,
             linkedChatId: $data['linked_chat_id'] ?? null,
             location: ($data['location'] ?? null) !== null
                 ? $this->denormalizeChatLocation($data['location'])
@@ -420,6 +423,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             senderChat: ($data['sender_chat'] ?? null) !== null
                 ? $this->denormalizeChat($data['sender_chat'])
                 : null,
+            senderBoostCount: $data['sender_boost_count'] ?? null,
             forwardOrigin: ($data['forward_origin'] ?? null) !== null
                 ? $this->denormalizeMessageOrigin($data['forward_origin'])
                 : null,
@@ -433,6 +437,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             quote: ($data['quote'] ?? null) !== null
                 ? $this->denormalizeTextQuote($data['quote'])
+                : null,
+            replyToStory: ($data['reply_to_story'] ?? null) !== null
+                ? $this->denormalizeStory($data['reply_to_story'])
                 : null,
             viaBot: ($data['via_bot'] ?? null) !== null
                 ? $this->denormalizeUser($data['via_bot'])
@@ -541,6 +548,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             proximityAlertTriggered: ($data['proximity_alert_triggered'] ?? null) !== null
                 ? $this->denormalizeProximityAlertTriggered($data['proximity_alert_triggered'])
+                : null,
+            boostAdded: ($data['boost_added'] ?? null) !== null
+                ? $this->denormalizeChatBoostAdded($data['boost_added'])
                 : null,
             forumTopicCreated: ($data['forum_topic_created'] ?? null) !== null
                 ? $this->denormalizeForumTopicCreated($data['forum_topic_created'])
@@ -1088,7 +1098,27 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
     public function denormalizeStory(array $data): Story
     {
-        return new Story();
+        $requiredFields = [
+            'chat',
+            'id',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class Story missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new Story(
+            chat: $this->denormalizeChat($data['chat']),
+            id: $data['id'],
+        );
     }
 
     public function denormalizeVideo(array $data): Video
@@ -1475,6 +1505,29 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
         return new MessageAutoDeleteTimerChanged(
             messageAutoDeleteTime: $data['message_auto_delete_time'],
+        );
+    }
+
+    public function denormalizeChatBoostAdded(array $data): ChatBoostAdded
+    {
+        $requiredFields = [
+            'boost_count',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatBoostAdded missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatBoostAdded(
+            boostCount: $data['boost_count'],
         );
     }
 
@@ -2228,6 +2281,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             'can_promote_members',
             'can_change_info',
             'can_invite_users',
+            'can_post_stories',
+            'can_edit_stories',
+            'can_delete_stories',
         ];
 
         $missingFields = [];
@@ -2251,12 +2307,12 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             canPromoteMembers: $data['can_promote_members'],
             canChangeInfo: $data['can_change_info'],
             canInviteUsers: $data['can_invite_users'],
+            canPostStories: $data['can_post_stories'],
+            canEditStories: $data['can_edit_stories'],
+            canDeleteStories: $data['can_delete_stories'],
             canPostMessages: $data['can_post_messages'] ?? null,
             canEditMessages: $data['can_edit_messages'] ?? null,
             canPinMessages: $data['can_pin_messages'] ?? null,
-            canPostStories: $data['can_post_stories'] ?? null,
-            canEditStories: $data['can_edit_stories'] ?? null,
-            canDeleteStories: $data['can_delete_stories'] ?? null,
             canManageTopics: $data['can_manage_topics'] ?? null,
         );
     }
@@ -2351,6 +2407,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             'can_promote_members',
             'can_change_info',
             'can_invite_users',
+            'can_post_stories',
+            'can_edit_stories',
+            'can_delete_stories',
         ];
 
         $missingFields = [];
@@ -2377,12 +2436,12 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             canPromoteMembers: $data['can_promote_members'],
             canChangeInfo: $data['can_change_info'],
             canInviteUsers: $data['can_invite_users'],
+            canPostStories: $data['can_post_stories'],
+            canEditStories: $data['can_edit_stories'],
+            canDeleteStories: $data['can_delete_stories'],
             canPostMessages: $data['can_post_messages'] ?? null,
             canEditMessages: $data['can_edit_messages'] ?? null,
             canPinMessages: $data['can_pin_messages'] ?? null,
-            canPostStories: $data['can_post_stories'] ?? null,
-            canEditStories: $data['can_edit_stories'] ?? null,
-            canDeleteStories: $data['can_delete_stories'] ?? null,
             canManageTopics: $data['can_manage_topics'] ?? null,
             customTitle: $data['custom_title'] ?? null,
         );
@@ -5363,6 +5422,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             WebAppData::class => $this->denormalizeWebAppData($data),
             ProximityAlertTriggered::class => $this->denormalizeProximityAlertTriggered($data),
             MessageAutoDeleteTimerChanged::class => $this->denormalizeMessageAutoDeleteTimerChanged($data),
+            ChatBoostAdded::class => $this->denormalizeChatBoostAdded($data),
             ForumTopicCreated::class => $this->denormalizeForumTopicCreated($data),
             ForumTopicClosed::class => $this->denormalizeForumTopicClosed($data),
             ForumTopicEdited::class => $this->denormalizeForumTopicEdited($data),

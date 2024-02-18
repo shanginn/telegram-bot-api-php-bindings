@@ -14,12 +14,14 @@ class Message extends MaybeInaccessibleMessage
      * @param int|null                           $messageThreadId               Optional. Unique identifier of a message thread to which the message belongs; for supergroups only
      * @param User|null                          $from                          Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
      * @param Chat|null                          $senderChat                    Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+     * @param int|null                           $senderBoostCount              Optional. If the sender of the message boosted the chat, the number of boosts added by the user
      * @param MessageOrigin|null                 $forwardOrigin                 Optional. Information about the original message for forwarded messages
      * @param bool|null                          $isTopicMessage                Optional. True, if the message is sent to a forum topic
      * @param bool|null                          $isAutomaticForward            Optional. True, if the message is a channel post that was automatically forwarded to the connected discussion group
      * @param Message|null                       $replyToMessage                Optional. For replies in the same chat and message thread, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
      * @param ExternalReplyInfo|null             $externalReply                 Optional. Information about the message that is being replied to, which may come from another chat or forum topic
      * @param TextQuote|null                     $quote                         Optional. For replies that quote part of the original message, the quoted part of the message
+     * @param Story|null                         $replyToStory                  Optional. For replies to a story, the original story
      * @param User|null                          $viaBot                        Optional. Bot through which the message was sent
      * @param int|null                           $editDate                      Optional. Date the message was last edited in Unix time
      * @param bool|null                          $hasProtectedContent           Optional. True, if the message can't be forwarded
@@ -66,6 +68,7 @@ class Message extends MaybeInaccessibleMessage
      * @param WriteAccessAllowed|null            $writeAccessAllowed            Optional. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess
      * @param PassportData|null                  $passportData                  Optional. Telegram Passport data
      * @param ProximityAlertTriggered|null       $proximityAlertTriggered       Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location.
+     * @param ChatBoostAdded|null                $boostAdded                    Optional. Service message: user boosted the chat
      * @param ForumTopicCreated|null             $forumTopicCreated             Optional. Service message: forum topic created
      * @param ForumTopicEdited|null              $forumTopicEdited              Optional. Service message: forum topic edited
      * @param ForumTopicClosed|null              $forumTopicClosed              Optional. Service message: forum topic closed
@@ -90,12 +93,14 @@ class Message extends MaybeInaccessibleMessage
         public ?int $messageThreadId = null,
         public ?User $from = null,
         public ?Chat $senderChat = null,
+        public ?int $senderBoostCount = null,
         public ?MessageOrigin $forwardOrigin = null,
         public ?bool $isTopicMessage = null,
         public ?bool $isAutomaticForward = null,
         public ?Message $replyToMessage = null,
         public ?ExternalReplyInfo $externalReply = null,
         public ?TextQuote $quote = null,
+        public ?Story $replyToStory = null,
         public ?User $viaBot = null,
         public ?int $editDate = null,
         public ?bool $hasProtectedContent = null,
@@ -142,6 +147,7 @@ class Message extends MaybeInaccessibleMessage
         public ?WriteAccessAllowed $writeAccessAllowed = null,
         public ?PassportData $passportData = null,
         public ?ProximityAlertTriggered $proximityAlertTriggered = null,
+        public ?ChatBoostAdded $boostAdded = null,
         public ?ForumTopicCreated $forumTopicCreated = null,
         public ?ForumTopicEdited $forumTopicEdited = null,
         public ?ForumTopicClosed $forumTopicClosed = null,

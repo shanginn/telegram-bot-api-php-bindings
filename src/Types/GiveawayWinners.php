@@ -9,7 +9,7 @@ class GiveawayWinners implements TypeInterface
 {
     /**
      * @param Chat        $chat                          The chat that created the giveaway
-     * @param int         $giveawayMessageId             Identifier of the messsage with the giveaway in the chat
+     * @param int         $giveawayMessageId             Identifier of the message with the giveaway in the chat
      * @param int         $winnersSelectionDate          Point in time (Unix timestamp) when winners of the giveaway were selected
      * @param int         $winnerCount                   Total number of winners in the giveaway
      * @param array<User> $winners                       List of up to 100 winners of the giveaway

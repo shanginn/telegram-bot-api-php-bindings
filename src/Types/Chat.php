@@ -33,7 +33,8 @@ class Chat implements TypeInterface
      * @param string|null              $inviteLink                         Optional. Primary invite link, for groups, supergroups and channel chats. Returned only in getChat.
      * @param Message|null             $pinnedMessage                      Optional. The most recent pinned message (by sending date). Returned only in getChat.
      * @param ChatPermissions|null     $permissions                        Optional. Default chat member permissions, for groups and supergroups. Returned only in getChat.
-     * @param int|null                 $slowModeDelay                      Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user; in seconds. Returned only in getChat.
+     * @param int|null                 $slowModeDelay                      Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds. Returned only in getChat.
+     * @param int|null                 $unrestrictBoostCount               Optional. For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions. Returned only in getChat.
      * @param int|null                 $messageAutoDeleteTime              Optional. The time after which all messages sent to the chat will be automatically deleted; in seconds. Returned only in getChat.
      * @param bool|null                $hasAggressiveAntiSpamEnabled       Optional. True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. Returned only in getChat.
      * @param bool|null                $hasHiddenMembers                   Optional. True, if non-administrators can only get the list of bots and administrators in the chat. Returned only in getChat.
@@ -41,6 +42,7 @@ class Chat implements TypeInterface
      * @param bool|null                $hasVisibleHistory                  Optional. True, if new chat members will have access to old messages; available only to chat administrators. Returned only in getChat.
      * @param string|null              $stickerSetName                     Optional. For supergroups, name of group sticker set. Returned only in getChat.
      * @param bool|null                $canSetStickerSet                   Optional. True, if the bot can change the group sticker set. Returned only in getChat.
+     * @param string|null              $customEmojiStickerSetName          Optional. For supergroups, the name of the group's custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group. Returned only in getChat.
      * @param int|null                 $linkedChatId                       Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in getChat.
      * @param ChatLocation|null        $location                           Optional. For supergroups, the location to which the supergroup is connected. Returned only in getChat.
      */
@@ -71,6 +73,7 @@ class Chat implements TypeInterface
         public ?Message $pinnedMessage = null,
         public ?ChatPermissions $permissions = null,
         public ?int $slowModeDelay = null,
+        public ?int $unrestrictBoostCount = null,
         public ?int $messageAutoDeleteTime = null,
         public ?bool $hasAggressiveAntiSpamEnabled = null,
         public ?bool $hasHiddenMembers = null,
@@ -78,6 +81,7 @@ class Chat implements TypeInterface
         public ?bool $hasVisibleHistory = null,
         public ?string $stickerSetName = null,
         public ?bool $canSetStickerSet = null,
+        public ?string $customEmojiStickerSetName = null,
         public ?int $linkedChatId = null,
         public ?ChatLocation $location = null,
     ) {
