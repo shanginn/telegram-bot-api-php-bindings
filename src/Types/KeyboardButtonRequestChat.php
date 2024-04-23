@@ -3,7 +3,7 @@
 namespace Shanginn\TelegramBotApiBindings\Types;
 
 /**
- * This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed. More about requesting chats ».
+ * This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the сhat if appropriate More about requesting chats ».
  */
 class KeyboardButtonRequestChat implements TypeInterface
 {
@@ -16,6 +16,9 @@ class KeyboardButtonRequestChat implements TypeInterface
      * @param ChatAdministratorRights|null $userAdministratorRights Optional. A JSON-serialized object listing the required administrator rights of the user in the chat. The rights must be a superset of bot_administrator_rights. If not specified, no additional restrictions are applied.
      * @param ChatAdministratorRights|null $botAdministratorRights  Optional. A JSON-serialized object listing the required administrator rights of the bot in the chat. The rights must be a subset of user_administrator_rights. If not specified, no additional restrictions are applied.
      * @param bool|null                    $botIsMember             Optional. Pass True to request a chat with the bot as a member. Otherwise, no additional restrictions are applied.
+     * @param bool|null                    $requestTitle            Optional. Pass True to request the chat's title
+     * @param bool|null                    $requestUsername         Optional. Pass True to request the chat's username
+     * @param bool|null                    $requestPhoto            Optional. Pass True to request the chat's photo
      */
     public function __construct(
         public int $requestId,
@@ -26,6 +29,9 @@ class KeyboardButtonRequestChat implements TypeInterface
         public ?ChatAdministratorRights $userAdministratorRights = null,
         public ?ChatAdministratorRights $botAdministratorRights = null,
         public ?bool $botIsMember = null,
+        public ?bool $requestTitle = null,
+        public ?bool $requestUsername = null,
+        public ?bool $requestPhoto = null,
     ) {
     }
 }

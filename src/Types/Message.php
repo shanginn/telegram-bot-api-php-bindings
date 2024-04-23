@@ -15,6 +15,8 @@ class Message extends MaybeInaccessibleMessage
      * @param User|null                          $from                          Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
      * @param Chat|null                          $senderChat                    Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
      * @param int|null                           $senderBoostCount              Optional. If the sender of the message boosted the chat, the number of boosts added by the user
+     * @param User|null                          $senderBusinessBot             Optional. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.
+     * @param string|null                        $businessConnectionId          Optional. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.
      * @param MessageOrigin|null                 $forwardOrigin                 Optional. Information about the original message for forwarded messages
      * @param bool|null                          $isTopicMessage                Optional. True, if the message is sent to a forum topic
      * @param bool|null                          $isAutomaticForward            Optional. True, if the message is a channel post that was automatically forwarded to the connected discussion group
@@ -25,6 +27,7 @@ class Message extends MaybeInaccessibleMessage
      * @param User|null                          $viaBot                        Optional. Bot through which the message was sent
      * @param int|null                           $editDate                      Optional. Date the message was last edited in Unix time
      * @param bool|null                          $hasProtectedContent           Optional. True, if the message can't be forwarded
+     * @param bool|null                          $isFromOffline                 Optional. True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message
      * @param string|null                        $mediaGroupId                  Optional. The unique identifier of a media message group this message belongs to
      * @param string|null                        $authorSignature               Optional. Signature of the post author for messages in channels, or the custom title of an anonymous group administrator
      * @param string|null                        $text                          Optional. For text messages, the actual UTF-8 text of the message
@@ -94,6 +97,8 @@ class Message extends MaybeInaccessibleMessage
         public ?User $from = null,
         public ?Chat $senderChat = null,
         public ?int $senderBoostCount = null,
+        public ?User $senderBusinessBot = null,
+        public ?string $businessConnectionId = null,
         public ?MessageOrigin $forwardOrigin = null,
         public ?bool $isTopicMessage = null,
         public ?bool $isAutomaticForward = null,
@@ -104,6 +109,7 @@ class Message extends MaybeInaccessibleMessage
         public ?User $viaBot = null,
         public ?int $editDate = null,
         public ?bool $hasProtectedContent = null,
+        public ?bool $isFromOffline = null,
         public ?string $mediaGroupId = null,
         public ?string $authorSignature = null,
         public ?string $text = null,

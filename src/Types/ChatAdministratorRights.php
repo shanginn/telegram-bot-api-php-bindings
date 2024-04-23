@@ -19,10 +19,10 @@ class ChatAdministratorRights implements TypeInterface
      * @param bool      $canPostStories      True, if the administrator can post stories to the chat
      * @param bool      $canEditStories      True, if the administrator can edit stories posted by other users
      * @param bool      $canDeleteStories    True, if the administrator can delete stories posted by other users
-     * @param bool|null $canPostMessages     Optional. True, if the administrator can post messages in the channel, or access channel statistics; channels only
-     * @param bool|null $canEditMessages     Optional. True, if the administrator can edit messages of other users and can pin messages; channels only
-     * @param bool|null $canPinMessages      Optional. True, if the user is allowed to pin messages; groups and supergroups only
-     * @param bool|null $canManageTopics     Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only
+     * @param bool|null $canPostMessages     Optional. True, if the administrator can post messages in the channel, or access channel statistics; for channels only
+     * @param bool|null $canEditMessages     Optional. True, if the administrator can edit messages of other users and can pin messages; for channels only
+     * @param bool|null $canPinMessages      Optional. True, if the user is allowed to pin messages; for groups and supergroups only
+     * @param bool|null $canManageTopics     Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
      */
     public function __construct(
         public bool $isAnonymous,
