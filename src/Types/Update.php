@@ -14,7 +14,7 @@ class Update implements TypeInterface
      * @param Message|null                     $channelPost             Optional. New incoming channel post of any kind - text, photo, sticker, etc.
      * @param Message|null                     $editedChannelPost       Optional. New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
      * @param BusinessConnection|null          $businessConnection      Optional. The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot
-     * @param Message|null                     $businessMessage         Optional. New non-service message from a connected business account
+     * @param Message|null                     $businessMessage         Optional. New message from a connected business account
      * @param Message|null                     $editedBusinessMessage   Optional. New version of a message from a connected business account
      * @param BusinessMessagesDeleted|null     $deletedBusinessMessages Optional. Messages were deleted from a connected business account
      * @param MessageReactionUpdated|null      $messageReaction         Optional. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots.

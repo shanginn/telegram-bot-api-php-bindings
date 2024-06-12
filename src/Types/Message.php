@@ -33,6 +33,7 @@ class Message extends MaybeInaccessibleMessage
      * @param string|null                        $text                          Optional. For text messages, the actual UTF-8 text of the message
      * @param array<MessageEntity>|null          $entities                      Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
      * @param LinkPreviewOptions|null            $linkPreviewOptions            Optional. Options used for link preview generation for the message, if it is a text message and link preview options were changed
+     * @param string|null                        $effectId                      Optional. Unique identifier of the message effect added to the message
      * @param Animation|null                     $animation                     Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
      * @param Audio|null                         $audio                         Optional. Message is an audio file, information about the file
      * @param Document|null                      $document                      Optional. Message is a general file, information about the file
@@ -44,6 +45,7 @@ class Message extends MaybeInaccessibleMessage
      * @param Voice|null                         $voice                         Optional. Message is a voice message, information about the file
      * @param string|null                        $caption                       Optional. Caption for the animation, audio, document, photo, video or voice
      * @param array<MessageEntity>|null          $captionEntities               Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+     * @param bool|null                          $showCaptionAboveMedia         Optional. True, if the caption must be shown above the message media
      * @param bool|null                          $hasMediaSpoiler               Optional. True, if the message media is covered by a spoiler animation
      * @param Contact|null                       $contact                       Optional. Message is a shared contact, information about the contact
      * @param Dice|null                          $dice                          Optional. Message is a dice with random value
@@ -72,6 +74,7 @@ class Message extends MaybeInaccessibleMessage
      * @param PassportData|null                  $passportData                  Optional. Telegram Passport data
      * @param ProximityAlertTriggered|null       $proximityAlertTriggered       Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location.
      * @param ChatBoostAdded|null                $boostAdded                    Optional. Service message: user boosted the chat
+     * @param ChatBackground|null                $chatBackgroundSet             Optional. Service message: chat background set
      * @param ForumTopicCreated|null             $forumTopicCreated             Optional. Service message: forum topic created
      * @param ForumTopicEdited|null              $forumTopicEdited              Optional. Service message: forum topic edited
      * @param ForumTopicClosed|null              $forumTopicClosed              Optional. Service message: forum topic closed
@@ -115,6 +118,7 @@ class Message extends MaybeInaccessibleMessage
         public ?string $text = null,
         public ?array $entities = null,
         public ?LinkPreviewOptions $linkPreviewOptions = null,
+        public ?string $effectId = null,
         public ?Animation $animation = null,
         public ?Audio $audio = null,
         public ?Document $document = null,
@@ -126,6 +130,7 @@ class Message extends MaybeInaccessibleMessage
         public ?Voice $voice = null,
         public ?string $caption = null,
         public ?array $captionEntities = null,
+        public ?bool $showCaptionAboveMedia = null,
         public ?bool $hasMediaSpoiler = null,
         public ?Contact $contact = null,
         public ?Dice $dice = null,
@@ -154,6 +159,7 @@ class Message extends MaybeInaccessibleMessage
         public ?PassportData $passportData = null,
         public ?ProximityAlertTriggered $proximityAlertTriggered = null,
         public ?ChatBoostAdded $boostAdded = null,
+        public ?ChatBackground $chatBackgroundSet = null,
         public ?ForumTopicCreated $forumTopicCreated = null,
         public ?ForumTopicEdited $forumTopicEdited = null,
         public ?ForumTopicClosed $forumTopicClosed = null,

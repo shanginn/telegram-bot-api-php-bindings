@@ -17,7 +17,7 @@ class ChatAdministratorRights implements TypeInterface
      * @param bool      $canChangeInfo       True, if the user is allowed to change the chat title, photo and other settings
      * @param bool      $canInviteUsers      True, if the user is allowed to invite new users to the chat
      * @param bool      $canPostStories      True, if the administrator can post stories to the chat
-     * @param bool      $canEditStories      True, if the administrator can edit stories posted by other users
+     * @param bool      $canEditStories      True, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive
      * @param bool      $canDeleteStories    True, if the administrator can delete stories posted by other users
      * @param bool|null $canPostMessages     Optional. True, if the administrator can post messages in the channel, or access channel statistics; for channels only
      * @param bool|null $canEditMessages     Optional. True, if the administrator can edit messages of other users and can pin messages; for channels only

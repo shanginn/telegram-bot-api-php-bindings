@@ -2,6 +2,9 @@
 
 namespace Shanginn\TelegramBotApiBindings\Types;
 
+/**
+ * Contains information about the location of a Telegram Business account.
+ */
 class BusinessLocation implements TypeInterface
 {
     /**

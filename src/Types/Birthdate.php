@@ -2,6 +2,9 @@
 
 namespace Shanginn\TelegramBotApiBindings\Types;
 
+/**
+ * Describes the birthdate of a user.
+ */
 class Birthdate implements TypeInterface
 {
     /**

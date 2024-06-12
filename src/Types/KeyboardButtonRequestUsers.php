@@ -12,9 +12,9 @@ class KeyboardButtonRequestUsers implements TypeInterface
      * @param bool|null $userIsBot       Optional. Pass True to request bots, pass False to request regular users. If not specified, no additional restrictions are applied.
      * @param bool|null $userIsPremium   Optional. Pass True to request premium users, pass False to request non-premium users. If not specified, no additional restrictions are applied.
      * @param int|null  $maxQuantity     Optional. The maximum number of users to be selected; 1-10. Defaults to 1.
-     * @param bool|null $requestName     Optional. Pass True to request the users' first and last name
-     * @param bool|null $requestUsername Optional. Pass True to request the users' username
-     * @param bool|null $requestPhoto    Optional. Pass True to request the users' photo
+     * @param bool|null $requestName     Optional. Pass True to request the users' first and last names
+     * @param bool|null $requestUsername Optional. Pass True to request the users' usernames
+     * @param bool|null $requestPhoto    Optional. Pass True to request the users' photos
      */
     public function __construct(
         public int $requestId,

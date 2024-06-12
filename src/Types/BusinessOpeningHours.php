@@ -2,6 +2,9 @@
 
 namespace Shanginn\TelegramBotApiBindings\Types;
 
+/**
+ * Describes the opening hours of a business.
+ */
 class BusinessOpeningHours implements TypeInterface
 {
     /**

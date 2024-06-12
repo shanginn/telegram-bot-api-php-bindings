@@ -4,6 +4,13 @@ namespace Shanginn\TelegramBotApiBindings;
 
 use Shanginn\TelegramBotApiBindings\Types\Animation;
 use Shanginn\TelegramBotApiBindings\Types\Audio;
+use Shanginn\TelegramBotApiBindings\Types\BackgroundFillFreeformGradient;
+use Shanginn\TelegramBotApiBindings\Types\BackgroundFillGradient;
+use Shanginn\TelegramBotApiBindings\Types\BackgroundFillSolid;
+use Shanginn\TelegramBotApiBindings\Types\BackgroundTypeChatTheme;
+use Shanginn\TelegramBotApiBindings\Types\BackgroundTypeFill;
+use Shanginn\TelegramBotApiBindings\Types\BackgroundTypePattern;
+use Shanginn\TelegramBotApiBindings\Types\BackgroundTypeWallpaper;
 use Shanginn\TelegramBotApiBindings\Types\Birthdate;
 use Shanginn\TelegramBotApiBindings\Types\BotCommand;
 use Shanginn\TelegramBotApiBindings\Types\BotCommandScopeAllChatAdministrators;
@@ -26,6 +33,7 @@ use Shanginn\TelegramBotApiBindings\Types\CallbackGame;
 use Shanginn\TelegramBotApiBindings\Types\CallbackQuery;
 use Shanginn\TelegramBotApiBindings\Types\Chat;
 use Shanginn\TelegramBotApiBindings\Types\ChatAdministratorRights;
+use Shanginn\TelegramBotApiBindings\Types\ChatBackground;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoost;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoostAdded;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoostRemoved;
@@ -33,6 +41,7 @@ use Shanginn\TelegramBotApiBindings\Types\ChatBoostSourceGiftCode;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoostSourceGiveaway;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoostSourcePremium;
 use Shanginn\TelegramBotApiBindings\Types\ChatBoostUpdated;
+use Shanginn\TelegramBotApiBindings\Types\ChatFullInfo;
 use Shanginn\TelegramBotApiBindings\Types\ChatInviteLink;
 use Shanginn\TelegramBotApiBindings\Types\ChatJoinRequest;
 use Shanginn\TelegramBotApiBindings\Types\ChatLocation;
@@ -102,6 +111,7 @@ use Shanginn\TelegramBotApiBindings\Types\InputMediaAudio;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaDocument;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaPhoto;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaVideo;
+use Shanginn\TelegramBotApiBindings\Types\InputPollOption;
 use Shanginn\TelegramBotApiBindings\Types\InputSticker;
 use Shanginn\TelegramBotApiBindings\Types\InputTextMessageContent;
 use Shanginn\TelegramBotApiBindings\Types\InputVenueMessageContent;
@@ -370,6 +380,40 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             firstName: $data['first_name'] ?? null,
             lastName: $data['last_name'] ?? null,
             isForum: $data['is_forum'] ?? null,
+        );
+    }
+
+    public function denormalizeChatFullInfo(array $data): ChatFullInfo
+    {
+        $requiredFields = [
+            'id',
+            'type',
+            'accent_color_id',
+            'max_reaction_count',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatFullInfo missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatFullInfo(
+            id: $data['id'],
+            type: $data['type'],
+            accentColorId: $data['accent_color_id'],
+            maxReactionCount: $data['max_reaction_count'],
+            title: $data['title'] ?? null,
+            username: $data['username'] ?? null,
+            firstName: $data['first_name'] ?? null,
+            lastName: $data['last_name'] ?? null,
+            isForum: $data['is_forum'] ?? null,
             photo: ($data['photo'] ?? null) !== null
                 ? $this->denormalizeChatPhoto($data['photo'])
                 : null,
@@ -392,7 +436,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             availableReactions: ($data['available_reactions'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeReactionType($item), $data['available_reactions'])
                 : null,
-            accentColorId: $data['accent_color_id'] ?? null,
             backgroundCustomEmojiId: $data['background_custom_emoji_id'] ?? null,
             profileAccentColorId: $data['profile_accent_color_id'] ?? null,
             profileBackgroundCustomEmojiId: $data['profile_background_custom_emoji_id'] ?? null,
@@ -496,6 +539,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             linkPreviewOptions: ($data['link_preview_options'] ?? null) !== null
                 ? $this->denormalizeLinkPreviewOptions($data['link_preview_options'])
                 : null,
+            effectId: $data['effect_id'] ?? null,
             animation: ($data['animation'] ?? null) !== null
                 ? $this->denormalizeAnimation($data['animation'])
                 : null,
@@ -527,6 +571,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             hasMediaSpoiler: $data['has_media_spoiler'] ?? null,
             contact: ($data['contact'] ?? null) !== null
                 ? $this->denormalizeContact($data['contact'])
@@ -592,6 +637,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             boostAdded: ($data['boost_added'] ?? null) !== null
                 ? $this->denormalizeChatBoostAdded($data['boost_added'])
+                : null,
+            chatBackgroundSet: ($data['chat_background_set'] ?? null) !== null
+                ? $this->denormalizeChatBackground($data['chat_background_set'])
                 : null,
             forumTopicCreated: ($data['forum_topic_created'] ?? null) !== null
                 ? $this->denormalizeForumTopicCreated($data['forum_topic_created'])
@@ -1336,6 +1384,36 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new PollOption(
             text: $data['text'],
             voterCount: $data['voter_count'],
+            textEntities: ($data['text_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['text_entities'])
+                : null,
+        );
+    }
+
+    public function denormalizeInputPollOption(array $data): InputPollOption
+    {
+        $requiredFields = [
+            'text',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class InputPollOption missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new InputPollOption(
+            text: $data['text'],
+            textParseMode: $data['text_parse_mode'] ?? null,
+            textEntities: ($data['text_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['text_entities'])
+                : null,
         );
     }
 
@@ -1404,6 +1482,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             isAnonymous: $data['is_anonymous'],
             type: $data['type'],
             allowsMultipleAnswers: $data['allows_multiple_answers'],
+            questionEntities: ($data['question_entities'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['question_entities'])
+                : null,
             correctOptionId: $data['correct_option_id'] ?? null,
             explanation: $data['explanation'] ?? null,
             explanationEntities: ($data['explanation_entities'] ?? null) !== null
@@ -1569,6 +1650,230 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
 
         return new ChatBoostAdded(
             boostCount: $data['boost_count'],
+        );
+    }
+
+    public function denormalizeBackgroundFill(array $data): Types\BackgroundFill
+    {
+        throw new \RuntimeException('class BackgroundFill is abstract and not yet implemented');
+    }
+
+    public function denormalizeBackgroundFillSolid(array $data): BackgroundFillSolid
+    {
+        $requiredFields = [
+            'type',
+            'color',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class BackgroundFillSolid missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new BackgroundFillSolid(
+            type: $data['type'],
+            color: $data['color'],
+        );
+    }
+
+    public function denormalizeBackgroundFillGradient(array $data): BackgroundFillGradient
+    {
+        $requiredFields = [
+            'type',
+            'top_color',
+            'bottom_color',
+            'rotation_angle',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class BackgroundFillGradient missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new BackgroundFillGradient(
+            type: $data['type'],
+            topColor: $data['top_color'],
+            bottomColor: $data['bottom_color'],
+            rotationAngle: $data['rotation_angle'],
+        );
+    }
+
+    public function denormalizeBackgroundFillFreeformGradient(array $data): BackgroundFillFreeformGradient
+    {
+        $requiredFields = [
+            'type',
+            'colors',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class BackgroundFillFreeformGradient missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new BackgroundFillFreeformGradient(
+            type: $data['type'],
+            colors: $data['colors'],
+        );
+    }
+
+    public function denormalizeBackgroundType(array $data): Types\BackgroundType
+    {
+        throw new \RuntimeException('class BackgroundType is abstract and not yet implemented');
+    }
+
+    public function denormalizeBackgroundTypeFill(array $data): BackgroundTypeFill
+    {
+        $requiredFields = [
+            'type',
+            'fill',
+            'dark_theme_dimming',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class BackgroundTypeFill missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new BackgroundTypeFill(
+            type: $data['type'],
+            fill: $this->denormalizeBackgroundFill($data['fill']),
+            darkThemeDimming: $data['dark_theme_dimming'],
+        );
+    }
+
+    public function denormalizeBackgroundTypeWallpaper(array $data): BackgroundTypeWallpaper
+    {
+        $requiredFields = [
+            'type',
+            'document',
+            'dark_theme_dimming',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class BackgroundTypeWallpaper missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new BackgroundTypeWallpaper(
+            type: $data['type'],
+            document: $this->denormalizeDocument($data['document']),
+            darkThemeDimming: $data['dark_theme_dimming'],
+            isBlurred: $data['is_blurred'] ?? null,
+            isMoving: $data['is_moving'] ?? null,
+        );
+    }
+
+    public function denormalizeBackgroundTypePattern(array $data): BackgroundTypePattern
+    {
+        $requiredFields = [
+            'type',
+            'document',
+            'fill',
+            'intensity',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class BackgroundTypePattern missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new BackgroundTypePattern(
+            type: $data['type'],
+            document: $this->denormalizeDocument($data['document']),
+            fill: $this->denormalizeBackgroundFill($data['fill']),
+            intensity: $data['intensity'],
+            isInverted: $data['is_inverted'] ?? null,
+            isMoving: $data['is_moving'] ?? null,
+        );
+    }
+
+    public function denormalizeBackgroundTypeChatTheme(array $data): BackgroundTypeChatTheme
+    {
+        $requiredFields = [
+            'type',
+            'theme_name',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class BackgroundTypeChatTheme missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new BackgroundTypeChatTheme(
+            type: $data['type'],
+            themeName: $data['theme_name'],
+        );
+    }
+
+    public function denormalizeChatBackground(array $data): ChatBackground
+    {
+        $requiredFields = [
+            'type',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ChatBackground missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ChatBackground(
+            type: $this->denormalizeBackgroundType($data['type']),
         );
     }
 
@@ -2429,6 +2734,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             inviteLink: ($data['invite_link'] ?? null) !== null
                 ? $this->denormalizeChatInviteLink($data['invite_link'])
                 : null,
+            viaJoinRequest: $data['via_join_request'] ?? null,
             viaChatFolderInviteLink: $data['via_chat_folder_invite_link'] ?? null,
         );
     }
@@ -3562,6 +3868,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             hasSpoiler: $data['has_spoiler'] ?? null,
         );
     }
@@ -3595,6 +3902,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             width: $data['width'] ?? null,
             height: $data['height'] ?? null,
             duration: $data['duration'] ?? null,
@@ -3632,6 +3940,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             width: $data['width'] ?? null,
             height: $data['height'] ?? null,
             duration: $data['duration'] ?? null,
@@ -3989,6 +4298,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -4033,6 +4343,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -4077,6 +4388,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -4120,6 +4432,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             videoWidth: $data['video_width'] ?? null,
             videoHeight: $data['video_height'] ?? null,
             videoDuration: $data['video_duration'] ?? null,
@@ -4445,6 +4758,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -4483,6 +4797,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -4521,6 +4836,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -4633,6 +4949,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             captionEntities: ($data['caption_entities'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizeMessageEntity($item), $data['caption_entities'])
                 : null,
+            showCaptionAboveMedia: $data['show_caption_above_media'] ?? null,
             replyMarkup: ($data['reply_markup'] ?? null) !== null
                 ? $this->denormalizeInlineKeyboardMarkup($data['reply_markup'])
                 : null,
@@ -4848,7 +5165,6 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             'title',
             'description',
             'payload',
-            'provider_token',
             'currency',
             'prices',
         ];
@@ -4869,9 +5185,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             title: $data['title'],
             description: $data['description'],
             payload: $data['payload'],
-            providerToken: $data['provider_token'],
             currency: $data['currency'],
             prices: array_map(fn (array $item) => $this->denormalizeLabeledPrice($item), $data['prices']),
+            providerToken: $data['provider_token'] ?? null,
             maxTipAmount: $data['max_tip_amount'] ?? null,
             suggestedTipAmounts: $data['suggested_tip_amounts'] ?? null,
             providerData: $data['provider_data'] ?? null,
@@ -5645,6 +5961,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             WebhookInfo::class => $this->denormalizeWebhookInfo($data),
             User::class => $this->denormalizeUser($data),
             Chat::class => $this->denormalizeChat($data),
+            ChatFullInfo::class => $this->denormalizeChatFullInfo($data),
             Message::class => $this->denormalizeMessage($data),
             MessageId::class => $this->denormalizeMessageId($data),
             InaccessibleMessage::class => $this->denormalizeInaccessibleMessage($data),
@@ -5667,6 +5984,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             Contact::class => $this->denormalizeContact($data),
             Dice::class => $this->denormalizeDice($data),
             PollOption::class => $this->denormalizePollOption($data),
+            InputPollOption::class => $this->denormalizeInputPollOption($data),
             PollAnswer::class => $this->denormalizePollAnswer($data),
             Poll::class => $this->denormalizePoll($data),
             Location::class => $this->denormalizeLocation($data),
@@ -5675,6 +5993,14 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             ProximityAlertTriggered::class => $this->denormalizeProximityAlertTriggered($data),
             MessageAutoDeleteTimerChanged::class => $this->denormalizeMessageAutoDeleteTimerChanged($data),
             ChatBoostAdded::class => $this->denormalizeChatBoostAdded($data),
+            BackgroundFillSolid::class => $this->denormalizeBackgroundFillSolid($data),
+            BackgroundFillGradient::class => $this->denormalizeBackgroundFillGradient($data),
+            BackgroundFillFreeformGradient::class => $this->denormalizeBackgroundFillFreeformGradient($data),
+            BackgroundTypeFill::class => $this->denormalizeBackgroundTypeFill($data),
+            BackgroundTypeWallpaper::class => $this->denormalizeBackgroundTypeWallpaper($data),
+            BackgroundTypePattern::class => $this->denormalizeBackgroundTypePattern($data),
+            BackgroundTypeChatTheme::class => $this->denormalizeBackgroundTypeChatTheme($data),
+            ChatBackground::class => $this->denormalizeChatBackground($data),
             ForumTopicCreated::class => $this->denormalizeForumTopicCreated($data),
             ForumTopicClosed::class => $this->denormalizeForumTopicClosed($data),
             ForumTopicEdited::class => $this->denormalizeForumTopicEdited($data),

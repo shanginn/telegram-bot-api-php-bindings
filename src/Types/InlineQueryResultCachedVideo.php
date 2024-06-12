@@ -8,16 +8,17 @@ namespace Shanginn\TelegramBotApiBindings\Types;
 class InlineQueryResultCachedVideo extends InlineQueryResult
 {
     /**
-     * @param string                    $id                  Unique identifier for this result, 1-64 bytes
-     * @param string                    $videoFileId         A valid file identifier for the video file
-     * @param string                    $title               Title for the result
-     * @param string                    $type                Type of the result, must be video
-     * @param string|null               $description         Optional. Short description of the result
-     * @param string|null               $caption             Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
-     * @param string|null               $parseMode           Optional. Mode for parsing entities in the video caption. See formatting options for more details.
-     * @param array<MessageEntity>|null $captionEntities     Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
-     * @param InlineKeyboardMarkup|null $replyMarkup         Optional. Inline keyboard attached to the message
-     * @param InputMessageContent|null  $inputMessageContent Optional. Content of the message to be sent instead of the video
+     * @param string                    $id                    Unique identifier for this result, 1-64 bytes
+     * @param string                    $videoFileId           A valid file identifier for the video file
+     * @param string                    $title                 Title for the result
+     * @param string                    $type                  Type of the result, must be video
+     * @param string|null               $description           Optional. Short description of the result
+     * @param string|null               $caption               Optional. Caption of the video to be sent, 0-1024 characters after entities parsing
+     * @param string|null               $parseMode             Optional. Mode for parsing entities in the video caption. See formatting options for more details.
+     * @param array<MessageEntity>|null $captionEntities       Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode
+     * @param bool|null                 $showCaptionAboveMedia Optional. Pass True, if the caption must be shown above the message media
+     * @param InlineKeyboardMarkup|null $replyMarkup           Optional. Inline keyboard attached to the message
+     * @param InputMessageContent|null  $inputMessageContent   Optional. Content of the message to be sent instead of the video
      */
     public function __construct(
         public string $id,
@@ -28,6 +29,7 @@ class InlineQueryResultCachedVideo extends InlineQueryResult
         public ?string $caption = null,
         public ?string $parseMode = null,
         public ?array $captionEntities = null,
+        public ?bool $showCaptionAboveMedia = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?InputMessageContent $inputMessageContent = null,
     ) {
