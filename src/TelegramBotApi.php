@@ -27,6 +27,7 @@ use Shanginn\TelegramBotApiBindings\Types\InputMediaAudio;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaDocument;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaPhoto;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaVideo;
+use Shanginn\TelegramBotApiBindings\Types\InputPaidMedia;
 use Shanginn\TelegramBotApiBindings\Types\InputPollOption;
 use Shanginn\TelegramBotApiBindings\Types\InputSticker;
 use Shanginn\TelegramBotApiBindings\Types\LabeledPrice;
@@ -44,6 +45,7 @@ use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardRemove;
 use Shanginn\TelegramBotApiBindings\Types\ReplyParameters;
 use Shanginn\TelegramBotApiBindings\Types\SentWebAppMessage;
 use Shanginn\TelegramBotApiBindings\Types\ShippingOption;
+use Shanginn\TelegramBotApiBindings\Types\StarTransactions;
 use Shanginn\TelegramBotApiBindings\Types\Sticker;
 use Shanginn\TelegramBotApiBindings\Types\StickerSet;
 use Shanginn\TelegramBotApiBindings\Types\Update;
@@ -292,7 +294,7 @@ class TelegramBotApi implements TelegramBotApiInterface
     }
 
     /**
-     * Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+     * Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
      *
      * @param int|string                                                                   $chatId                Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param int|string                                                                   $fromChatId            Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
@@ -331,7 +333,7 @@ class TelegramBotApi implements TelegramBotApiInterface
     }
 
     /**
-     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
+     * Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned.
      *
      * @param int|string $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param int|string $fromChatId          Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
@@ -667,6 +669,43 @@ class TelegramBotApi implements TelegramBotApiInterface
         bool $disableNotification = null,
         bool $protectContent = null,
         string $messageEffectId = null,
+        ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+    ): PromiseInterface {
+        return $this->doRequest(
+            __FUNCTION__,
+            get_defined_vars(),
+            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+        );
+    }
+
+    /**
+     * Use this method to send paid media to channel chats. On success, the sent Message is returned.
+     *
+     * @param int|string                                                                   $chatId                Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int                                                                          $starCount             The number of Telegram Stars that must be paid to buy access to the media
+     * @param array<InputPaidMedia>                                                        $media                 A JSON-serialized array describing the media to be sent; up to 10 items
+     * @param string|null                                                                  $caption               Media caption, 0-1024 characters after entities parsing
+     * @param string|null                                                                  $parseMode             Mode for parsing entities in the media caption. See formatting options for more details.
+     * @param array<MessageEntity>|null                                                    $captionEntities       A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
+     * @param bool|null                                                                    $showCaptionAboveMedia Pass True, if the caption must be shown above the message media
+     * @param bool|null                                                                    $disableNotification   Sends the message silently. Users will receive a notification with no sound.
+     * @param bool|null                                                                    $protectContent        Protects the contents of the sent message from forwarding and saving
+     * @param ReplyParameters|null                                                         $replyParameters       Description of the message to reply to
+     * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup           Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user
+     *
+     * @return PromiseInterface<Message>
+     */
+    public function sendPaidMedia(
+        int|string $chatId,
+        int $starCount,
+        array $media,
+        string $caption = null,
+        string $parseMode = null,
+        array $captionEntities = null,
+        bool $showCaptionAboveMedia = null,
+        bool $disableNotification = null,
+        bool $protectContent = null,
         ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
     ): PromiseInterface {
@@ -2063,21 +2102,23 @@ class TelegramBotApi implements TelegramBotApiInterface
     }
 
     /**
-     * Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
-     * @param string                    $text               New text of the message, 1-4096 characters after entities parsing
-     * @param int|string|null           $chatId             Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int|null                  $messageId          Required if inline_message_id is not specified. Identifier of the message to edit
-     * @param string|null               $inlineMessageId    Required if chat_id and message_id are not specified. Identifier of the inline message
-     * @param string|null               $parseMode          Mode for parsing entities in the message text. See formatting options for more details.
-     * @param array<MessageEntity>|null $entities           A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode
-     * @param LinkPreviewOptions|null   $linkPreviewOptions Link preview generation options for the message
-     * @param InlineKeyboardMarkup|null $replyMarkup        a JSON-serialized object for an inline keyboard
+     * @param string                    $text                 New text of the message, 1-4096 characters after entities parsing
+     * @param string|null               $businessConnectionId Unique identifier of the business connection on behalf of which the message to be edited was sent
+     * @param int|string|null           $chatId               Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|null                  $messageId            Required if inline_message_id is not specified. Identifier of the message to edit
+     * @param string|null               $inlineMessageId      Required if chat_id and message_id are not specified. Identifier of the inline message
+     * @param string|null               $parseMode            Mode for parsing entities in the message text. See formatting options for more details.
+     * @param array<MessageEntity>|null $entities             A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode
+     * @param LinkPreviewOptions|null   $linkPreviewOptions   Link preview generation options for the message
+     * @param InlineKeyboardMarkup|null $replyMarkup          a JSON-serialized object for an inline keyboard
      *
      * @return PromiseInterface<Message|bool>
      */
     public function editMessageText(
         string $text,
+        string $businessConnectionId = null,
         int|string $chatId = null,
         int $messageId = null,
         string $inlineMessageId = null,
@@ -2094,8 +2135,9 @@ class TelegramBotApi implements TelegramBotApiInterface
     }
 
     /**
-     * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
+     * @param string|null               $businessConnectionId  Unique identifier of the business connection on behalf of which the message to be edited was sent
      * @param int|string|null           $chatId                Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param int|null                  $messageId             Required if inline_message_id is not specified. Identifier of the message to edit
      * @param string|null               $inlineMessageId       Required if chat_id and message_id are not specified. Identifier of the inline message
@@ -2108,6 +2150,7 @@ class TelegramBotApi implements TelegramBotApiInterface
      * @return PromiseInterface<Message|bool>
      */
     public function editMessageCaption(
+        string $businessConnectionId = null,
         int|string $chatId = null,
         int $messageId = null,
         string $inlineMessageId = null,
@@ -2125,18 +2168,20 @@ class TelegramBotApi implements TelegramBotApiInterface
     }
 
     /**
-     * Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
-     * @param InputMedia                $media           A JSON-serialized object for a new media content of the message
-     * @param int|string|null           $chatId          Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int|null                  $messageId       Required if inline_message_id is not specified. Identifier of the message to edit
-     * @param string|null               $inlineMessageId Required if chat_id and message_id are not specified. Identifier of the inline message
-     * @param InlineKeyboardMarkup|null $replyMarkup     a JSON-serialized object for a new inline keyboard
+     * @param InputMedia                $media                A JSON-serialized object for a new media content of the message
+     * @param string|null               $businessConnectionId Unique identifier of the business connection on behalf of which the message to be edited was sent
+     * @param int|string|null           $chatId               Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|null                  $messageId            Required if inline_message_id is not specified. Identifier of the message to edit
+     * @param string|null               $inlineMessageId      Required if chat_id and message_id are not specified. Identifier of the inline message
+     * @param InlineKeyboardMarkup|null $replyMarkup          a JSON-serialized object for a new inline keyboard
      *
      * @return PromiseInterface<Message|bool>
      */
     public function editMessageMedia(
         InputMedia $media,
+        string $businessConnectionId = null,
         int|string $chatId = null,
         int $messageId = null,
         string $inlineMessageId = null,
@@ -2154,6 +2199,7 @@ class TelegramBotApi implements TelegramBotApiInterface
      *
      * @param float                     $latitude             Latitude of new location
      * @param float                     $longitude            Longitude of new location
+     * @param string|null               $businessConnectionId Unique identifier of the business connection on behalf of which the message to be edited was sent
      * @param int|string|null           $chatId               Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param int|null                  $messageId            Required if inline_message_id is not specified. Identifier of the message to edit
      * @param string|null               $inlineMessageId      Required if chat_id and message_id are not specified. Identifier of the inline message
@@ -2168,6 +2214,7 @@ class TelegramBotApi implements TelegramBotApiInterface
     public function editMessageLiveLocation(
         float $latitude,
         float $longitude,
+        string $businessConnectionId = null,
         int|string $chatId = null,
         int $messageId = null,
         string $inlineMessageId = null,
@@ -2187,14 +2234,16 @@ class TelegramBotApi implements TelegramBotApiInterface
     /**
      * Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned.
      *
-     * @param int|string|null           $chatId          Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int|null                  $messageId       Required if inline_message_id is not specified. Identifier of the message with live location to stop
-     * @param string|null               $inlineMessageId Required if chat_id and message_id are not specified. Identifier of the inline message
-     * @param InlineKeyboardMarkup|null $replyMarkup     a JSON-serialized object for a new inline keyboard
+     * @param string|null               $businessConnectionId Unique identifier of the business connection on behalf of which the message to be edited was sent
+     * @param int|string|null           $chatId               Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|null                  $messageId            Required if inline_message_id is not specified. Identifier of the message with live location to stop
+     * @param string|null               $inlineMessageId      Required if chat_id and message_id are not specified. Identifier of the inline message
+     * @param InlineKeyboardMarkup|null $replyMarkup          a JSON-serialized object for a new inline keyboard
      *
      * @return PromiseInterface<Message|bool>
      */
     public function stopMessageLiveLocation(
+        string $businessConnectionId = null,
         int|string $chatId = null,
         int $messageId = null,
         string $inlineMessageId = null,
@@ -2208,16 +2257,18 @@ class TelegramBotApi implements TelegramBotApiInterface
     }
 
     /**
-     * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.
+     * Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      *
-     * @param int|string|null           $chatId          Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int|null                  $messageId       Required if inline_message_id is not specified. Identifier of the message to edit
-     * @param string|null               $inlineMessageId Required if chat_id and message_id are not specified. Identifier of the inline message
-     * @param InlineKeyboardMarkup|null $replyMarkup     a JSON-serialized object for an inline keyboard
+     * @param string|null               $businessConnectionId Unique identifier of the business connection on behalf of which the message to be edited was sent
+     * @param int|string|null           $chatId               Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|null                  $messageId            Required if inline_message_id is not specified. Identifier of the message to edit
+     * @param string|null               $inlineMessageId      Required if chat_id and message_id are not specified. Identifier of the inline message
+     * @param InlineKeyboardMarkup|null $replyMarkup          a JSON-serialized object for an inline keyboard
      *
      * @return PromiseInterface<Message|bool>
      */
     public function editMessageReplyMarkup(
+        string $businessConnectionId = null,
         int|string $chatId = null,
         int $messageId = null,
         string $inlineMessageId = null,
@@ -2233,15 +2284,17 @@ class TelegramBotApi implements TelegramBotApiInterface
     /**
      * Use this method to stop a poll which was sent by the bot. On success, the stopped Poll is returned.
      *
-     * @param int|string                $chatId      Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int                       $messageId   Identifier of the original message with the poll
-     * @param InlineKeyboardMarkup|null $replyMarkup a JSON-serialized object for a new message inline keyboard
+     * @param int|string                $chatId               Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int                       $messageId            Identifier of the original message with the poll
+     * @param string|null               $businessConnectionId Unique identifier of the business connection on behalf of which the message to be edited was sent
+     * @param InlineKeyboardMarkup|null $replyMarkup          a JSON-serialized object for a new message inline keyboard
      *
      * @return PromiseInterface<Poll>
      */
     public function stopPoll(
         int|string $chatId,
         int $messageId,
+        string $businessConnectionId = null,
         InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
@@ -2806,6 +2859,23 @@ class TelegramBotApi implements TelegramBotApiInterface
             __FUNCTION__,
             get_defined_vars(),
             ['bool']
+        );
+    }
+
+    /**
+     * Returns the bot's Telegram Star transactions in chronological order. On success, returns a StarTransactions object.
+     *
+     * @param int|null $offset Number of transactions to skip in the response
+     * @param int|null $limit  The maximum number of transactions to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+     *
+     * @return PromiseInterface<StarTransactions>
+     */
+    public function getStarTransactions(int $offset = null, ?int $limit = 100): PromiseInterface
+    {
+        return $this->doRequest(
+            __FUNCTION__,
+            get_defined_vars(),
+            ["Shanginn\TelegramBotApiBindings\Types\StarTransactions"]
         );
     }
 

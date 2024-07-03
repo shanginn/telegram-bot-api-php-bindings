@@ -111,6 +111,8 @@ use Shanginn\TelegramBotApiBindings\Types\InputMediaAudio;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaDocument;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaPhoto;
 use Shanginn\TelegramBotApiBindings\Types\InputMediaVideo;
+use Shanginn\TelegramBotApiBindings\Types\InputPaidMediaPhoto;
+use Shanginn\TelegramBotApiBindings\Types\InputPaidMediaVideo;
 use Shanginn\TelegramBotApiBindings\Types\InputPollOption;
 use Shanginn\TelegramBotApiBindings\Types\InputSticker;
 use Shanginn\TelegramBotApiBindings\Types\InputTextMessageContent;
@@ -139,6 +141,10 @@ use Shanginn\TelegramBotApiBindings\Types\MessageOriginUser;
 use Shanginn\TelegramBotApiBindings\Types\MessageReactionCountUpdated;
 use Shanginn\TelegramBotApiBindings\Types\MessageReactionUpdated;
 use Shanginn\TelegramBotApiBindings\Types\OrderInfo;
+use Shanginn\TelegramBotApiBindings\Types\PaidMediaInfo;
+use Shanginn\TelegramBotApiBindings\Types\PaidMediaPhoto;
+use Shanginn\TelegramBotApiBindings\Types\PaidMediaPreview;
+use Shanginn\TelegramBotApiBindings\Types\PaidMediaVideo;
 use Shanginn\TelegramBotApiBindings\Types\PassportData;
 use Shanginn\TelegramBotApiBindings\Types\PassportElementErrorDataField;
 use Shanginn\TelegramBotApiBindings\Types\PassportElementErrorFile;
@@ -163,17 +169,26 @@ use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardMarkup;
 use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardRemove;
 use Shanginn\TelegramBotApiBindings\Types\ReplyParameters;
 use Shanginn\TelegramBotApiBindings\Types\ResponseParameters;
+use Shanginn\TelegramBotApiBindings\Types\RevenueWithdrawalStateFailed;
+use Shanginn\TelegramBotApiBindings\Types\RevenueWithdrawalStatePending;
+use Shanginn\TelegramBotApiBindings\Types\RevenueWithdrawalStateSucceeded;
 use Shanginn\TelegramBotApiBindings\Types\SentWebAppMessage;
 use Shanginn\TelegramBotApiBindings\Types\SharedUser;
 use Shanginn\TelegramBotApiBindings\Types\ShippingAddress;
 use Shanginn\TelegramBotApiBindings\Types\ShippingOption;
 use Shanginn\TelegramBotApiBindings\Types\ShippingQuery;
+use Shanginn\TelegramBotApiBindings\Types\StarTransaction;
+use Shanginn\TelegramBotApiBindings\Types\StarTransactions;
 use Shanginn\TelegramBotApiBindings\Types\Sticker;
 use Shanginn\TelegramBotApiBindings\Types\StickerSet;
 use Shanginn\TelegramBotApiBindings\Types\Story;
 use Shanginn\TelegramBotApiBindings\Types\SuccessfulPayment;
 use Shanginn\TelegramBotApiBindings\Types\SwitchInlineQueryChosenChat;
 use Shanginn\TelegramBotApiBindings\Types\TextQuote;
+use Shanginn\TelegramBotApiBindings\Types\TransactionPartnerFragment;
+use Shanginn\TelegramBotApiBindings\Types\TransactionPartnerOther;
+use Shanginn\TelegramBotApiBindings\Types\TransactionPartnerTelegramAds;
+use Shanginn\TelegramBotApiBindings\Types\TransactionPartnerUser;
 use Shanginn\TelegramBotApiBindings\Types\TypeInterface;
 use Shanginn\TelegramBotApiBindings\Types\Update;
 use Shanginn\TelegramBotApiBindings\Types\User;
@@ -454,6 +469,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             permissions: ($data['permissions'] ?? null) !== null
                 ? $this->denormalizeChatPermissions($data['permissions'])
                 : null,
+            canSendPaidMedia: $data['can_send_paid_media'] ?? null,
             slowModeDelay: $data['slow_mode_delay'] ?? null,
             unrestrictBoostCount: $data['unrestrict_boost_count'] ?? null,
             messageAutoDeleteTime: $data['message_auto_delete_time'] ?? null,
@@ -548,6 +564,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             document: ($data['document'] ?? null) !== null
                 ? $this->denormalizeDocument($data['document'])
+                : null,
+            paidMedia: ($data['paid_media'] ?? null) !== null
+                ? $this->denormalizePaidMediaInfo($data['paid_media'])
                 : null,
             photo: ($data['photo'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizePhotoSize($item), $data['photo'])
@@ -848,6 +867,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             document: ($data['document'] ?? null) !== null
                 ? $this->denormalizeDocument($data['document'])
+                : null,
+            paidMedia: ($data['paid_media'] ?? null) !== null
+                ? $this->denormalizePaidMediaInfo($data['paid_media'])
                 : null,
             photo: ($data['photo'] ?? null) !== null
                 ? array_map(fn (array $item) => $this->denormalizePhotoSize($item), $data['photo'])
@@ -1306,6 +1328,112 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             duration: $data['duration'],
             mimeType: $data['mime_type'] ?? null,
             fileSize: $data['file_size'] ?? null,
+        );
+    }
+
+    public function denormalizePaidMediaInfo(array $data): PaidMediaInfo
+    {
+        $requiredFields = [
+            'star_count',
+            'paid_media',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class PaidMediaInfo missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new PaidMediaInfo(
+            starCount: $data['star_count'],
+            paidMedia: array_map(fn (array $item) => $this->denormalizePaidMedia($item), $data['paid_media']),
+        );
+    }
+
+    public function denormalizePaidMedia(array $data): Types\PaidMedia
+    {
+        throw new \RuntimeException('class PaidMedia is abstract and not yet implemented');
+    }
+
+    public function denormalizePaidMediaPreview(array $data): PaidMediaPreview
+    {
+        $requiredFields = [
+            'type',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class PaidMediaPreview missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new PaidMediaPreview(
+            type: $data['type'],
+            width: $data['width'] ?? null,
+            height: $data['height'] ?? null,
+            duration: $data['duration'] ?? null,
+        );
+    }
+
+    public function denormalizePaidMediaPhoto(array $data): PaidMediaPhoto
+    {
+        $requiredFields = [
+            'type',
+            'photo',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class PaidMediaPhoto missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new PaidMediaPhoto(
+            type: $data['type'],
+            photo: array_map(fn (array $item) => $this->denormalizePhotoSize($item), $data['photo']),
+        );
+    }
+
+    public function denormalizePaidMediaVideo(array $data): PaidMediaVideo
+    {
+        $requiredFields = [
+            'type',
+            'video',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class PaidMediaVideo missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new PaidMediaVideo(
+            type: $data['type'],
+            video: $this->denormalizeVideo($data['video']),
         );
     }
 
@@ -4021,6 +4149,66 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new InputFile();
     }
 
+    public function denormalizeInputPaidMedia(array $data): Types\InputPaidMedia
+    {
+        throw new \RuntimeException('class InputPaidMedia is abstract and not yet implemented');
+    }
+
+    public function denormalizeInputPaidMediaPhoto(array $data): InputPaidMediaPhoto
+    {
+        $requiredFields = [
+            'media',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class InputPaidMediaPhoto missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new InputPaidMediaPhoto(
+            media: $data['media'],
+            type: $data['type'] ?? 'photo',
+        );
+    }
+
+    public function denormalizeInputPaidMediaVideo(array $data): InputPaidMediaVideo
+    {
+        $requiredFields = [
+            'media',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class InputPaidMediaVideo missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new InputPaidMediaVideo(
+            media: $data['media'],
+            type: $data['type'] ?? 'video',
+            thumbnail: ($data['thumbnail'] ?? null) !== null
+                ? $this->denormalizeInputFile($data['thumbnail'])
+                : null,
+            width: $data['width'] ?? null,
+            height: $data['height'] ?? null,
+            duration: $data['duration'] ?? null,
+            supportsStreaming: $data['supports_streaming'] ?? null,
+        );
+    }
+
     public function denormalizeSticker(array $data): Sticker
     {
         $requiredFields = [
@@ -5470,6 +5658,243 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         );
     }
 
+    public function denormalizeRevenueWithdrawalState(array $data): Types\RevenueWithdrawalState
+    {
+        throw new \RuntimeException('class RevenueWithdrawalState is abstract and not yet implemented');
+    }
+
+    public function denormalizeRevenueWithdrawalStatePending(array $data): RevenueWithdrawalStatePending
+    {
+        $requiredFields = [
+            'type',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class RevenueWithdrawalStatePending missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new RevenueWithdrawalStatePending(
+            type: $data['type'],
+        );
+    }
+
+    public function denormalizeRevenueWithdrawalStateSucceeded(array $data): RevenueWithdrawalStateSucceeded
+    {
+        $requiredFields = [
+            'type',
+            'date',
+            'url',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class RevenueWithdrawalStateSucceeded missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new RevenueWithdrawalStateSucceeded(
+            type: $data['type'],
+            date: $data['date'],
+            url: $data['url'],
+        );
+    }
+
+    public function denormalizeRevenueWithdrawalStateFailed(array $data): RevenueWithdrawalStateFailed
+    {
+        $requiredFields = [
+            'type',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class RevenueWithdrawalStateFailed missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new RevenueWithdrawalStateFailed(
+            type: $data['type'],
+        );
+    }
+
+    public function denormalizeTransactionPartner(array $data): Types\TransactionPartner
+    {
+        throw new \RuntimeException('class TransactionPartner is abstract and not yet implemented');
+    }
+
+    public function denormalizeTransactionPartnerUser(array $data): TransactionPartnerUser
+    {
+        $requiredFields = [
+            'type',
+            'user',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class TransactionPartnerUser missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new TransactionPartnerUser(
+            type: $data['type'],
+            user: $this->denormalizeUser($data['user']),
+            invoicePayload: $data['invoice_payload'] ?? null,
+        );
+    }
+
+    public function denormalizeTransactionPartnerFragment(array $data): TransactionPartnerFragment
+    {
+        $requiredFields = [
+            'type',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class TransactionPartnerFragment missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new TransactionPartnerFragment(
+            type: $data['type'],
+            withdrawalState: ($data['withdrawal_state'] ?? null) !== null
+                ? $this->denormalizeRevenueWithdrawalState($data['withdrawal_state'])
+                : null,
+        );
+    }
+
+    public function denormalizeTransactionPartnerTelegramAds(array $data): TransactionPartnerTelegramAds
+    {
+        $requiredFields = [
+            'type',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class TransactionPartnerTelegramAds missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new TransactionPartnerTelegramAds(
+            type: $data['type'],
+        );
+    }
+
+    public function denormalizeTransactionPartnerOther(array $data): TransactionPartnerOther
+    {
+        $requiredFields = [
+            'type',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class TransactionPartnerOther missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new TransactionPartnerOther(
+            type: $data['type'],
+        );
+    }
+
+    public function denormalizeStarTransaction(array $data): StarTransaction
+    {
+        $requiredFields = [
+            'id',
+            'amount',
+            'date',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class StarTransaction missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new StarTransaction(
+            id: $data['id'],
+            amount: $data['amount'],
+            date: $data['date'],
+            source: ($data['source'] ?? null) !== null
+                ? $this->denormalizeTransactionPartner($data['source'])
+                : null,
+            receiver: ($data['receiver'] ?? null) !== null
+                ? $this->denormalizeTransactionPartner($data['receiver'])
+                : null,
+        );
+    }
+
+    public function denormalizeStarTransactions(array $data): StarTransactions
+    {
+        $requiredFields = [
+            'transactions',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class StarTransactions missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new StarTransactions(
+            transactions: array_map(fn (array $item) => $this->denormalizeStarTransaction($item), $data['transactions']),
+        );
+    }
+
     public function denormalizePassportData(array $data): PassportData
     {
         $requiredFields = [
@@ -5981,6 +6406,10 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             Video::class => $this->denormalizeVideo($data),
             VideoNote::class => $this->denormalizeVideoNote($data),
             Voice::class => $this->denormalizeVoice($data),
+            PaidMediaInfo::class => $this->denormalizePaidMediaInfo($data),
+            PaidMediaPreview::class => $this->denormalizePaidMediaPreview($data),
+            PaidMediaPhoto::class => $this->denormalizePaidMediaPhoto($data),
+            PaidMediaVideo::class => $this->denormalizePaidMediaVideo($data),
             Contact::class => $this->denormalizeContact($data),
             Dice::class => $this->denormalizeDice($data),
             PollOption::class => $this->denormalizePollOption($data),
@@ -6089,6 +6518,8 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             InputMediaAudio::class => $this->denormalizeInputMediaAudio($data),
             InputMediaDocument::class => $this->denormalizeInputMediaDocument($data),
             InputFile::class => $this->denormalizeInputFile($data),
+            InputPaidMediaPhoto::class => $this->denormalizeInputPaidMediaPhoto($data),
+            InputPaidMediaVideo::class => $this->denormalizeInputPaidMediaVideo($data),
             Sticker::class => $this->denormalizeSticker($data),
             StickerSet::class => $this->denormalizeStickerSet($data),
             MaskPosition::class => $this->denormalizeMaskPosition($data),
@@ -6130,6 +6561,15 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             SuccessfulPayment::class => $this->denormalizeSuccessfulPayment($data),
             ShippingQuery::class => $this->denormalizeShippingQuery($data),
             PreCheckoutQuery::class => $this->denormalizePreCheckoutQuery($data),
+            RevenueWithdrawalStatePending::class => $this->denormalizeRevenueWithdrawalStatePending($data),
+            RevenueWithdrawalStateSucceeded::class => $this->denormalizeRevenueWithdrawalStateSucceeded($data),
+            RevenueWithdrawalStateFailed::class => $this->denormalizeRevenueWithdrawalStateFailed($data),
+            TransactionPartnerUser::class => $this->denormalizeTransactionPartnerUser($data),
+            TransactionPartnerFragment::class => $this->denormalizeTransactionPartnerFragment($data),
+            TransactionPartnerTelegramAds::class => $this->denormalizeTransactionPartnerTelegramAds($data),
+            TransactionPartnerOther::class => $this->denormalizeTransactionPartnerOther($data),
+            StarTransaction::class => $this->denormalizeStarTransaction($data),
+            StarTransactions::class => $this->denormalizeStarTransactions($data),
             PassportData::class => $this->denormalizePassportData($data),
             PassportFile::class => $this->denormalizePassportFile($data),
             EncryptedPassportElement::class => $this->denormalizeEncryptedPassportElement($data),

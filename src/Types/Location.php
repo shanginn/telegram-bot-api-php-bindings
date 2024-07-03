@@ -8,8 +8,8 @@ namespace Shanginn\TelegramBotApiBindings\Types;
 class Location implements TypeInterface
 {
     /**
-     * @param float      $latitude             Latitude as defined by sender
-     * @param float      $longitude            Longitude as defined by sender
+     * @param float      $latitude             Latitude as defined by the sender
+     * @param float      $longitude            Longitude as defined by the sender
      * @param float|null $horizontalAccuracy   Optional. The radius of uncertainty for the location, measured in meters; 0-1500
      * @param int|null   $livePeriod           Optional. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.
      * @param int|null   $heading              Optional. The direction in which user is moving, in degrees; 1-360. For active live locations only.

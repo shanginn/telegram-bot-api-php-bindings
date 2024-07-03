@@ -15,6 +15,7 @@ class ExternalReplyInfo implements TypeInterface
      * @param Animation|null          $animation          Optional. Message is an animation, information about the animation
      * @param Audio|null              $audio              Optional. Message is an audio file, information about the file
      * @param Document|null           $document           Optional. Message is a general file, information about the file
+     * @param PaidMediaInfo|null      $paidMedia          Optional. Message contains paid media; information about the paid media
      * @param array<PhotoSize>|null   $photo              Optional. Message is a photo, available sizes of the photo
      * @param Sticker|null            $sticker            Optional. Message is a sticker, information about the sticker
      * @param Story|null              $story              Optional. Message is a forwarded story
@@ -40,6 +41,7 @@ class ExternalReplyInfo implements TypeInterface
         public ?Animation $animation = null,
         public ?Audio $audio = null,
         public ?Document $document = null,
+        public ?PaidMediaInfo $paidMedia = null,
         public ?array $photo = null,
         public ?Sticker $sticker = null,
         public ?Story $story = null,
