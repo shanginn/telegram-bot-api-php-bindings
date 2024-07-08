@@ -165,6 +165,7 @@ use Shanginn\TelegramBotApiBindings\Types\ProximityAlertTriggered;
 use Shanginn\TelegramBotApiBindings\Types\ReactionCount;
 use Shanginn\TelegramBotApiBindings\Types\ReactionTypeCustomEmoji;
 use Shanginn\TelegramBotApiBindings\Types\ReactionTypeEmoji;
+use Shanginn\TelegramBotApiBindings\Types\RefundedPayment;
 use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardMarkup;
 use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardRemove;
 use Shanginn\TelegramBotApiBindings\Types\ReplyParameters;
@@ -637,6 +638,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
                 : null,
             successfulPayment: ($data['successful_payment'] ?? null) !== null
                 ? $this->denormalizeSuccessfulPayment($data['successful_payment'])
+                : null,
+            refundedPayment: ($data['refunded_payment'] ?? null) !== null
+                ? $this->denormalizeRefundedPayment($data['refunded_payment'])
                 : null,
             usersShared: ($data['users_shared'] ?? null) !== null
                 ? $this->denormalizeUsersShared($data['users_shared'])
@@ -5594,6 +5598,36 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         );
     }
 
+    public function denormalizeRefundedPayment(array $data): RefundedPayment
+    {
+        $requiredFields = [
+            'currency',
+            'total_amount',
+            'invoice_payload',
+            'telegram_payment_charge_id',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class RefundedPayment missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new RefundedPayment(
+            currency: $data['currency'],
+            totalAmount: $data['total_amount'],
+            invoicePayload: $data['invoice_payload'],
+            telegramPaymentChargeId: $data['telegram_payment_charge_id'],
+            providerPaymentChargeId: $data['provider_payment_charge_id'] ?? null,
+        );
+    }
+
     public function denormalizeShippingQuery(array $data): ShippingQuery
     {
         $requiredFields = [
@@ -6559,6 +6593,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             OrderInfo::class => $this->denormalizeOrderInfo($data),
             ShippingOption::class => $this->denormalizeShippingOption($data),
             SuccessfulPayment::class => $this->denormalizeSuccessfulPayment($data),
+            RefundedPayment::class => $this->denormalizeRefundedPayment($data),
             ShippingQuery::class => $this->denormalizeShippingQuery($data),
             PreCheckoutQuery::class => $this->denormalizePreCheckoutQuery($data),
             RevenueWithdrawalStatePending::class => $this->denormalizeRevenueWithdrawalStatePending($data),

@@ -68,6 +68,7 @@ class Message extends MaybeInaccessibleMessage
      * @param MaybeInaccessibleMessage|null      $pinnedMessage                 Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
      * @param Invoice|null                       $invoice                       Optional. Message is an invoice for a payment, information about the invoice. More about payments »
      * @param SuccessfulPayment|null             $successfulPayment             Optional. Message is a service message about a successful payment, information about the payment. More about payments »
+     * @param RefundedPayment|null               $refundedPayment               Optional. Message is a service message about a refunded payment, information about the payment. More about payments »
      * @param UsersShared|null                   $usersShared                   Optional. Service message: users were shared with the bot
      * @param ChatShared|null                    $chatShared                    Optional. Service message: a chat was shared with the bot
      * @param string|null                        $connectedWebsite              Optional. The domain name of the website on which the user has logged in. More about Telegram Login »
@@ -154,6 +155,7 @@ class Message extends MaybeInaccessibleMessage
         public ?MaybeInaccessibleMessage $pinnedMessage = null,
         public ?Invoice $invoice = null,
         public ?SuccessfulPayment $successfulPayment = null,
+        public ?RefundedPayment $refundedPayment = null,
         public ?UsersShared $usersShared = null,
         public ?ChatShared $chatShared = null,
         public ?string $connectedWebsite = null,
