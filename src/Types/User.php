@@ -20,6 +20,7 @@ class User implements TypeInterface
      * @param bool|null   $canReadAllGroupMessages Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
      * @param bool|null   $supportsInlineQueries   Optional. True, if the bot supports inline queries. Returned only in getMe.
      * @param bool|null   $canConnectToBusiness    Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
+     * @param bool|null   $hasMainWebApp           Optional. True, if the bot has a main Web App. Returned only in getMe.
      */
     public function __construct(
         public int $id,
@@ -34,6 +35,7 @@ class User implements TypeInterface
         public ?bool $canReadAllGroupMessages = null,
         public ?bool $supportsInlineQueries = null,
         public ?bool $canConnectToBusiness = null,
+        public ?bool $hasMainWebApp = null,
     ) {
     }
 }

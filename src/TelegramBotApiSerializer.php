@@ -366,6 +366,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             canReadAllGroupMessages: $data['can_read_all_group_messages'] ?? null,
             supportsInlineQueries: $data['supports_inline_queries'] ?? null,
             canConnectToBusiness: $data['can_connect_to_business'] ?? null,
+            hasMainWebApp: $data['has_main_web_app'] ?? null,
         );
     }
 

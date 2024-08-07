@@ -1104,27 +1104,34 @@ interface TelegramBotApiInterface
     /**
      * Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
      *
-     * @param int|string $chatId              Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int        $messageId           Identifier of a message to pin
-     * @param bool|null  $disableNotification Pass True if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
+     * @param int|string  $chatId               Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int         $messageId            Identifier of a message to pin
+     * @param string|null $businessConnectionId Unique identifier of the business connection on behalf of which the message will be pinned
+     * @param bool|null   $disableNotification  Pass True if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
      *
      * @return PromiseInterface<bool>
      */
     public function pinChatMessage(
         int|string $chatId,
         int $messageId,
+        string $businessConnectionId = null,
         bool $disableNotification = null,
     ): PromiseInterface;
 
     /**
      * Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
      *
-     * @param int|string $chatId    Unique identifier for the target chat or username of the target channel (in the format @channelusername)
-     * @param int|null   $messageId Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
+     * @param int|string  $chatId               Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param string|null $businessConnectionId Unique identifier of the business connection on behalf of which the message will be unpinned
+     * @param int|null    $messageId            Identifier of the message to unpin. Required if business_connection_id is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.
      *
      * @return PromiseInterface<bool>
      */
-    public function unpinChatMessage(int|string $chatId, int $messageId = null): PromiseInterface;
+    public function unpinChatMessage(
+        int|string $chatId,
+        string $businessConnectionId = null,
+        int $messageId = null,
+    ): PromiseInterface;
 
     /**
      * Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
@@ -1863,7 +1870,7 @@ interface TelegramBotApiInterface
      * @param string                $name      Sticker set name
      * @param int                   $userId    User identifier of the sticker set owner
      * @param string                $format    Format of the thumbnail, must be one of “static” for a .WEBP or .PNG image, “animated” for a .TGS animation, or “video” for a WEBM video
-     * @param InputFile|string|null $thumbnail A .WEBP or .PNG image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a .TGS animation with a thumbnail up to 32 kilobytes in size (see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
+     * @param InputFile|string|null $thumbnail A .WEBP or .PNG image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a .TGS animation with a thumbnail up to 32 kilobytes in size (see https://core.telegram.org/stickers#animation-requirements for animated sticker technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.
      *
      * @return PromiseInterface<bool>
      */
