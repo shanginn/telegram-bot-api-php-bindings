@@ -17,6 +17,8 @@ class ChatInviteLink implements TypeInterface
      * @param int|null    $expireDate              Optional. Point in time (Unix timestamp) when the link will expire or has been expired
      * @param int|null    $memberLimit             Optional. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
      * @param int|null    $pendingJoinRequestCount Optional. Number of pending join requests created using this link
+     * @param int|null    $subscriptionPeriod      Optional. The number of seconds the subscription will be active for before the next payment
+     * @param int|null    $subscriptionPrice       Optional. The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link
      */
     public function __construct(
         public string $inviteLink,
@@ -28,6 +30,8 @@ class ChatInviteLink implements TypeInterface
         public ?int $expireDate = null,
         public ?int $memberLimit = null,
         public ?int $pendingJoinRequestCount = null,
+        public ?int $subscriptionPeriod = null,
+        public ?int $subscriptionPrice = null,
     ) {
     }
 }

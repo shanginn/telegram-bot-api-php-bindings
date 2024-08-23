@@ -542,11 +542,12 @@ interface TelegramBotApiInterface
     ): PromiseInterface;
 
     /**
-     * Use this method to send paid media to channel chats. On success, the sent Message is returned.
+     * Use this method to send paid media. On success, the sent Message is returned.
      *
-     * @param int|string                                                                   $chatId                Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param int|string                                                                   $chatId                Unique identifier for the target chat or username of the target channel (in the format @channelusername). If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat's balance. Otherwise, they will be credited to the bot's balance.
      * @param int                                                                          $starCount             The number of Telegram Stars that must be paid to buy access to the media
      * @param array<InputPaidMedia>                                                        $media                 A JSON-serialized array describing the media to be sent; up to 10 items
+     * @param string|null                                                                  $businessConnectionId  Unique identifier of the business connection on behalf of which the message will be sent
      * @param string|null                                                                  $caption               Media caption, 0-1024 characters after entities parsing
      * @param string|null                                                                  $parseMode             Mode for parsing entities in the media caption. See formatting options for more details.
      * @param array<MessageEntity>|null                                                    $captionEntities       A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode
@@ -562,6 +563,7 @@ interface TelegramBotApiInterface
         int|string $chatId,
         int $starCount,
         array $media,
+        string $businessConnectionId = null,
         string $caption = null,
         string $parseMode = null,
         array $captionEntities = null,
@@ -807,11 +809,11 @@ interface TelegramBotApiInterface
     ): PromiseInterface;
 
     /**
-     * Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Returns True on success.
+     * Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.
      *
      * @param int|string               $chatId    Unique identifier for the target chat or username of the target channel (in the format @channelusername)
      * @param int                      $messageId Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.
-     * @param array<ReactionType>|null $reaction  A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.
+     * @param array<ReactionType>|null $reaction  A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots.
      * @param bool|null                $isBig     Pass True to set the reaction with a big animation
      *
      * @return PromiseInterface<bool>
@@ -1033,6 +1035,38 @@ interface TelegramBotApiInterface
     ): PromiseInterface;
 
     /**
+     * Use this method to create a subscription invite link for a channel chat. The bot must have the can_invite_users administrator rights. The link can be edited using the method editChatSubscriptionInviteLink or revoked using the method revokeChatInviteLink. Returns the new invite link as a ChatInviteLink object.
+     *
+     * @param int|string  $chatId             Unique identifier for the target channel chat or username of the target channel (in the format @channelusername)
+     * @param int         $subscriptionPeriod The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).
+     * @param int         $subscriptionPrice  The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-2500
+     * @param string|null $name               Invite link name; 0-32 characters
+     *
+     * @return PromiseInterface<ChatInviteLink>
+     */
+    public function createChatSubscriptionInviteLink(
+        int|string $chatId,
+        int $subscriptionPeriod,
+        int $subscriptionPrice,
+        string $name = null,
+    ): PromiseInterface;
+
+    /**
+     * Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object.
+     *
+     * @param int|string  $chatId     Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+     * @param string      $inviteLink The invite link to edit
+     * @param string|null $name       Invite link name; 0-32 characters
+     *
+     * @return PromiseInterface<ChatInviteLink>
+     */
+    public function editChatSubscriptionInviteLink(
+        int|string $chatId,
+        string $inviteLink,
+        string $name = null,
+    ): PromiseInterface;
+
+    /**
      * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.
      *
      * @param int|string $chatId     Unique identifier of the target chat or username of the target channel (in the format @channelusername)
@@ -1232,7 +1266,7 @@ interface TelegramBotApiInterface
     ): PromiseInterface;
 
     /**
-     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
+     * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
      *
      * @param int|string  $chatId            Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param int         $messageThreadId   Unique identifier for the target message thread of the forum topic
@@ -1289,7 +1323,7 @@ interface TelegramBotApiInterface
     public function unpinAllForumTopicMessages(int|string $chatId, int $messageThreadId): PromiseInterface;
 
     /**
-     * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.
+     * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.
      *
      * @param int|string $chatId Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
      * @param string     $name   New topic name, 1-128 characters

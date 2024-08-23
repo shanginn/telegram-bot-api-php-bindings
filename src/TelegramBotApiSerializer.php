@@ -165,6 +165,7 @@ use Shanginn\TelegramBotApiBindings\Types\ProximityAlertTriggered;
 use Shanginn\TelegramBotApiBindings\Types\ReactionCount;
 use Shanginn\TelegramBotApiBindings\Types\ReactionTypeCustomEmoji;
 use Shanginn\TelegramBotApiBindings\Types\ReactionTypeEmoji;
+use Shanginn\TelegramBotApiBindings\Types\ReactionTypePaid;
 use Shanginn\TelegramBotApiBindings\Types\RefundedPayment;
 use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardMarkup;
 use Shanginn\TelegramBotApiBindings\Types\ReplyKeyboardRemove;
@@ -2786,6 +2787,8 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             expireDate: $data['expire_date'] ?? null,
             memberLimit: $data['member_limit'] ?? null,
             pendingJoinRequestCount: $data['pending_join_request_count'] ?? null,
+            subscriptionPeriod: $data['subscription_period'] ?? null,
+            subscriptionPrice: $data['subscription_price'] ?? null,
         );
     }
 
@@ -2989,6 +2992,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new ChatMemberMember(
             status: $data['status'],
             user: $this->denormalizeUser($data['user']),
+            untilDate: $data['until_date'] ?? null,
         );
     }
 
@@ -3344,6 +3348,29 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
         return new ReactionTypeCustomEmoji(
             type: $data['type'],
             customEmojiId: $data['custom_emoji_id'],
+        );
+    }
+
+    public function denormalizeReactionTypePaid(array $data): ReactionTypePaid
+    {
+        $requiredFields = [
+            'type',
+        ];
+
+        $missingFields = [];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (count($missingFields) > 0) {
+            throw new \InvalidArgumentException(sprintf('Class ReactionTypePaid missing some fields from the data array: %s', implode(', ', $missingFields)));
+        }
+
+        return new ReactionTypePaid(
+            type: $data['type'],
         );
     }
 
@@ -5799,6 +5826,9 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             type: $data['type'],
             user: $this->denormalizeUser($data['user']),
             invoicePayload: $data['invoice_payload'] ?? null,
+            paidMedia: ($data['paid_media'] ?? null) !== null
+                ? array_map(fn (array $item) => $this->denormalizePaidMedia($item), $data['paid_media'])
+                : null,
         );
     }
 
@@ -6519,6 +6549,7 @@ class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
             ChatLocation::class => $this->denormalizeChatLocation($data),
             ReactionTypeEmoji::class => $this->denormalizeReactionTypeEmoji($data),
             ReactionTypeCustomEmoji::class => $this->denormalizeReactionTypeCustomEmoji($data),
+            ReactionTypePaid::class => $this->denormalizeReactionTypePaid($data),
             ReactionCount::class => $this->denormalizeReactionCount($data),
             MessageReactionUpdated::class => $this->denormalizeMessageReactionUpdated($data),
             MessageReactionCountUpdated::class => $this->denormalizeMessageReactionCountUpdated($data),

@@ -7,6 +7,7 @@ namespace Shanginn\TelegramBotApiBindings\Types;
  *
  * @see ReactionTypeEmoji
  * @see ReactionTypeCustomEmoji
+ * @see ReactionTypePaid
  */
 abstract class ReactionType implements TypeInterface
 {
