@@ -61,6 +61,12 @@ class Api implements ApiInterface
     ) {
     }
 
+    /**
+     * @param array<mixed>              $args
+     * @param list<class-string|string> $returnTypes
+     *
+     * @phpstan-ignore-next-line TODO: add generics to the promise from $returnTypes
+     */
     private function doRequest(string $method, array $args, array $returnTypes): PromiseInterface
     {
         return $this->client
@@ -3046,7 +3052,7 @@ class Api implements ApiInterface
         return $this->doRequest(
             __FUNCTION__,
             get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\GameHighScore>"]
+            ["array<Shanginn\TelegramBotApiBindings\Types\>"]
         );
     }
 }
