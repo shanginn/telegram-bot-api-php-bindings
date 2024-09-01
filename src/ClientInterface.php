@@ -2,7 +2,10 @@
 
 namespace Shanginn\TelegramBotApiBindings;
 
-interface TelegramBotApiClientInterface
+interface ClientInterface
 {
+    /**
+     * @return PromiseInterface<string>
+     */
     public function sendRequest(string $method, string $json): PromiseInterface;
 }

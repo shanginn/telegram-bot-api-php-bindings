@@ -2,7 +2,7 @@
 
 namespace Shanginn\TelegramBotApiBindings;
 
-interface TelegramBotApiSerializerInterface
+interface SerializerInterface
 {
     public function serialize(array $data): string;
 

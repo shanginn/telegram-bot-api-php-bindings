@@ -3,7 +3,7 @@
 namespace Shanginn\TelegramBotApiBindings\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Shanginn\TelegramBotApiBindings\TelegramBotApiSerializer;
+use Shanginn\TelegramBotApiBindings\Serializer;
 use Shanginn\TelegramBotApiBindings\Types\ChatMemberMember;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardButton;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup;
@@ -14,7 +14,7 @@ class SerializerTest extends TestCase
 {
     public function testInlineKeyboardMarkupIsAValidJson()
     {
-        $serializer = new TelegramBotApiSerializer();
+        $serializer = new Serializer();
         $inlineKeyboardMarkup = new InlineKeyboardMarkup(
             inlineKeyboard: [
                 [
@@ -99,7 +99,7 @@ class SerializerTest extends TestCase
             ],
         ];
 
-        $serializer = new TelegramBotApiSerializer();
+        $serializer = new Serializer();
         $updates = $serializer->deserialize(
             data: json_encode($updatesData),
             types: ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]
@@ -153,7 +153,7 @@ class SerializerTest extends TestCase
             ],
         ];
 
-        $serializer = new TelegramBotApiSerializer();
+        $serializer = new Serializer();
         $updates = $serializer->deserialize(
             data: json_encode($updatesData),
             types: ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]
@@ -209,7 +209,7 @@ class SerializerTest extends TestCase
             ],
         ];
 
-        $serializer = new TelegramBotApiSerializer();
+        $serializer = new Serializer();
         $updates = $serializer->deserialize(
             data: json_encode($updatesData),
             types: ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]

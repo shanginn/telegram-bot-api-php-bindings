@@ -210,7 +210,7 @@ use Shanginn\TelegramBotApiBindings\Types\WebAppInfo;
 use Shanginn\TelegramBotApiBindings\Types\WebhookInfo;
 use Shanginn\TelegramBotApiBindings\Types\WriteAccessAllowed;
 
-class TelegramBotApiSerializer implements TelegramBotApiSerializerInterface
+class Serializer implements SerializerInterface
 {
     public function denormalizeUpdate(array $data): Update
     {

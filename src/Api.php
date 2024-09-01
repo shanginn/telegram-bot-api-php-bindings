@@ -53,10 +53,10 @@ use Shanginn\TelegramBotApiBindings\Types\UserChatBoosts;
 use Shanginn\TelegramBotApiBindings\Types\UserProfilePhotos;
 use Shanginn\TelegramBotApiBindings\Types\WebhookInfo;
 
-class TelegramBotApi implements TelegramBotApiInterface
+class Api implements ApiInterface
 {
     public function __construct(
-        protected ClientInterface     $client,
+        protected ClientInterface $client,
         protected SerializerInterface $serializer,
     ) {
     }

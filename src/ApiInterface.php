@@ -53,7 +53,7 @@ use Shanginn\TelegramBotApiBindings\Types\UserChatBoosts;
 use Shanginn\TelegramBotApiBindings\Types\UserProfilePhotos;
 use Shanginn\TelegramBotApiBindings\Types\WebhookInfo;
 
-interface TelegramBotApiInterface
+interface ApiInterface
 {
     /**
      * Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects.
