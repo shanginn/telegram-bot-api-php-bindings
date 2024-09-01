@@ -1,3 +1,6 @@
+# DEPRECATED
+See [Code in repo](https://github.com/phenogram/bindings)
+
 # Telegram Bot API PHP bindings
 
 This is auto-generated typed PHP classes for Telegram Bot API based on the official documentation.
