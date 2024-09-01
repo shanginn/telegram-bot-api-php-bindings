@@ -3052,7 +3052,7 @@ class Api implements ApiInterface
         return $this->doRequest(
             __FUNCTION__,
             get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\>"]
+            ["array<Shanginn\TelegramBotApiBindings\Types\GameHighScore>"]
         );
     }
 }
