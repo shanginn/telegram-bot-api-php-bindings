@@ -9,6 +9,11 @@
             "Shanginn\\TelegramBotApiBindings\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Shanginn\\TelegramBotApiBindings\\Tests\\": "tests"
+        }
+    },
     "authors": [
         {
             "name": "Nikolai Shangin",
@@ -30,6 +35,9 @@
     "scripts": {
         "fix": [
             "PHP_CS_FIXER_IGNORE_ENV=1 ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix -vvv --config=.php-cs-fixer.php --allow-risky=yes"
+        ],
+        "phpstan": [
+            "php -d xdebug.mode=off ./tools/phpstan/vendor/bin/phpstan analyse --memory-limit=2G -c phpstan.neon"
         ]
     },
     "config": {
