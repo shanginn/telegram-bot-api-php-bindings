@@ -1,5 +1,5 @@
 # DEPRECATED
-See [Code in repo](https://github.com/phenogram/bindings)
+[Code moved into Phenogram organization](https://github.com/phenogram/bindings)
 
 # Telegram Bot API PHP bindings
 
