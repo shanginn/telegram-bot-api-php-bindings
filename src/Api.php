@@ -62,13 +62,17 @@ class Api implements ApiInterface
     }
 
     /**
-     * @param array<mixed>              $args
-     * @param list<class-string|string> $returnTypes
+     * @param array<mixed>                       $args
+     * @param class-string|'bool'|'string'|'int' $returnType
      *
-     * @phpstan-ignore-next-line TODO: add generics to the promise from $returnTypes
+     * @phpstan-ignore-next-line TODO: add generics to the promise from $returnType
      */
-    private function doRequest(string $method, array $args, array $returnTypes): PromiseInterface
-    {
+    private function doRequest(
+        string $method,
+        array $args,
+        string $returnType,
+        bool $returnsArray = false,
+    ): PromiseInterface {
         return $this->client
             ->sendRequest(
                 $method,
@@ -76,7 +80,8 @@ class Api implements ApiInterface
             )
             ->then(fn ($response) => $this->serializer->deserialize(
                 $response,
-                $returnTypes
+                $returnType,
+                $returnsArray
             ));
     }
 
@@ -91,15 +96,16 @@ class Api implements ApiInterface
      * @return PromiseInterface<array<Update>>
      */
     public function getUpdates(
-        int $offset = null,
+        ?int $offset = null,
         ?int $limit = 100,
-        int $timeout = null,
-        array $allowedUpdates = null,
+        ?int $timeout = null,
+        ?array $allowedUpdates = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Update::class,
+            returnsArray: true,
         );
     }
 
@@ -119,17 +125,17 @@ class Api implements ApiInterface
      */
     public function setWebhook(
         string $url,
-        InputFile $certificate = null,
-        string $ipAddress = null,
+        ?InputFile $certificate = null,
+        ?string $ipAddress = null,
         ?int $maxConnections = 40,
-        array $allowedUpdates = null,
-        bool $dropPendingUpdates = null,
-        string $secretToken = null,
+        ?array $allowedUpdates = null,
+        ?bool $dropPendingUpdates = null,
+        ?string $secretToken = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -140,12 +146,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function deleteWebhook(bool $dropPendingUpdates = null): PromiseInterface
+    public function deleteWebhook(?bool $dropPendingUpdates = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -157,9 +163,9 @@ class Api implements ApiInterface
     public function getWebhookInfo(): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\WebhookInfo"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: WebhookInfo::class,
         );
     }
 
@@ -171,9 +177,9 @@ class Api implements ApiInterface
     public function getMe(): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\User"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: User::class,
         );
     }
 
@@ -185,9 +191,9 @@ class Api implements ApiInterface
     public function logOut(): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -199,9 +205,9 @@ class Api implements ApiInterface
     public function close(): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -226,21 +232,21 @@ class Api implements ApiInterface
     public function sendMessage(
         int|string $chatId,
         string $text,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $parseMode = null,
-        array $entities = null,
-        LinkPreviewOptions $linkPreviewOptions = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $parseMode = null,
+        ?array $entities = null,
+        ?LinkPreviewOptions $linkPreviewOptions = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -260,14 +266,14 @@ class Api implements ApiInterface
         int|string $chatId,
         int|string $fromChatId,
         int $messageId,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -287,14 +293,15 @@ class Api implements ApiInterface
         int|string $chatId,
         int|string $fromChatId,
         array $messageIds,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\MessageId>"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: MessageId::class,
+            returnsArray: true,
         );
     }
 
@@ -320,20 +327,20 @@ class Api implements ApiInterface
         int|string $chatId,
         int|string $fromChatId,
         int $messageId,
-        int $messageThreadId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\MessageId"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: MessageId::class,
         );
     }
 
@@ -354,15 +361,16 @@ class Api implements ApiInterface
         int|string $chatId,
         int|string $fromChatId,
         array $messageIds,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        bool $removeCaption = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?bool $removeCaption = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\MessageId>"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: MessageId::class,
+            returnsArray: true,
         );
     }
 
@@ -389,23 +397,23 @@ class Api implements ApiInterface
     public function sendPhoto(
         int|string $chatId,
         InputFile|string $photo,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $hasSpoiler = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $hasSpoiler = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -435,25 +443,25 @@ class Api implements ApiInterface
     public function sendAudio(
         int|string $chatId,
         InputFile|string $audio,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        int $duration = null,
-        string $performer = null,
-        string $title = null,
-        InputFile|string $thumbnail = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?int $duration = null,
+        ?string $performer = null,
+        ?string $title = null,
+        InputFile|string|null $thumbnail = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -480,23 +488,23 @@ class Api implements ApiInterface
     public function sendDocument(
         int|string $chatId,
         InputFile|string $document,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        InputFile|string $thumbnail = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $disableContentTypeDetection = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $disableContentTypeDetection = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -528,28 +536,28 @@ class Api implements ApiInterface
     public function sendVideo(
         int|string $chatId,
         InputFile|string $video,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        int $duration = null,
-        int $width = null,
-        int $height = null,
-        InputFile|string $thumbnail = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $hasSpoiler = null,
-        bool $supportsStreaming = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?int $duration = null,
+        ?int $width = null,
+        ?int $height = null,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $hasSpoiler = null,
+        ?bool $supportsStreaming = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -580,27 +588,27 @@ class Api implements ApiInterface
     public function sendAnimation(
         int|string $chatId,
         InputFile|string $animation,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        int $duration = null,
-        int $width = null,
-        int $height = null,
-        InputFile|string $thumbnail = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $hasSpoiler = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?int $duration = null,
+        ?int $width = null,
+        ?int $height = null,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $hasSpoiler = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -626,22 +634,22 @@ class Api implements ApiInterface
     public function sendVoice(
         int|string $chatId,
         InputFile|string $voice,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        int $duration = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?int $duration = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -666,21 +674,21 @@ class Api implements ApiInterface
     public function sendVideoNote(
         int|string $chatId,
         InputFile|string $videoNote,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        int $duration = null,
-        int $length = null,
-        InputFile|string $thumbnail = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?int $duration = null,
+        ?int $length = null,
+        InputFile|string|null $thumbnail = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -706,20 +714,20 @@ class Api implements ApiInterface
         int|string $chatId,
         int $starCount,
         array $media,
-        string $businessConnectionId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -740,17 +748,18 @@ class Api implements ApiInterface
     public function sendMediaGroup(
         int|string $chatId,
         array $media,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\Message>"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
+            returnsArray: true,
         );
     }
 
@@ -778,22 +787,22 @@ class Api implements ApiInterface
         int|string $chatId,
         float $latitude,
         float $longitude,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        float $horizontalAccuracy = null,
-        int $livePeriod = null,
-        int $heading = null,
-        int $proximityAlertRadius = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?float $horizontalAccuracy = null,
+        ?int $livePeriod = null,
+        ?int $heading = null,
+        ?int $proximityAlertRadius = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -825,22 +834,22 @@ class Api implements ApiInterface
         float $longitude,
         string $title,
         string $address,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $foursquareId = null,
-        string $foursquareType = null,
-        string $googlePlaceId = null,
-        string $googlePlaceType = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $foursquareId = null,
+        ?string $foursquareType = null,
+        ?string $googlePlaceId = null,
+        ?string $googlePlaceType = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -866,20 +875,20 @@ class Api implements ApiInterface
         int|string $chatId,
         string $phoneNumber,
         string $firstName,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $lastName = null,
-        string $vcard = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $lastName = null,
+        ?string $vcard = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -915,30 +924,30 @@ class Api implements ApiInterface
         int|string $chatId,
         string $question,
         array $options,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $questionParseMode = null,
-        array $questionEntities = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $questionParseMode = null,
+        ?array $questionEntities = null,
         ?bool $isAnonymous = true,
         ?string $type = 'regular',
-        bool $allowsMultipleAnswers = null,
-        int $correctOptionId = null,
-        string $explanation = null,
-        string $explanationParseMode = null,
-        array $explanationEntities = null,
-        int $openPeriod = null,
-        int $closeDate = null,
-        bool $isClosed = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?bool $allowsMultipleAnswers = null,
+        ?int $correctOptionId = null,
+        ?string $explanation = null,
+        ?string $explanationParseMode = null,
+        ?array $explanationEntities = null,
+        ?int $openPeriod = null,
+        ?int $closeDate = null,
+        ?bool $isClosed = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -959,19 +968,19 @@ class Api implements ApiInterface
      */
     public function sendDice(
         int|string $chatId,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
         ?string $emoji = '🎲',
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -989,13 +998,13 @@ class Api implements ApiInterface
     public function sendChatAction(
         int|string $chatId,
         string $action,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1012,13 +1021,13 @@ class Api implements ApiInterface
     public function setMessageReaction(
         int|string $chatId,
         int $messageId,
-        array $reaction = null,
-        bool $isBig = null,
+        ?array $reaction = null,
+        ?bool $isBig = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1031,12 +1040,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<UserProfilePhotos>
      */
-    public function getUserProfilePhotos(int $userId, int $offset = null, ?int $limit = 100): PromiseInterface
+    public function getUserProfilePhotos(int $userId, ?int $offset = null, ?int $limit = 100): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\UserProfilePhotos"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: UserProfilePhotos::class,
         );
     }
 
@@ -1050,9 +1059,9 @@ class Api implements ApiInterface
     public function getFile(string $fileId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\File"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: File::class,
         );
     }
 
@@ -1069,13 +1078,13 @@ class Api implements ApiInterface
     public function banChatMember(
         int|string $chatId,
         int $userId,
-        int $untilDate = null,
-        bool $revokeMessages = null,
+        ?int $untilDate = null,
+        ?bool $revokeMessages = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1088,12 +1097,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function unbanChatMember(int|string $chatId, int $userId, bool $onlyIfBanned = null): PromiseInterface
+    public function unbanChatMember(int|string $chatId, int $userId, ?bool $onlyIfBanned = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1112,13 +1121,13 @@ class Api implements ApiInterface
         int|string $chatId,
         int $userId,
         ChatPermissions $permissions,
-        bool $useIndependentChatPermissions = null,
-        int $untilDate = null,
+        ?bool $useIndependentChatPermissions = null,
+        ?int $untilDate = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1148,26 +1157,26 @@ class Api implements ApiInterface
     public function promoteChatMember(
         int|string $chatId,
         int $userId,
-        bool $isAnonymous = null,
-        bool $canManageChat = null,
-        bool $canDeleteMessages = null,
-        bool $canManageVideoChats = null,
-        bool $canRestrictMembers = null,
-        bool $canPromoteMembers = null,
-        bool $canChangeInfo = null,
-        bool $canInviteUsers = null,
-        bool $canPostStories = null,
-        bool $canEditStories = null,
-        bool $canDeleteStories = null,
-        bool $canPostMessages = null,
-        bool $canEditMessages = null,
-        bool $canPinMessages = null,
-        bool $canManageTopics = null,
+        ?bool $isAnonymous = null,
+        ?bool $canManageChat = null,
+        ?bool $canDeleteMessages = null,
+        ?bool $canManageVideoChats = null,
+        ?bool $canRestrictMembers = null,
+        ?bool $canPromoteMembers = null,
+        ?bool $canChangeInfo = null,
+        ?bool $canInviteUsers = null,
+        ?bool $canPostStories = null,
+        ?bool $canEditStories = null,
+        ?bool $canDeleteStories = null,
+        ?bool $canPostMessages = null,
+        ?bool $canEditMessages = null,
+        ?bool $canPinMessages = null,
+        ?bool $canManageTopics = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1186,9 +1195,9 @@ class Api implements ApiInterface
         string $customTitle,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1203,9 +1212,9 @@ class Api implements ApiInterface
     public function banChatSenderChat(int|string $chatId, int $senderChatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1220,9 +1229,9 @@ class Api implements ApiInterface
     public function unbanChatSenderChat(int|string $chatId, int $senderChatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1238,12 +1247,12 @@ class Api implements ApiInterface
     public function setChatPermissions(
         int|string $chatId,
         ChatPermissions $permissions,
-        bool $useIndependentChatPermissions = null,
+        ?bool $useIndependentChatPermissions = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1257,9 +1266,9 @@ class Api implements ApiInterface
     public function exportChatInviteLink(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['string']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'string',
         );
     }
 
@@ -1276,15 +1285,15 @@ class Api implements ApiInterface
      */
     public function createChatInviteLink(
         int|string $chatId,
-        string $name = null,
-        int $expireDate = null,
-        int $memberLimit = null,
-        bool $createsJoinRequest = null,
+        ?string $name = null,
+        ?int $expireDate = null,
+        ?int $memberLimit = null,
+        ?bool $createsJoinRequest = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\ChatInviteLink"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ChatInviteLink::class,
         );
     }
 
@@ -1303,15 +1312,15 @@ class Api implements ApiInterface
     public function editChatInviteLink(
         int|string $chatId,
         string $inviteLink,
-        string $name = null,
-        int $expireDate = null,
-        int $memberLimit = null,
-        bool $createsJoinRequest = null,
+        ?string $name = null,
+        ?int $expireDate = null,
+        ?int $memberLimit = null,
+        ?bool $createsJoinRequest = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\ChatInviteLink"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ChatInviteLink::class,
         );
     }
 
@@ -1329,12 +1338,12 @@ class Api implements ApiInterface
         int|string $chatId,
         int $subscriptionPeriod,
         int $subscriptionPrice,
-        string $name = null,
+        ?string $name = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\ChatInviteLink"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ChatInviteLink::class,
         );
     }
 
@@ -1350,12 +1359,12 @@ class Api implements ApiInterface
     public function editChatSubscriptionInviteLink(
         int|string $chatId,
         string $inviteLink,
-        string $name = null,
+        ?string $name = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\ChatInviteLink"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ChatInviteLink::class,
         );
     }
 
@@ -1370,9 +1379,9 @@ class Api implements ApiInterface
     public function revokeChatInviteLink(int|string $chatId, string $inviteLink): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\ChatInviteLink"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ChatInviteLink::class,
         );
     }
 
@@ -1387,9 +1396,9 @@ class Api implements ApiInterface
     public function approveChatJoinRequest(int|string $chatId, int $userId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1404,9 +1413,9 @@ class Api implements ApiInterface
     public function declineChatJoinRequest(int|string $chatId, int $userId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1421,9 +1430,9 @@ class Api implements ApiInterface
     public function setChatPhoto(int|string $chatId, InputFile $photo): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1437,9 +1446,9 @@ class Api implements ApiInterface
     public function deleteChatPhoto(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1454,9 +1463,9 @@ class Api implements ApiInterface
     public function setChatTitle(int|string $chatId, string $title): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1468,12 +1477,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setChatDescription(int|string $chatId, string $description = null): PromiseInterface
+    public function setChatDescription(int|string $chatId, ?string $description = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1490,13 +1499,13 @@ class Api implements ApiInterface
     public function pinChatMessage(
         int|string $chatId,
         int $messageId,
-        string $businessConnectionId = null,
-        bool $disableNotification = null,
+        ?string $businessConnectionId = null,
+        ?bool $disableNotification = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1511,13 +1520,13 @@ class Api implements ApiInterface
      */
     public function unpinChatMessage(
         int|string $chatId,
-        string $businessConnectionId = null,
-        int $messageId = null,
+        ?string $businessConnectionId = null,
+        ?int $messageId = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1531,9 +1540,9 @@ class Api implements ApiInterface
     public function unpinAllChatMessages(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1547,9 +1556,9 @@ class Api implements ApiInterface
     public function leaveChat(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1563,9 +1572,9 @@ class Api implements ApiInterface
     public function getChat(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\ChatFullInfo"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ChatFullInfo::class,
         );
     }
 
@@ -1579,9 +1588,10 @@ class Api implements ApiInterface
     public function getChatAdministrators(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\ChatMember>"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ChatMember::class,
+            returnsArray: true,
         );
     }
 
@@ -1595,9 +1605,9 @@ class Api implements ApiInterface
     public function getChatMemberCount(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['int']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'int',
         );
     }
 
@@ -1612,9 +1622,9 @@ class Api implements ApiInterface
     public function getChatMember(int|string $chatId, int $userId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\ChatMember"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ChatMember::class,
         );
     }
 
@@ -1629,9 +1639,9 @@ class Api implements ApiInterface
     public function setChatStickerSet(int|string $chatId, string $stickerSetName): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1645,9 +1655,9 @@ class Api implements ApiInterface
     public function deleteChatStickerSet(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1659,9 +1669,10 @@ class Api implements ApiInterface
     public function getForumTopicIconStickers(): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\Sticker>"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Sticker::class,
+            returnsArray: true,
         );
     }
 
@@ -1678,13 +1689,13 @@ class Api implements ApiInterface
     public function createForumTopic(
         int|string $chatId,
         string $name,
-        int $iconColor = null,
-        string $iconCustomEmojiId = null,
+        ?int $iconColor = null,
+        ?string $iconCustomEmojiId = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\ForumTopic"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ForumTopic::class,
         );
     }
 
@@ -1701,13 +1712,13 @@ class Api implements ApiInterface
     public function editForumTopic(
         int|string $chatId,
         int $messageThreadId,
-        string $name = null,
-        string $iconCustomEmojiId = null,
+        ?string $name = null,
+        ?string $iconCustomEmojiId = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1722,9 +1733,9 @@ class Api implements ApiInterface
     public function closeForumTopic(int|string $chatId, int $messageThreadId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1739,9 +1750,9 @@ class Api implements ApiInterface
     public function reopenForumTopic(int|string $chatId, int $messageThreadId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1756,9 +1767,9 @@ class Api implements ApiInterface
     public function deleteForumTopic(int|string $chatId, int $messageThreadId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1773,9 +1784,9 @@ class Api implements ApiInterface
     public function unpinAllForumTopicMessages(int|string $chatId, int $messageThreadId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1790,9 +1801,9 @@ class Api implements ApiInterface
     public function editGeneralForumTopic(int|string $chatId, string $name): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1806,9 +1817,9 @@ class Api implements ApiInterface
     public function closeGeneralForumTopic(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1822,9 +1833,9 @@ class Api implements ApiInterface
     public function reopenGeneralForumTopic(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1838,9 +1849,9 @@ class Api implements ApiInterface
     public function hideGeneralForumTopic(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1854,9 +1865,9 @@ class Api implements ApiInterface
     public function unhideGeneralForumTopic(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1870,9 +1881,9 @@ class Api implements ApiInterface
     public function unpinAllGeneralForumTopicMessages(int|string $chatId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1889,15 +1900,15 @@ class Api implements ApiInterface
      */
     public function answerCallbackQuery(
         string $callbackQueryId,
-        string $text = null,
-        bool $showAlert = null,
-        string $url = null,
-        int $cacheTime = null,
+        ?string $text = null,
+        ?bool $showAlert = null,
+        ?string $url = null,
+        ?int $cacheTime = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1912,9 +1923,9 @@ class Api implements ApiInterface
     public function getUserChatBoosts(int|string $chatId, int $userId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\UserChatBoosts"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: UserChatBoosts::class,
         );
     }
 
@@ -1928,9 +1939,9 @@ class Api implements ApiInterface
     public function getBusinessConnection(string $businessConnectionId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\BusinessConnection"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: BusinessConnection::class,
         );
     }
 
@@ -1945,13 +1956,13 @@ class Api implements ApiInterface
      */
     public function setMyCommands(
         array $commands,
-        BotCommandScope $scope = null,
-        string $languageCode = null,
+        ?BotCommandScope $scope = null,
+        ?string $languageCode = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1963,12 +1974,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function deleteMyCommands(BotCommandScope $scope = null, string $languageCode = null): PromiseInterface
+    public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -1980,12 +1991,13 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<array<BotCommand>>
      */
-    public function getMyCommands(BotCommandScope $scope = null, string $languageCode = null): PromiseInterface
+    public function getMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\BotCommand>"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: BotCommand::class,
+            returnsArray: true,
         );
     }
 
@@ -1997,12 +2009,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setMyName(string $name = null, string $languageCode = null): PromiseInterface
+    public function setMyName(?string $name = null, ?string $languageCode = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2013,12 +2025,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<BotName>
      */
-    public function getMyName(string $languageCode = null): PromiseInterface
+    public function getMyName(?string $languageCode = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\BotName"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: BotName::class,
         );
     }
 
@@ -2030,12 +2042,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setMyDescription(string $description = null, string $languageCode = null): PromiseInterface
+    public function setMyDescription(?string $description = null, ?string $languageCode = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2046,12 +2058,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<BotDescription>
      */
-    public function getMyDescription(string $languageCode = null): PromiseInterface
+    public function getMyDescription(?string $languageCode = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\BotDescription"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: BotDescription::class,
         );
     }
 
@@ -2064,13 +2076,13 @@ class Api implements ApiInterface
      * @return PromiseInterface<bool>
      */
     public function setMyShortDescription(
-        string $shortDescription = null,
-        string $languageCode = null,
+        ?string $shortDescription = null,
+        ?string $languageCode = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2081,12 +2093,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<BotShortDescription>
      */
-    public function getMyShortDescription(string $languageCode = null): PromiseInterface
+    public function getMyShortDescription(?string $languageCode = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\BotShortDescription"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: BotShortDescription::class,
         );
     }
 
@@ -2098,12 +2110,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setChatMenuButton(int $chatId = null, MenuButton $menuButton = null): PromiseInterface
+    public function setChatMenuButton(?int $chatId = null, ?MenuButton $menuButton = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2114,12 +2126,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<MenuButton>
      */
-    public function getChatMenuButton(int $chatId = null): PromiseInterface
+    public function getChatMenuButton(?int $chatId = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\MenuButton"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: MenuButton::class,
         );
     }
 
@@ -2132,13 +2144,13 @@ class Api implements ApiInterface
      * @return PromiseInterface<bool>
      */
     public function setMyDefaultAdministratorRights(
-        ChatAdministratorRights $rights = null,
-        bool $forChannels = null,
+        ?ChatAdministratorRights $rights = null,
+        ?bool $forChannels = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2149,12 +2161,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<ChatAdministratorRights>
      */
-    public function getMyDefaultAdministratorRights(bool $forChannels = null): PromiseInterface
+    public function getMyDefaultAdministratorRights(?bool $forChannels = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\ChatAdministratorRights"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: ChatAdministratorRights::class,
         );
     }
 
@@ -2175,19 +2187,19 @@ class Api implements ApiInterface
      */
     public function editMessageText(
         string $text,
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        string $parseMode = null,
-        array $entities = null,
-        LinkPreviewOptions $linkPreviewOptions = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?string $parseMode = null,
+        ?array $entities = null,
+        ?LinkPreviewOptions $linkPreviewOptions = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -2207,20 +2219,20 @@ class Api implements ApiInterface
      * @return PromiseInterface<Message|bool>
      */
     public function editMessageCaption(
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -2238,16 +2250,16 @@ class Api implements ApiInterface
      */
     public function editMessageMedia(
         InputMedia $media,
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -2271,20 +2283,20 @@ class Api implements ApiInterface
     public function editMessageLiveLocation(
         float $latitude,
         float $longitude,
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        int $livePeriod = null,
-        float $horizontalAccuracy = null,
-        int $heading = null,
-        int $proximityAlertRadius = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?int $livePeriod = null,
+        ?float $horizontalAccuracy = null,
+        ?int $heading = null,
+        ?int $proximityAlertRadius = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -2300,16 +2312,16 @@ class Api implements ApiInterface
      * @return PromiseInterface<Message|bool>
      */
     public function stopMessageLiveLocation(
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -2325,16 +2337,16 @@ class Api implements ApiInterface
      * @return PromiseInterface<Message|bool>
      */
     public function editMessageReplyMarkup(
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -2351,13 +2363,13 @@ class Api implements ApiInterface
     public function stopPoll(
         int|string $chatId,
         int $messageId,
-        string $businessConnectionId = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Poll"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Poll::class,
         );
     }
 
@@ -2372,9 +2384,9 @@ class Api implements ApiInterface
     public function deleteMessage(int|string $chatId, int $messageId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2389,9 +2401,9 @@ class Api implements ApiInterface
     public function deleteMessages(int|string $chatId, array $messageIds): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2414,19 +2426,19 @@ class Api implements ApiInterface
     public function sendSticker(
         int|string $chatId,
         InputFile|string $sticker,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $emoji = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $emoji = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -2440,9 +2452,9 @@ class Api implements ApiInterface
     public function getStickerSet(string $name): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\StickerSet"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: StickerSet::class,
         );
     }
 
@@ -2456,9 +2468,10 @@ class Api implements ApiInterface
     public function getCustomEmojiStickers(array $customEmojiIds): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\Sticker>"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Sticker::class,
+            returnsArray: true,
         );
     }
 
@@ -2474,9 +2487,9 @@ class Api implements ApiInterface
     public function uploadStickerFile(int $userId, InputFile $sticker, string $stickerFormat): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\File"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: File::class,
         );
     }
 
@@ -2497,13 +2510,13 @@ class Api implements ApiInterface
         string $name,
         string $title,
         array $stickers,
-        string $stickerType = null,
-        bool $needsRepainting = null,
+        ?string $stickerType = null,
+        ?bool $needsRepainting = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2519,9 +2532,9 @@ class Api implements ApiInterface
     public function addStickerToSet(int $userId, string $name, InputSticker $sticker): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2536,9 +2549,9 @@ class Api implements ApiInterface
     public function setStickerPositionInSet(string $sticker, int $position): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2552,9 +2565,9 @@ class Api implements ApiInterface
     public function deleteStickerFromSet(string $sticker): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2575,9 +2588,9 @@ class Api implements ApiInterface
         InputSticker $sticker,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2592,9 +2605,9 @@ class Api implements ApiInterface
     public function setStickerEmojiList(string $sticker, array $emojiList): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2606,12 +2619,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setStickerKeywords(string $sticker, array $keywords = null): PromiseInterface
+    public function setStickerKeywords(string $sticker, ?array $keywords = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2623,12 +2636,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setStickerMaskPosition(string $sticker, MaskPosition $maskPosition = null): PromiseInterface
+    public function setStickerMaskPosition(string $sticker, ?MaskPosition $maskPosition = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2643,9 +2656,9 @@ class Api implements ApiInterface
     public function setStickerSetTitle(string $name, string $title): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2663,12 +2676,12 @@ class Api implements ApiInterface
         string $name,
         int $userId,
         string $format,
-        InputFile|string $thumbnail = null,
+        InputFile|string|null $thumbnail = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2680,12 +2693,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setCustomEmojiStickerSetThumbnail(string $name, string $customEmojiId = null): PromiseInterface
+    public function setCustomEmojiStickerSetThumbnail(string $name, ?string $customEmojiId = null): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2699,9 +2712,9 @@ class Api implements ApiInterface
     public function deleteStickerSet(string $name): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2721,14 +2734,14 @@ class Api implements ApiInterface
         string $inlineQueryId,
         array $results,
         ?int $cacheTime = 300,
-        bool $isPersonal = null,
-        string $nextOffset = null,
-        InlineQueryResultsButton $button = null,
+        ?bool $isPersonal = null,
+        ?string $nextOffset = null,
+        ?InlineQueryResultsButton $button = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2743,9 +2756,9 @@ class Api implements ApiInterface
     public function answerWebAppQuery(string $webAppQueryId, InlineQueryResult $result): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\SentWebAppMessage"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: SentWebAppMessage::class,
         );
     }
 
@@ -2790,33 +2803,33 @@ class Api implements ApiInterface
         string $payload,
         string $currency,
         array $prices,
-        int $messageThreadId = null,
-        string $providerToken = null,
-        int $maxTipAmount = null,
-        array $suggestedTipAmounts = null,
-        string $startParameter = null,
-        string $providerData = null,
-        string $photoUrl = null,
-        int $photoSize = null,
-        int $photoWidth = null,
-        int $photoHeight = null,
-        bool $needName = null,
-        bool $needPhoneNumber = null,
-        bool $needEmail = null,
-        bool $needShippingAddress = null,
-        bool $sendPhoneNumberToProvider = null,
-        bool $sendEmailToProvider = null,
-        bool $isFlexible = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?int $messageThreadId = null,
+        ?string $providerToken = null,
+        ?int $maxTipAmount = null,
+        ?array $suggestedTipAmounts = null,
+        ?string $startParameter = null,
+        ?string $providerData = null,
+        ?string $photoUrl = null,
+        ?int $photoSize = null,
+        ?int $photoWidth = null,
+        ?int $photoHeight = null,
+        ?bool $needName = null,
+        ?bool $needPhoneNumber = null,
+        ?bool $needEmail = null,
+        ?bool $needShippingAddress = null,
+        ?bool $sendPhoneNumberToProvider = null,
+        ?bool $sendEmailToProvider = null,
+        ?bool $isFlexible = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -2852,26 +2865,26 @@ class Api implements ApiInterface
         string $payload,
         string $currency,
         array $prices,
-        string $providerToken = null,
-        int $maxTipAmount = null,
-        array $suggestedTipAmounts = null,
-        string $providerData = null,
-        string $photoUrl = null,
-        int $photoSize = null,
-        int $photoWidth = null,
-        int $photoHeight = null,
-        bool $needName = null,
-        bool $needPhoneNumber = null,
-        bool $needEmail = null,
-        bool $needShippingAddress = null,
-        bool $sendPhoneNumberToProvider = null,
-        bool $sendEmailToProvider = null,
-        bool $isFlexible = null,
+        ?string $providerToken = null,
+        ?int $maxTipAmount = null,
+        ?array $suggestedTipAmounts = null,
+        ?string $providerData = null,
+        ?string $photoUrl = null,
+        ?int $photoSize = null,
+        ?int $photoWidth = null,
+        ?int $photoHeight = null,
+        ?bool $needName = null,
+        ?bool $needPhoneNumber = null,
+        ?bool $needEmail = null,
+        ?bool $needShippingAddress = null,
+        ?bool $sendPhoneNumberToProvider = null,
+        ?bool $sendEmailToProvider = null,
+        ?bool $isFlexible = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['string']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'string',
         );
     }
 
@@ -2888,13 +2901,13 @@ class Api implements ApiInterface
     public function answerShippingQuery(
         string $shippingQueryId,
         bool $ok,
-        array $shippingOptions = null,
-        string $errorMessage = null,
+        ?array $shippingOptions = null,
+        ?string $errorMessage = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2910,12 +2923,12 @@ class Api implements ApiInterface
     public function answerPreCheckoutQuery(
         string $preCheckoutQueryId,
         bool $ok,
-        string $errorMessage = null,
+        ?string $errorMessage = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2927,12 +2940,12 @@ class Api implements ApiInterface
      *
      * @return PromiseInterface<StarTransactions>
      */
-    public function getStarTransactions(int $offset = null, ?int $limit = 100): PromiseInterface
+    public function getStarTransactions(?int $offset = null, ?int $limit = 100): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\StarTransactions"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: StarTransactions::class,
         );
     }
 
@@ -2947,9 +2960,9 @@ class Api implements ApiInterface
     public function refundStarPayment(int $userId, string $telegramPaymentChargeId): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2965,9 +2978,9 @@ class Api implements ApiInterface
     public function setPassportDataErrors(int $userId, array $errors): PromiseInterface
     {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ['bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: 'bool',
         );
     }
 
@@ -2989,18 +3002,18 @@ class Api implements ApiInterface
     public function sendGame(
         int $chatId,
         string $gameShortName,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -3020,16 +3033,16 @@ class Api implements ApiInterface
     public function setGameScore(
         int $userId,
         int $score,
-        bool $force = null,
-        bool $disableEditMessage = null,
-        int $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
+        ?bool $force = null,
+        ?bool $disableEditMessage = null,
+        ?int $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["Shanginn\TelegramBotApiBindings\Types\Message", 'bool']
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: Message::class,
         );
     }
 
@@ -3045,14 +3058,15 @@ class Api implements ApiInterface
      */
     public function getGameHighScores(
         int $userId,
-        int $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
+        ?int $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
     ): PromiseInterface {
         return $this->doRequest(
-            __FUNCTION__,
-            get_defined_vars(),
-            ["array<Shanginn\TelegramBotApiBindings\Types\GameHighScore>"]
+            method: __FUNCTION__,
+            args: get_defined_vars(),
+            returnType: GameHighScore::class,
+            returnsArray: true,
         );
     }
 }

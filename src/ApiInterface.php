@@ -66,10 +66,10 @@ interface ApiInterface
      * @return PromiseInterface<array<Update>>
      */
     public function getUpdates(
-        int $offset = null,
+        ?int $offset = null,
         ?int $limit = 100,
-        int $timeout = null,
-        array $allowedUpdates = null,
+        ?int $timeout = null,
+        ?array $allowedUpdates = null,
     ): PromiseInterface;
 
     /**
@@ -88,12 +88,12 @@ interface ApiInterface
      */
     public function setWebhook(
         string $url,
-        InputFile $certificate = null,
-        string $ipAddress = null,
+        ?InputFile $certificate = null,
+        ?string $ipAddress = null,
         ?int $maxConnections = 40,
-        array $allowedUpdates = null,
-        bool $dropPendingUpdates = null,
-        string $secretToken = null,
+        ?array $allowedUpdates = null,
+        ?bool $dropPendingUpdates = null,
+        ?string $secretToken = null,
     ): PromiseInterface;
 
     /**
@@ -103,7 +103,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function deleteWebhook(bool $dropPendingUpdates = null): PromiseInterface;
+    public function deleteWebhook(?bool $dropPendingUpdates = null): PromiseInterface;
 
     /**
      * Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty.
@@ -154,16 +154,16 @@ interface ApiInterface
     public function sendMessage(
         int|string $chatId,
         string $text,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $parseMode = null,
-        array $entities = null,
-        LinkPreviewOptions $linkPreviewOptions = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $parseMode = null,
+        ?array $entities = null,
+        ?LinkPreviewOptions $linkPreviewOptions = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -182,9 +182,9 @@ interface ApiInterface
         int|string $chatId,
         int|string $fromChatId,
         int $messageId,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
     ): PromiseInterface;
 
     /**
@@ -203,9 +203,9 @@ interface ApiInterface
         int|string $chatId,
         int|string $fromChatId,
         array $messageIds,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
     ): PromiseInterface;
 
     /**
@@ -230,15 +230,15 @@ interface ApiInterface
         int|string $chatId,
         int|string $fromChatId,
         int $messageId,
-        int $messageThreadId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -258,10 +258,10 @@ interface ApiInterface
         int|string $chatId,
         int|string $fromChatId,
         array $messageIds,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        bool $removeCaption = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?bool $removeCaption = null,
     ): PromiseInterface;
 
     /**
@@ -287,18 +287,18 @@ interface ApiInterface
     public function sendPhoto(
         int|string $chatId,
         InputFile|string $photo,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $hasSpoiler = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $hasSpoiler = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -327,20 +327,20 @@ interface ApiInterface
     public function sendAudio(
         int|string $chatId,
         InputFile|string $audio,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        int $duration = null,
-        string $performer = null,
-        string $title = null,
-        InputFile|string $thumbnail = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?int $duration = null,
+        ?string $performer = null,
+        ?string $title = null,
+        InputFile|string|null $thumbnail = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -366,18 +366,18 @@ interface ApiInterface
     public function sendDocument(
         int|string $chatId,
         InputFile|string $document,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        InputFile|string $thumbnail = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $disableContentTypeDetection = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $disableContentTypeDetection = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -408,23 +408,23 @@ interface ApiInterface
     public function sendVideo(
         int|string $chatId,
         InputFile|string $video,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        int $duration = null,
-        int $width = null,
-        int $height = null,
-        InputFile|string $thumbnail = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $hasSpoiler = null,
-        bool $supportsStreaming = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?int $duration = null,
+        ?int $width = null,
+        ?int $height = null,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $hasSpoiler = null,
+        ?bool $supportsStreaming = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -454,22 +454,22 @@ interface ApiInterface
     public function sendAnimation(
         int|string $chatId,
         InputFile|string $animation,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        int $duration = null,
-        int $width = null,
-        int $height = null,
-        InputFile|string $thumbnail = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $hasSpoiler = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?int $duration = null,
+        ?int $width = null,
+        ?int $height = null,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $hasSpoiler = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -494,17 +494,17 @@ interface ApiInterface
     public function sendVoice(
         int|string $chatId,
         InputFile|string $voice,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        int $duration = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?int $duration = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -528,16 +528,16 @@ interface ApiInterface
     public function sendVideoNote(
         int|string $chatId,
         InputFile|string $videoNote,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        int $duration = null,
-        int $length = null,
-        InputFile|string $thumbnail = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?int $duration = null,
+        ?int $length = null,
+        InputFile|string|null $thumbnail = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -562,15 +562,15 @@ interface ApiInterface
         int|string $chatId,
         int $starCount,
         array $media,
-        string $businessConnectionId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -590,12 +590,12 @@ interface ApiInterface
     public function sendMediaGroup(
         int|string $chatId,
         array $media,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
     ): PromiseInterface;
 
     /**
@@ -622,17 +622,17 @@ interface ApiInterface
         int|string $chatId,
         float $latitude,
         float $longitude,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        float $horizontalAccuracy = null,
-        int $livePeriod = null,
-        int $heading = null,
-        int $proximityAlertRadius = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?float $horizontalAccuracy = null,
+        ?int $livePeriod = null,
+        ?int $heading = null,
+        ?int $proximityAlertRadius = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -663,17 +663,17 @@ interface ApiInterface
         float $longitude,
         string $title,
         string $address,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $foursquareId = null,
-        string $foursquareType = null,
-        string $googlePlaceId = null,
-        string $googlePlaceType = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $foursquareId = null,
+        ?string $foursquareType = null,
+        ?string $googlePlaceId = null,
+        ?string $googlePlaceType = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -698,15 +698,15 @@ interface ApiInterface
         int|string $chatId,
         string $phoneNumber,
         string $firstName,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $lastName = null,
-        string $vcard = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $lastName = null,
+        ?string $vcard = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -741,25 +741,25 @@ interface ApiInterface
         int|string $chatId,
         string $question,
         array $options,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $questionParseMode = null,
-        array $questionEntities = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $questionParseMode = null,
+        ?array $questionEntities = null,
         ?bool $isAnonymous = true,
         ?string $type = 'regular',
-        bool $allowsMultipleAnswers = null,
-        int $correctOptionId = null,
-        string $explanation = null,
-        string $explanationParseMode = null,
-        array $explanationEntities = null,
-        int $openPeriod = null,
-        int $closeDate = null,
-        bool $isClosed = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?bool $allowsMultipleAnswers = null,
+        ?int $correctOptionId = null,
+        ?string $explanation = null,
+        ?string $explanationParseMode = null,
+        ?array $explanationEntities = null,
+        ?int $openPeriod = null,
+        ?int $closeDate = null,
+        ?bool $isClosed = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -779,14 +779,14 @@ interface ApiInterface
      */
     public function sendDice(
         int|string $chatId,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
         ?string $emoji = '🎲',
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -803,8 +803,8 @@ interface ApiInterface
     public function sendChatAction(
         int|string $chatId,
         string $action,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
     ): PromiseInterface;
 
     /**
@@ -820,8 +820,8 @@ interface ApiInterface
     public function setMessageReaction(
         int|string $chatId,
         int $messageId,
-        array $reaction = null,
-        bool $isBig = null,
+        ?array $reaction = null,
+        ?bool $isBig = null,
     ): PromiseInterface;
 
     /**
@@ -833,7 +833,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<UserProfilePhotos>
      */
-    public function getUserProfilePhotos(int $userId, int $offset = null, ?int $limit = 100): PromiseInterface;
+    public function getUserProfilePhotos(int $userId, ?int $offset = null, ?int $limit = 100): PromiseInterface;
 
     /**
      * Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.
@@ -857,8 +857,8 @@ interface ApiInterface
     public function banChatMember(
         int|string $chatId,
         int $userId,
-        int $untilDate = null,
-        bool $revokeMessages = null,
+        ?int $untilDate = null,
+        ?bool $revokeMessages = null,
     ): PromiseInterface;
 
     /**
@@ -870,7 +870,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function unbanChatMember(int|string $chatId, int $userId, bool $onlyIfBanned = null): PromiseInterface;
+    public function unbanChatMember(int|string $chatId, int $userId, ?bool $onlyIfBanned = null): PromiseInterface;
 
     /**
      * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.
@@ -887,8 +887,8 @@ interface ApiInterface
         int|string $chatId,
         int $userId,
         ChatPermissions $permissions,
-        bool $useIndependentChatPermissions = null,
-        int $untilDate = null,
+        ?bool $useIndependentChatPermissions = null,
+        ?int $untilDate = null,
     ): PromiseInterface;
 
     /**
@@ -917,21 +917,21 @@ interface ApiInterface
     public function promoteChatMember(
         int|string $chatId,
         int $userId,
-        bool $isAnonymous = null,
-        bool $canManageChat = null,
-        bool $canDeleteMessages = null,
-        bool $canManageVideoChats = null,
-        bool $canRestrictMembers = null,
-        bool $canPromoteMembers = null,
-        bool $canChangeInfo = null,
-        bool $canInviteUsers = null,
-        bool $canPostStories = null,
-        bool $canEditStories = null,
-        bool $canDeleteStories = null,
-        bool $canPostMessages = null,
-        bool $canEditMessages = null,
-        bool $canPinMessages = null,
-        bool $canManageTopics = null,
+        ?bool $isAnonymous = null,
+        ?bool $canManageChat = null,
+        ?bool $canDeleteMessages = null,
+        ?bool $canManageVideoChats = null,
+        ?bool $canRestrictMembers = null,
+        ?bool $canPromoteMembers = null,
+        ?bool $canChangeInfo = null,
+        ?bool $canInviteUsers = null,
+        ?bool $canPostStories = null,
+        ?bool $canEditStories = null,
+        ?bool $canDeleteStories = null,
+        ?bool $canPostMessages = null,
+        ?bool $canEditMessages = null,
+        ?bool $canPinMessages = null,
+        ?bool $canManageTopics = null,
     ): PromiseInterface;
 
     /**
@@ -981,7 +981,7 @@ interface ApiInterface
     public function setChatPermissions(
         int|string $chatId,
         ChatPermissions $permissions,
-        bool $useIndependentChatPermissions = null,
+        ?bool $useIndependentChatPermissions = null,
     ): PromiseInterface;
 
     /**
@@ -1006,10 +1006,10 @@ interface ApiInterface
      */
     public function createChatInviteLink(
         int|string $chatId,
-        string $name = null,
-        int $expireDate = null,
-        int $memberLimit = null,
-        bool $createsJoinRequest = null,
+        ?string $name = null,
+        ?int $expireDate = null,
+        ?int $memberLimit = null,
+        ?bool $createsJoinRequest = null,
     ): PromiseInterface;
 
     /**
@@ -1027,10 +1027,10 @@ interface ApiInterface
     public function editChatInviteLink(
         int|string $chatId,
         string $inviteLink,
-        string $name = null,
-        int $expireDate = null,
-        int $memberLimit = null,
-        bool $createsJoinRequest = null,
+        ?string $name = null,
+        ?int $expireDate = null,
+        ?int $memberLimit = null,
+        ?bool $createsJoinRequest = null,
     ): PromiseInterface;
 
     /**
@@ -1047,7 +1047,7 @@ interface ApiInterface
         int|string $chatId,
         int $subscriptionPeriod,
         int $subscriptionPrice,
-        string $name = null,
+        ?string $name = null,
     ): PromiseInterface;
 
     /**
@@ -1062,7 +1062,7 @@ interface ApiInterface
     public function editChatSubscriptionInviteLink(
         int|string $chatId,
         string $inviteLink,
-        string $name = null,
+        ?string $name = null,
     ): PromiseInterface;
 
     /**
@@ -1132,7 +1132,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setChatDescription(int|string $chatId, string $description = null): PromiseInterface;
+    public function setChatDescription(int|string $chatId, ?string $description = null): PromiseInterface;
 
     /**
      * Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
@@ -1147,8 +1147,8 @@ interface ApiInterface
     public function pinChatMessage(
         int|string $chatId,
         int $messageId,
-        string $businessConnectionId = null,
-        bool $disableNotification = null,
+        ?string $businessConnectionId = null,
+        ?bool $disableNotification = null,
     ): PromiseInterface;
 
     /**
@@ -1162,8 +1162,8 @@ interface ApiInterface
      */
     public function unpinChatMessage(
         int|string $chatId,
-        string $businessConnectionId = null,
-        int $messageId = null,
+        ?string $businessConnectionId = null,
+        ?int $messageId = null,
     ): PromiseInterface;
 
     /**
@@ -1260,8 +1260,8 @@ interface ApiInterface
     public function createForumTopic(
         int|string $chatId,
         string $name,
-        int $iconColor = null,
-        string $iconCustomEmojiId = null,
+        ?int $iconColor = null,
+        ?string $iconCustomEmojiId = null,
     ): PromiseInterface;
 
     /**
@@ -1277,8 +1277,8 @@ interface ApiInterface
     public function editForumTopic(
         int|string $chatId,
         int $messageThreadId,
-        string $name = null,
-        string $iconCustomEmojiId = null,
+        ?string $name = null,
+        ?string $iconCustomEmojiId = null,
     ): PromiseInterface;
 
     /**
@@ -1389,10 +1389,10 @@ interface ApiInterface
      */
     public function answerCallbackQuery(
         string $callbackQueryId,
-        string $text = null,
-        bool $showAlert = null,
-        string $url = null,
-        int $cacheTime = null,
+        ?string $text = null,
+        ?bool $showAlert = null,
+        ?string $url = null,
+        ?int $cacheTime = null,
     ): PromiseInterface;
 
     /**
@@ -1425,8 +1425,8 @@ interface ApiInterface
      */
     public function setMyCommands(
         array $commands,
-        BotCommandScope $scope = null,
-        string $languageCode = null,
+        ?BotCommandScope $scope = null,
+        ?string $languageCode = null,
     ): PromiseInterface;
 
     /**
@@ -1437,7 +1437,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function deleteMyCommands(BotCommandScope $scope = null, string $languageCode = null): PromiseInterface;
+    public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): PromiseInterface;
 
     /**
      * Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of BotCommand objects. If commands aren't set, an empty list is returned.
@@ -1447,7 +1447,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<array<BotCommand>>
      */
-    public function getMyCommands(BotCommandScope $scope = null, string $languageCode = null): PromiseInterface;
+    public function getMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): PromiseInterface;
 
     /**
      * Use this method to change the bot's name. Returns True on success.
@@ -1457,7 +1457,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setMyName(string $name = null, string $languageCode = null): PromiseInterface;
+    public function setMyName(?string $name = null, ?string $languageCode = null): PromiseInterface;
 
     /**
      * Use this method to get the current bot name for the given user language. Returns BotName on success.
@@ -1466,7 +1466,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<BotName>
      */
-    public function getMyName(string $languageCode = null): PromiseInterface;
+    public function getMyName(?string $languageCode = null): PromiseInterface;
 
     /**
      * Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success.
@@ -1476,7 +1476,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setMyDescription(string $description = null, string $languageCode = null): PromiseInterface;
+    public function setMyDescription(?string $description = null, ?string $languageCode = null): PromiseInterface;
 
     /**
      * Use this method to get the current bot description for the given user language. Returns BotDescription on success.
@@ -1485,7 +1485,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<BotDescription>
      */
-    public function getMyDescription(string $languageCode = null): PromiseInterface;
+    public function getMyDescription(?string $languageCode = null): PromiseInterface;
 
     /**
      * Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns True on success.
@@ -1496,8 +1496,8 @@ interface ApiInterface
      * @return PromiseInterface<bool>
      */
     public function setMyShortDescription(
-        string $shortDescription = null,
-        string $languageCode = null,
+        ?string $shortDescription = null,
+        ?string $languageCode = null,
     ): PromiseInterface;
 
     /**
@@ -1507,7 +1507,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<BotShortDescription>
      */
-    public function getMyShortDescription(string $languageCode = null): PromiseInterface;
+    public function getMyShortDescription(?string $languageCode = null): PromiseInterface;
 
     /**
      * Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.
@@ -1517,7 +1517,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setChatMenuButton(int $chatId = null, MenuButton $menuButton = null): PromiseInterface;
+    public function setChatMenuButton(?int $chatId = null, ?MenuButton $menuButton = null): PromiseInterface;
 
     /**
      * Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.
@@ -1526,7 +1526,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<MenuButton>
      */
-    public function getChatMenuButton(int $chatId = null): PromiseInterface;
+    public function getChatMenuButton(?int $chatId = null): PromiseInterface;
 
     /**
      * Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns True on success.
@@ -1537,8 +1537,8 @@ interface ApiInterface
      * @return PromiseInterface<bool>
      */
     public function setMyDefaultAdministratorRights(
-        ChatAdministratorRights $rights = null,
-        bool $forChannels = null,
+        ?ChatAdministratorRights $rights = null,
+        ?bool $forChannels = null,
     ): PromiseInterface;
 
     /**
@@ -1548,7 +1548,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<ChatAdministratorRights>
      */
-    public function getMyDefaultAdministratorRights(bool $forChannels = null): PromiseInterface;
+    public function getMyDefaultAdministratorRights(?bool $forChannels = null): PromiseInterface;
 
     /**
      * Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
@@ -1567,14 +1567,14 @@ interface ApiInterface
      */
     public function editMessageText(
         string $text,
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        string $parseMode = null,
-        array $entities = null,
-        LinkPreviewOptions $linkPreviewOptions = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?string $parseMode = null,
+        ?array $entities = null,
+        ?LinkPreviewOptions $linkPreviewOptions = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -1593,15 +1593,15 @@ interface ApiInterface
      * @return PromiseInterface<Message|bool>
      */
     public function editMessageCaption(
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        string $caption = null,
-        string $parseMode = null,
-        array $captionEntities = null,
-        bool $showCaptionAboveMedia = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -1618,11 +1618,11 @@ interface ApiInterface
      */
     public function editMessageMedia(
         InputMedia $media,
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -1645,15 +1645,15 @@ interface ApiInterface
     public function editMessageLiveLocation(
         float $latitude,
         float $longitude,
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        int $livePeriod = null,
-        float $horizontalAccuracy = null,
-        int $heading = null,
-        int $proximityAlertRadius = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?int $livePeriod = null,
+        ?float $horizontalAccuracy = null,
+        ?int $heading = null,
+        ?int $proximityAlertRadius = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -1668,11 +1668,11 @@ interface ApiInterface
      * @return PromiseInterface<Message|bool>
      */
     public function stopMessageLiveLocation(
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -1687,11 +1687,11 @@ interface ApiInterface
      * @return PromiseInterface<Message|bool>
      */
     public function editMessageReplyMarkup(
-        string $businessConnectionId = null,
-        int|string $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -1707,8 +1707,8 @@ interface ApiInterface
     public function stopPoll(
         int|string $chatId,
         int $messageId,
-        string $businessConnectionId = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -1750,14 +1750,14 @@ interface ApiInterface
     public function sendSticker(
         int|string $chatId,
         InputFile|string $sticker,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        string $emoji = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $emoji = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -1806,8 +1806,8 @@ interface ApiInterface
         string $name,
         string $title,
         array $stickers,
-        string $stickerType = null,
-        bool $needsRepainting = null,
+        ?string $stickerType = null,
+        ?bool $needsRepainting = null,
     ): PromiseInterface;
 
     /**
@@ -1875,7 +1875,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setStickerKeywords(string $sticker, array $keywords = null): PromiseInterface;
+    public function setStickerKeywords(string $sticker, ?array $keywords = null): PromiseInterface;
 
     /**
      * Use this method to change the mask position of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns True on success.
@@ -1885,7 +1885,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setStickerMaskPosition(string $sticker, MaskPosition $maskPosition = null): PromiseInterface;
+    public function setStickerMaskPosition(string $sticker, ?MaskPosition $maskPosition = null): PromiseInterface;
 
     /**
      * Use this method to set the title of a created sticker set. Returns True on success.
@@ -1911,7 +1911,7 @@ interface ApiInterface
         string $name,
         int $userId,
         string $format,
-        InputFile|string $thumbnail = null,
+        InputFile|string|null $thumbnail = null,
     ): PromiseInterface;
 
     /**
@@ -1922,7 +1922,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<bool>
      */
-    public function setCustomEmojiStickerSetThumbnail(string $name, string $customEmojiId = null): PromiseInterface;
+    public function setCustomEmojiStickerSetThumbnail(string $name, ?string $customEmojiId = null): PromiseInterface;
 
     /**
      * Use this method to delete a sticker set that was created by the bot. Returns True on success.
@@ -1949,9 +1949,9 @@ interface ApiInterface
         string $inlineQueryId,
         array $results,
         ?int $cacheTime = 300,
-        bool $isPersonal = null,
-        string $nextOffset = null,
-        InlineQueryResultsButton $button = null,
+        ?bool $isPersonal = null,
+        ?string $nextOffset = null,
+        ?InlineQueryResultsButton $button = null,
     ): PromiseInterface;
 
     /**
@@ -2005,28 +2005,28 @@ interface ApiInterface
         string $payload,
         string $currency,
         array $prices,
-        int $messageThreadId = null,
-        string $providerToken = null,
-        int $maxTipAmount = null,
-        array $suggestedTipAmounts = null,
-        string $startParameter = null,
-        string $providerData = null,
-        string $photoUrl = null,
-        int $photoSize = null,
-        int $photoWidth = null,
-        int $photoHeight = null,
-        bool $needName = null,
-        bool $needPhoneNumber = null,
-        bool $needEmail = null,
-        bool $needShippingAddress = null,
-        bool $sendPhoneNumberToProvider = null,
-        bool $sendEmailToProvider = null,
-        bool $isFlexible = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?int $messageThreadId = null,
+        ?string $providerToken = null,
+        ?int $maxTipAmount = null,
+        ?array $suggestedTipAmounts = null,
+        ?string $startParameter = null,
+        ?string $providerData = null,
+        ?string $photoUrl = null,
+        ?int $photoSize = null,
+        ?int $photoWidth = null,
+        ?int $photoHeight = null,
+        ?bool $needName = null,
+        ?bool $needPhoneNumber = null,
+        ?bool $needEmail = null,
+        ?bool $needShippingAddress = null,
+        ?bool $sendPhoneNumberToProvider = null,
+        ?bool $sendEmailToProvider = null,
+        ?bool $isFlexible = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -2061,21 +2061,21 @@ interface ApiInterface
         string $payload,
         string $currency,
         array $prices,
-        string $providerToken = null,
-        int $maxTipAmount = null,
-        array $suggestedTipAmounts = null,
-        string $providerData = null,
-        string $photoUrl = null,
-        int $photoSize = null,
-        int $photoWidth = null,
-        int $photoHeight = null,
-        bool $needName = null,
-        bool $needPhoneNumber = null,
-        bool $needEmail = null,
-        bool $needShippingAddress = null,
-        bool $sendPhoneNumberToProvider = null,
-        bool $sendEmailToProvider = null,
-        bool $isFlexible = null,
+        ?string $providerToken = null,
+        ?int $maxTipAmount = null,
+        ?array $suggestedTipAmounts = null,
+        ?string $providerData = null,
+        ?string $photoUrl = null,
+        ?int $photoSize = null,
+        ?int $photoWidth = null,
+        ?int $photoHeight = null,
+        ?bool $needName = null,
+        ?bool $needPhoneNumber = null,
+        ?bool $needEmail = null,
+        ?bool $needShippingAddress = null,
+        ?bool $sendPhoneNumberToProvider = null,
+        ?bool $sendEmailToProvider = null,
+        ?bool $isFlexible = null,
     ): PromiseInterface;
 
     /**
@@ -2091,8 +2091,8 @@ interface ApiInterface
     public function answerShippingQuery(
         string $shippingQueryId,
         bool $ok,
-        array $shippingOptions = null,
-        string $errorMessage = null,
+        ?array $shippingOptions = null,
+        ?string $errorMessage = null,
     ): PromiseInterface;
 
     /**
@@ -2107,7 +2107,7 @@ interface ApiInterface
     public function answerPreCheckoutQuery(
         string $preCheckoutQueryId,
         bool $ok,
-        string $errorMessage = null,
+        ?string $errorMessage = null,
     ): PromiseInterface;
 
     /**
@@ -2118,7 +2118,7 @@ interface ApiInterface
      *
      * @return PromiseInterface<StarTransactions>
      */
-    public function getStarTransactions(int $offset = null, ?int $limit = 100): PromiseInterface;
+    public function getStarTransactions(?int $offset = null, ?int $limit = 100): PromiseInterface;
 
     /**
      * Refunds a successful payment in Telegram Stars. Returns True on success.
@@ -2159,13 +2159,13 @@ interface ApiInterface
     public function sendGame(
         int $chatId,
         string $gameShortName,
-        string $businessConnectionId = null,
-        int $messageThreadId = null,
-        bool $disableNotification = null,
-        bool $protectContent = null,
-        string $messageEffectId = null,
-        ReplyParameters $replyParameters = null,
-        InlineKeyboardMarkup $replyMarkup = null,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
     ): PromiseInterface;
 
     /**
@@ -2184,11 +2184,11 @@ interface ApiInterface
     public function setGameScore(
         int $userId,
         int $score,
-        bool $force = null,
-        bool $disableEditMessage = null,
-        int $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
+        ?bool $force = null,
+        ?bool $disableEditMessage = null,
+        ?int $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
     ): PromiseInterface;
 
     /**
@@ -2203,8 +2203,8 @@ interface ApiInterface
      */
     public function getGameHighScores(
         int $userId,
-        int $chatId = null,
-        int $messageId = null,
-        string $inlineMessageId = null,
+        ?int $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
     ): PromiseInterface;
 }

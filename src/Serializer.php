@@ -6414,34 +6414,26 @@ class Serializer implements SerializerInterface
         return json_encode($this->normalize($data));
     }
 
-    public function deserialize(string $data, array $types): mixed
+    public function deserialize(string $data, string $type, bool $isArray = false): mixed
     {
         $decoded = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
 
         return is_array($decoded)
-            ? $this->denormalize($decoded, $types)
+            ? $this->denormalize($decoded, $type, $isArray)
             : $decoded;
     }
 
-    public function denormalize(array $data, array $types): mixed
+    public function denormalize(array $data, string $type, bool $isArray = false): mixed
     {
-        foreach ($types as $type) {
-            if (class_exists($type) && is_subclass_of($type, TypeInterface::class)) {
-                return $this->denormalizeType($data, $type);
-            } elseif (str_starts_with($type, 'array<')) {
-                preg_match('/array<(.+)>/', $type, $matches);
-                $innerType = $matches[1];
-                $resultArray = [];
-
-                foreach ($data as $item) {
-                    $resultArray[] = $this->denormalize($item, [$innerType]);
-                }
-
-                return $resultArray;
-            }
+        if (!class_exists($type) || !is_subclass_of($type, TypeInterface::class)) {
+            throw new \UnexpectedValueException(sprintf('Failed to decode response to the expected type: %s', $type));
         }
 
-        throw new \UnexpectedValueException(sprintf('Failed to decode response to any of the expected types: %s', implode(', ', $types)));
+        if (!$isArray) {
+            return $this->denormalizeType($data, $type);
+        }
+
+        return array_map(fn (array $item) => $this->denormalizeType($item, $type), $data);
     }
 
     private function denormalizeType(array $data, string $type): TypeInterface

@@ -9,6 +9,7 @@ use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardButton;
 use Shanginn\TelegramBotApiBindings\Types\InlineKeyboardMarkup;
 use Shanginn\TelegramBotApiBindings\Types\Message;
 use Shanginn\TelegramBotApiBindings\Types\MessageOriginUser;
+use Shanginn\TelegramBotApiBindings\Types\Update;
 
 class SerializerTest extends TestCase
 {
@@ -102,7 +103,8 @@ class SerializerTest extends TestCase
         $serializer = new Serializer();
         $updates = $serializer->deserialize(
             data: json_encode($updatesData),
-            types: ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]
+            type: Update::class,
+            isArray: true,
         );
 
         $this->assertInstanceOf(ChatMemberMember::class, $updates[0]->myChatMember->newChatMember);
@@ -156,7 +158,8 @@ class SerializerTest extends TestCase
         $serializer = new Serializer();
         $updates = $serializer->deserialize(
             data: json_encode($updatesData),
-            types: ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]
+            type: Update::class,
+            isArray: true,
         );
 
         $this->assertInstanceOf(Message::class, $updates[0]->callbackQuery->message);
@@ -212,9 +215,21 @@ class SerializerTest extends TestCase
         $serializer = new Serializer();
         $updates = $serializer->deserialize(
             data: json_encode($updatesData),
-            types: ["array<Shanginn\TelegramBotApiBindings\Types\Update>"]
+            type: Update::class,
+            isArray: true,
         );
 
         $this->assertInstanceOf(MessageOriginUser::class, $updates[0]->message->forwardOrigin);
+    }
+
+    public function testDeserializeBoolean(): void
+    {
+        $serializer = new Serializer();
+        $data = $serializer->deserialize(
+            data: json_encode(true),
+            type: 'bool',
+        );
+
+        $this->assertTrue($data);
     }
 }

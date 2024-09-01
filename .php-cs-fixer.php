@@ -1,11 +1,14 @@
 <?php
 
+use PhpCsFixer\Runner\Parallel\ParallelConfig;
+
 $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
     ->exclude('var')
 ;
 
 return (new PhpCsFixer\Config())
+    ->setParallelConfig(new ParallelConfig(maxProcesses: 4))
     ->registerCustomFixers(new \ErickSkrauch\PhpCsFixer\Fixers())
     ->setRules([
         '@Symfony' => true,
